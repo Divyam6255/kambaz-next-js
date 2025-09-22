@@ -144,7 +144,8 @@ body {
 }
 
 /* Course card styling */
-.course-card img {
+.course-card img,
+.course-card span {
   width: 100%;
   max-width: 200px;
   height: auto;

@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export default function CourseHomePage() {
   return (
     <div className="kambaz-container">
@@ -60,7 +62,7 @@ export default function CourseHomePage() {
           <div className="course-main-content">
             <div className="course-home-content">
               <div className="course-hero-image">
-                <img src="/1_V-Jp13LvtVc2IiY2fp4qYw.jpg" alt="Web Development Technologies" style={{width: '100%', maxWidth: '300px', height: 'auto', borderRadius: '8px', marginBottom: '20px'}} />
+                <Image src="/1_V-Jp13LvtVc2IiY2fp4qYw.jpg" alt="Web Development Technologies" width={300} height={200} style={{borderRadius: '8px', marginBottom: '20px'}} />
               </div>
           <div className="top-buttons">
             <button>Import Existing Content</button>

@@ -1,4 +1,6 @@
-export default function Lab1() {
+import Image from 'next/image';
+
+export default function Lab1Page() {
     return (
         <div id="lab1" style={{ fontFamily: "Arial, sans-serif", margin: 24 }}>
             <h1><b>Lab 1</b></h1>
@@ -78,7 +80,7 @@ export default function Lab1() {
                         <li>The Great Gatsby</li>
                         <li>To Kill a Mockingbird</li>
                         <li>1984</li>
-                        <li>Harry Potter and the Sorcerer's Stone</li>
+                        <li>Harry Potter and the Sorcerer&apos;s Stone</li>
                         <li>The Hobbit</li>
                     </ul>
                 </div>
@@ -144,19 +146,21 @@ export default function Lab1() {
                 <div style={{ display: "flex", gap: 32 }}>
                     <div id="starship-image">
                         <h4>Starship image</h4>
-                        <img
+                        <Image
                             src="/screenshot-2025-03-15-at-17-22-30-starship-carrying-tesla-bot-to-depart-for-mars-by-end-of-2026-musk-1742034356.webp"
                             alt="Starship"
                             width={300}
+                            height={200}
                             style={{ border: "1px solid #ccc", borderRadius: 8, objectFit: "cover" }}
                         />
                     </div>
                     <div id="teslabot-image">
                         <h4>Teslabot image</h4>
-                        <img
+                        <Image
                             src="/666162a44fc3151463d52b64_dfe896_7aca0cc3d4224feea60f21fd6b77ce2e~mv2.png"
                             alt="Teslabot"
                             width={320}
+                            height={200}
                             style={{ border: "1px solid #ccc", borderRadius: 8, objectFit: "cover" }}
                         />
                     </div>

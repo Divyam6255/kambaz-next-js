@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export default function Course5678Page() {
   return (
     <div className="kambaz-container">
@@ -60,7 +62,7 @@ export default function Course5678Page() {
           <div className="course-main-content">
             <div className="course-content">
               <div className="course-hero-image">
-                <img src="/PDP_textbook.jpg" alt="Programming Design and Paradigm" style={{width: '100%', maxWidth: '300px', height: 'auto', borderRadius: '8px', marginBottom: '20px'}} />
+                <Image src="/PDP_textbook.jpg" alt="Programming Design and Paradigm" width={300} height={200} style={{borderRadius: '8px', marginBottom: '20px'}} />
               </div>
               <p>Welcome to Course 5678 - Programming Design and Paradigm</p>
               <p>This course covers programming design principles, design patterns, and programming paradigms including object-oriented and functional programming.</p>

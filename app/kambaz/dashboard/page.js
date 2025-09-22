@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export default function DashboardPage() {
   return (
     <div className="kambaz-container">
@@ -35,7 +37,7 @@ export default function DashboardPage() {
           <div className="courses-grid">
             <div className="course-card">
               <a href="/kambaz/courses/1234">
-                <img src="/1_V-Jp13LvtVc2IiY2fp4qYw.jpg" alt="Course 1234" />
+                <Image src="/1_V-Jp13LvtVc2IiY2fp4qYw.jpg" alt="Course 1234" width={200} height={150} style={{borderRadius: '8px'}} />
                 <div className="course-info">
                   <h3>Course 1234</h3>
                   <p>Web Development</p>
@@ -45,7 +47,7 @@ export default function DashboardPage() {
             
             <div className="course-card">
               <a href="/kambaz/courses/5678">
-                <img src="/PDP_textbook.jpg" alt="Course 5678" />
+                <Image src="/PDP_textbook.jpg" alt="Course 5678" width={200} height={150} style={{borderRadius: '8px'}} />
                 <div className="course-info">
                   <h3>Course 5678</h3>
                   <p>Programming Design and Paradigm</p>

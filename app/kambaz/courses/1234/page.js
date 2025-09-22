@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export default function CoursePage() {
   return (
     <div className="kambaz-container">
@@ -60,7 +62,7 @@ export default function CoursePage() {
           <div className="course-main-content">
             <div className="course-content">
               <div className="course-hero-image">
-                <img src="/1_V-Jp13LvtVc2IiY2fp4qYw.jpg" alt="Web Development Technologies" style={{width: '100%', maxWidth: '300px', height: 'auto', borderRadius: '8px', marginBottom: '20px'}} />
+                <Image src="/1_V-Jp13LvtVc2IiY2fp4qYw.jpg" alt="Web Development Technologies" width={300} height={200} style={{borderRadius: '8px', marginBottom: '20px'}} />
               </div>
               <p>Welcome to Course 1234 - Web Development</p>
               <p>This course covers modern web development technologies including HTML5, CSS3, JavaScript, jQuery, PHP, Java, WordPress, and Rails.</p>

@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export default function Course5678ModulesPage() {
   return (
     <div className="kambaz-container">
@@ -60,7 +62,7 @@ export default function Course5678ModulesPage() {
           <div className="course-main-content">
             <div className="modules-content">
               <div className="course-hero-image">
-                <img src="/PDP_textbook.jpg" alt="Programming Design and Paradigm" style={{width: '100%', maxWidth: '300px', height: 'auto', borderRadius: '8px', marginBottom: '20px'}} />
+                <Image src="/PDP_textbook.jpg" alt="Programming Design and Paradigm" width={300} height={200} style={{borderRadius: '8px', marginBottom: '20px'}} />
               </div>
               <div className="modules-controls">
                 <button>Collapse All</button>
