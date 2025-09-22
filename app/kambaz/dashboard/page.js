@@ -6,6 +6,9 @@ export default function DashboardPage() {
       <nav className="sidebar">
         <div className="nav-links">
           <div className="nav-item">
+            <a href="/kambaz" style={{fontWeight: 'bold', fontSize: '18px', color: 'red'}}>Kambaz</a>
+          </div>
+          <div className="nav-item">
             <a href="https://northeastern.edu" target="_blank">NEU</a>
           </div>
           <div className="nav-item">
