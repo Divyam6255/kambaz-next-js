@@ -83,7 +83,7 @@ export default function LabsPage() {
         <ul style={{ listStyle: 'none', padding: '0' }}>
           <li style={{ marginBottom: '15px' }}>
             <a 
-              href="https://github.com/yourusername/kambaz-next-js" 
+              href="https://github.com/Divyam6255/kambaz-next-js" 
               target="_blank" 
               rel="noopener noreferrer"
               style={{ 
