@@ -6,8 +6,8 @@ export default function HomePage() {
   const router = useRouter();
 
   useEffect(() => {
-    // Landing page is Kambaz application
-    router.push('/kambaz/account/signin');
+    // Landing page is Labs page
+    router.push('/labs');
   }, [router]);
 
   return null;

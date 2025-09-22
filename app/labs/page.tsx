@@ -43,7 +43,7 @@ export default function LabsPage() {
         <ul style={{ listStyle: 'none', padding: '0' }}>
           <li style={{ marginBottom: '15px' }}>
             <Link 
-              href="/" 
+              href="/kambaz" 
               style={{ 
                 color: '#007bff', 
                 textDecoration: 'underline', 
