@@ -59,51 +59,52 @@ export default function Course5678HomePage() {
             </div>
           </div>
           
-          <div className="course-main-content">
-            <div className="course-home-content">
-              <div className="course-hero-image">
-                <Image src="/PDP_textbook.jpg" alt="Programming Design and Paradigm" width={300} height={200} style={{borderRadius: '8px', marginBottom: '20px'}} />
-              </div>
-              <div className="top-buttons">
-                <button>Import Existing Content</button>
-                <button>Import from Commons</button>
-                <button>Choose Home Page</button>
-                <button>View Course Stream</button>
-                <button>New Announcement</button>
-                <button>New Analytics</button>
-                <button>View Course Notifications</button>
-              </div>
+          <div className="course-main-content" style={{display: 'flex', gap: '20px'}}>
+            <div style={{flex: '1'}}>
+              <h2>CS5678 - Programming Design and Paradigm</h2>
+              <p>Welcome to CS5678 Programming Design and Paradigm! This course covers object-oriented design, design patterns, and programming paradigms.</p>
               
-              <div className="course-status">
-                <h3>Course Status</h3>
-                <p>Published</p>
+              <div className="course-section">
+                <h3>Course Information</h3>
+                <p><strong>Instructor:</strong> Dr. Smith</p>
+                <p><strong>Credits:</strong> 4</p>
+                <p><strong>Prerequisites:</strong> CS3500 Object-Oriented Design</p>
+                <p><strong>Meeting Time:</strong> TTh 1:35-3:15 PM</p>
+              </div>
+
+              <div className="course-section">
+                <h3>Course Description</h3>
+                <p>
+                  This course examines object-oriented programming and contrasts it with functional programming. 
+                  Students will learn design patterns, SOLID principles, and how to apply different programming 
+                  paradigms to solve complex software engineering problems.
+                </p>
+              </div>
+
+              <div className="course-section">
+                <h3>Recent Activity</h3>
                 <ul>
-                  <li>Unpublished Changes</li>
-                  <li>Choose Home Page</li>
-                  <li>Course Setup Checklist</li>
+                  <li>Assignment 1: Design Patterns Implementation - Due Oct 2</li>
+                  <li>Lab 2: SOLID Principles Practice - Due Oct 7</li>
+                  <li>Quiz 1: OOP Concepts - Oct 12</li>
                 </ul>
               </div>
-              
-              <div className="modules-section">
-                <h3>Recent Modules</h3>
-                
-                <div className="module">
-                  <h4>Week 1 - Introduction to Programming Paradigms</h4>
-                  <ul>
-                    <li>Object-Oriented Programming Concepts</li>
-                    <li>Functional Programming Fundamentals</li>
-                    <li>Procedural vs OOP Design</li>
-                  </ul>
-                </div>
-                
-                <div className="module">
-                  <h4>Week 2 - Design Patterns and SOLID Principles</h4>
-                  <ul>
-                    <li>Single Responsibility Principle</li>
-                    <li>Observer and Factory Patterns</li>
-                    <li>Dependency Injection</li>
-                  </ul>
-                </div>
+            </div>
+            
+            <div style={{width: '250px', padding: '20px'}}>
+              <h3>Course Status</h3>
+              <div style={{marginBottom: '10px'}}>
+                <button style={{marginRight: '10px'}}>Unpublish</button>
+                <button>Publish</button>
+              </div>
+              <div>
+                <div><button style={{display: 'block', marginBottom: '5px', width: '100%', textAlign: 'left'}}>Import Existing Content</button></div>
+                <div><button style={{display: 'block', marginBottom: '5px', width: '100%', textAlign: 'left'}}>Import from Commons</button></div>
+                <div><button style={{display: 'block', marginBottom: '5px', width: '100%', textAlign: 'left'}}>Choose Home Page</button></div>
+                <div><button style={{display: 'block', marginBottom: '5px', width: '100%', textAlign: 'left'}}>View Course Stream</button></div>
+                <div><button style={{display: 'block', marginBottom: '5px', width: '100%', textAlign: 'left'}}>New Announcement</button></div>
+                <div><button style={{display: 'block', marginBottom: '5px', width: '100%', textAlign: 'left'}}>New Analytics</button></div>
+                <div><button style={{display: 'block', marginBottom: '5px', width: '100%', textAlign: 'left'}}>View Course Notifications</button></div>
               </div>
             </div>
           </div>

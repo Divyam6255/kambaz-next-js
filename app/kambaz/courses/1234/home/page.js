@@ -59,52 +59,53 @@ export default function CourseHomePage() {
             </div>
           </div>
           
-          <div className="course-main-content">
-            <div className="course-home-content">
-              <div className="course-hero-image">
-                <Image src="/1_V-Jp13LvtVc2IiY2fp4qYw.jpg" alt="Web Development Technologies" width={300} height={200} style={{borderRadius: '8px', marginBottom: '20px'}} />
+          <div className="course-main-content" style={{display: 'flex', gap: '20px'}}>
+            <div style={{flex: '1'}}>
+              <h2>CS4550 - Web Development</h2>
+              <p>Welcome to CS4550 Web Development! This course covers modern web development technologies including HTML, CSS, JavaScript, React, and Node.js.</p>
+              
+              <div className="course-section">
+                <h3>Course Information</h3>
+                <p><strong>Instructor:</strong> Dr. Johnson</p>
+                <p><strong>Credits:</strong> 4</p>
+                <p><strong>Prerequisites:</strong> CS3500 Object-Oriented Design</p>
+                <p><strong>Meeting Time:</strong> MWF 2:50-3:55 PM</p>
               </div>
-          <div className="top-buttons">
-            <button>Import Existing Content</button>
-            <button>Import from Commons</button>
-            <button>Choose Home Page</button>
-            <button>View Course Stream</button>
-            <button>New Announcement</button>
-            <button>New Analytics</button>
-            <button>View Course Notifications</button>
-          </div>
-          
-          <div className="course-status">
-            <h3>Course Status</h3>
-            <p>Published</p>
-            <ul>
-              <li>Unpublished Changes</li>
-              <li>Choose Home Page</li>
-              <li>Course Setup Checklist</li>
-            </ul>
-          </div>
-          
-          <div className="modules-section">
-            <h3>Recent Modules</h3>
-            
-            <div className="module">
-              <h4>Week 1 - Introduction to Web Development</h4>
-              <ul>
-                <li>Course Introduction, Syllabus, Agenda</li>
-                <li>Creating an HTTP server with Node.js</li>
-                <li>Creating a React Application</li>
-              </ul>
+
+              <div className="course-section">
+                <h3>Course Description</h3>
+                <p>
+                  This course introduces students to web development using modern technologies. 
+                  Students will learn to create interactive web applications using HTML5, CSS3, 
+                  JavaScript ES6+, React, and server-side development with Node.js and Express.
+                </p>
+              </div>
+
+              <div className="course-section">
+                <h3>Recent Activity</h3>
+                <ul>
+                  <li>Assignment 1: HTML/CSS Portfolio - Due Sept 30</li>
+                  <li>Lab 2: JavaScript Fundamentals - Due Oct 5</li>
+                  <li>Quiz 1: Web Basics - Oct 10</li>
+                </ul>
+              </div>
             </div>
             
-            <div className="module">
-              <h4>Week 2 - HTML and CSS Fundamentals</h4>
-              <ul>
-                <li>Introduction to HTML and the DOM</li>
-                <li>Formatting Web content with Headings and Text</li>
-                <li>Creating Web content with Lists and Tables</li>
-              </ul>
-            </div>
-          </div>
+            <div style={{width: '250px', padding: '20px'}}>
+              <h3>Course Status</h3>
+              <div style={{marginBottom: '10px'}}>
+                <button style={{marginRight: '10px'}}>Unpublish</button>
+                <button>Publish</button>
+              </div>
+              <div>
+                <div><button style={{display: 'block', marginBottom: '5px', width: '100%', textAlign: 'left'}}>Import Existing Content</button></div>
+                <div><button style={{display: 'block', marginBottom: '5px', width: '100%', textAlign: 'left'}}>Import from Commons</button></div>
+                <div><button style={{display: 'block', marginBottom: '5px', width: '100%', textAlign: 'left'}}>Choose Home Page</button></div>
+                <div><button style={{display: 'block', marginBottom: '5px', width: '100%', textAlign: 'left'}}>View Course Stream</button></div>
+                <div><button style={{display: 'block', marginBottom: '5px', width: '100%', textAlign: 'left'}}>New Announcement</button></div>
+                <div><button style={{display: 'block', marginBottom: '5px', width: '100%', textAlign: 'left'}}>New Analytics</button></div>
+                <div><button style={{display: 'block', marginBottom: '5px', width: '100%', textAlign: 'left'}}>View Course Notifications</button></div>
+              </div>
             </div>
           </div>
         </div>
