@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaGraduationCap } from 'react-icons/fa';
+import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask } from 'react-icons/fa';
 import './styles.css';
 
 export default function DashboardPage() {
@@ -10,8 +10,8 @@ export default function DashboardPage() {
           <a href="/kambaz" className="kambaz-brand">Kambaz</a>
           <div className="nav-item">
             <a href="https://northeastern.edu" target="_blank">
-              <img src="/org-neu.svg" 
-                   alt="NEU" style={{width: '30px', height: '20px'}} />
+              <Image src="/org-neu.svg" 
+                     alt="NEU" width={30} height={20} />
               NEU
             </a>
           </div>

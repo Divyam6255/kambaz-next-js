@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Lab2Page() {
@@ -115,10 +114,10 @@ export default function Lab2Page() {
             <div id="css-dimensions" className="mb-5">
                 <h2><b>CSS Dimensions</b></h2>
                 <div style={{ backgroundColor: 'yellow', width: '100px', height: '200px', margin: '10px', display: 'inline-block' }}>
-                    Yellow DIV taller than it's longer
+                    Yellow DIV taller than it&apos;s longer
                 </div>
                 <div style={{ backgroundColor: 'blue', width: '200px', height: '100px', margin: '10px', display: 'inline-block' }}>
-                    Blue DIV longer than it's taller
+                    Blue DIV longer than it&apos;s taller
                 </div>
                 <div style={{ backgroundColor: 'red', width: '150px', height: '150px', margin: '10px', display: 'inline-block' }}>
                     Red DIV height same as width
@@ -370,7 +369,7 @@ export default function Lab2Page() {
                 <div className="card" style={{ width: '18rem' }}>
                     <div className="card-body">
                         <h5 className="card-title">Starship</h5>
-                        <p className="card-text">SpaceX's Starship is a fully reusable transportation system designed to carry both crew and cargo to Earth orbit, the Moon, Mars, and beyond.</p>
+                        <p className="card-text">SpaceX&apos;s Starship is a fully reusable transportation system designed to carry both crew and cargo to Earth orbit, the Moon, Mars, and beyond.</p>
                         <a href="#" className="btn btn-primary">Learn More</a>
                     </div>
                 </div>

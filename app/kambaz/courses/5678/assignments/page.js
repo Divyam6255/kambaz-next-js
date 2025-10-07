@@ -106,7 +106,7 @@ export default function Course5678AssignmentsPage() {
           
               <div className="assignment-item">
                 <div className="assignment-info">
-                  <h4><a href="#">A1 - OOP Design Patterns</a></h4>
+                  <h4><a href="/kambaz/courses/5678/assignments/editor">A1 - OOP Design Patterns</a></h4>
                   <p><strong>Multiple Modules</strong> | <strong>Due</strong> Sep 20 at 11:59pm | <strong>Available until</strong> Sep 27 at 11:59pm</p>
                   <p>100 pts</p>
                 </div>

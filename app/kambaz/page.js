@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import Image from 'next/image';
 import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaGraduationCap } from 'react-icons/fa';
 
 export default function KambazPage() {
@@ -16,8 +17,8 @@ export default function KambazPage() {
           <a href="/kambaz" className="kambaz-brand">Kambaz</a>
           <div className="nav-item">
             <a href="https://northeastern.edu" target="_blank">
-              <img src="/org-neu.svg" 
-                   alt="NEU" style={{width: '20px', height: '20px'}} />
+              <Image src="/org-neu.svg" 
+                     alt="NEU" width={20} height={20} />
               NEU
             </a>
           </div>
