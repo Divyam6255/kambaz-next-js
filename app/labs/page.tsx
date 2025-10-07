@@ -74,7 +74,22 @@ export default function LabsPage() {
             </Link>
           </li>
         </ul>
+        <ul style={{ listStyle: 'none', padding: '0', margin: '0' }}>
+          <li style={{ marginBottom: '0' }}>
+            <Link
+              href="/labs/lab2" 
+              style={{ 
+                color: '#007bff', 
+                textDecoration: 'underline', 
+                fontSize: '16px'
+              }}
+            >
+              Lab Exercise 2
+            </Link>
+          </li>
+        </ul>
       </div>
+
 
       <div style={{ marginBottom: '30px' }}>
         <h2 style={{ fontSize: '24px', marginBottom: '15px', color: '#333' }}>

@@ -1,0 +1,262 @@
+/* Inbox Page Styles */
+.inbox-container {
+  width: 100%;
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.inbox-container h1 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.inbox-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+.inbox-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.compose-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.compose-button:hover {
+  background-color: #c82333;
+}
+
+.inbox-search {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.inbox-search input {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 15px 10px 40px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.inbox-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+}
+
+.inbox-tabs {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.inbox-tab {
+  padding: 10px 20px;
+  background-color: white;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  color: #666;
+}
+
+.inbox-tab.active {
+  color: #007bff;
+  border-bottom-color: #007bff;
+}
+
+.inbox-tab:hover {
+  background-color: #f8f9fa;
+}
+
+.message-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background-color: #ddd;
+}
+
+.message-item {
+  background-color: white;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: background-color 0.2s;
+}
+
+.message-item:hover {
+  background-color: #f8f9fa;
+}
+
+.message-item.unread {
+  border-left-color: #007bff;
+  font-weight: bold;
+}
+
+.message-item.selected {
+  background-color: #e3f2fd;
+  border-left-color: #007bff;
+}
+
+.message-checkbox {
+  width: 18px;
+  height: 18px;
+}
+
+.message-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #6c757d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+}
+
+.message-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.message-sender {
+  font-weight: bold;
+  color: #333;
+}
+
+.message-date {
+  font-size: 12px;
+  color: #666;
+}
+
+.message-subject {
+  color: #333;
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.message-preview {
+  color: #666;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.message-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.message-item:hover .message-actions {
+  opacity: 1;
+}
+
+.message-action-button {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.message-action-button:hover {
+  background-color: #e9ecef;
+  color: #333;
+}
+
+/* Message Detail View */
+.message-detail {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.message-detail-header {
+  padding-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.message-detail-subject {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.message-detail-meta {
+  display: flex;
+  gap: 20px;
+  color: #666;
+  font-size: 14px;
+}
+
+.message-detail-body {
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Responsive Design for Inbox */
+@media (max-width: 768px) {
+  .inbox-header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+  }
+  
+  .message-item {
+    padding: 10px 15px;
+  }
+  
+  .message-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  
+  .message-date {
+    align-self: flex-end;
+  }
+  
+  .message-actions {
+    opacity: 1;
+  }
+}

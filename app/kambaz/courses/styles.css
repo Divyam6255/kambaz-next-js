@@ -1,0 +1,512 @@
+/* Course Pages Styles */
+
+/* Course Layout */
+.course-layout {
+  display: flex;
+  gap: 0;
+  width: 100%;
+  height: calc(100vh - 60px);
+  flex: 1;
+}
+
+.course-nav-sidebar {
+  width: 200px;
+  background-color: #ecf0f1;
+  padding: 20px;
+  height: 100%;
+}
+
+.course-nav-sidebar .course-nav-item {
+  margin-bottom: 10px;
+}
+
+.course-nav-sidebar .course-nav-item a {
+  color: red;
+  text-decoration: none;
+  padding: 8px 15px;
+  display: block;
+  border-radius: 3px;
+  transition: background-color 0.3s;
+}
+
+.course-nav-sidebar .course-nav-item a:hover {
+  background-color: black;
+  opacity: 0.8;
+}   
+
+.course-nav-sidebar .course-nav-item.active a {
+  background-color: white;
+  color: black;
+  border-left: 3px solid black;
+  font-weight: bold;
+}
+
+.course-main-content {
+  flex: 1;
+  padding: 20px;
+  background-color: white;
+}
+
+.course-header {
+  padding: 15px 20px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+}
+
+.course-header h1 {
+  margin: 0;
+  color: #333;
+  font-size: 24px;
+}
+
+/* Course Home Content */
+.course-home-content {
+  width: 100%;
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.home-four-columns .course-status-column {
+  display: block;
+}
+
+/* Modules Content */
+.modules-content {
+  width: 100%;
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+/* Module and Assignment Buttons */
+.control-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.btn-grey {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn-red {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+/* Module Styles */
+.module {
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.module-header {
+  background-color: #f8f9fa;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ddd;
+}
+
+.module-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  color: #333;
+}
+
+.module-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #666;
+  cursor: pointer;
+}
+
+.lesson {
+  background-color: white;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-left: 3px solid #28a745;
+  border-bottom: 1px solid #eee;
+}
+
+.lesson:last-child {
+  border-bottom: none;
+}
+
+.lesson-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: black;
+}
+
+/* Assignment Styles */
+.assignments-content {
+  width: 100%;
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.assignment-search {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.assignment-search input {
+  padding: 8px 15px 8px 35px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 250px;
+  font-size: 14px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+}
+
+.assignment-item {
+  background-color: white;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-left: 3px solid #28a745;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.assignment-info h4 {
+  margin: 0 0 5px 0;
+  color: #007bff;
+}
+
+.assignment-info h4 a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.assignment-info h4 a:hover {
+  text-decoration: underline;
+}
+
+.assignment-info p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.assignment-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #666;
+  cursor: pointer;
+}
+
+
+
+/* Assignment Editor */
+.assignment-editor {
+  width: 100%;
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.assignment-form .form-group {
+  margin-bottom: 15px;
+}
+
+.assignment-form .form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.assignment-form .form-group input, 
+.assignment-form .form-group select, 
+.assignment-form .form-group textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: normal;
+}
+
+
+
+/* People Page Styles */
+.people-content {
+  width: 100%;
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.people-content h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.people-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.person-item {
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.person-avatar {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.person-info {
+  flex: 1;
+}
+
+.person-info h4 {
+  margin: 0 0 5px 0;
+  color: #007bff;
+}
+
+.person-info p {
+  margin: 2px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.person-actions button {
+  font-size: 14px;
+}
+
+/* People Table Styles */
+.people-table-container {
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.people-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.people-table th {
+  background-color: #f8f9fa;
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.people-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #dee2e6;
+  vertical-align: middle;
+}
+
+.people-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.person-name {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.person-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-icon {
+  color: #6c757d;
+  font-size: 18px;
+}
+
+.person-name span {
+  font-weight: 500;
+  color: #333;
+}
+
+/* Home Page Layout */
+.home-layout {
+  display: flex;
+  gap: 20px;
+  height: 100%;
+}
+
+.home-sidebar {
+  width: 250px;
+  background-color: white;
+  padding: 20px;
+}
+
+.course-status-section h5 {
+  color: #333;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  margin-bottom: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  color: #333;
+}
+
+.status-item:hover {
+  background-color: #f8f9fa;
+}
+
+.status-icon {
+  font-size: 16px;
+  width: 20px;
+}
+
+.home-main-content {
+  flex: 1;
+  padding: 20px;
+  background-color: white;
+}
+
+.modules-section {
+  width: 100%;
+}
+
+.lesson-controls {
+  color: #666;
+  cursor: pointer;
+}
+
+/* Responsive Design for Courses */
+@media (max-width: 768px) {
+  .course-nav-sidebar {
+    display: none;
+  }
+  
+  .course-layout {
+    flex-direction: column;
+  }
+  
+  .people-table-container {
+    overflow-x: auto;
+  }
+  
+  .people-table {
+    min-width: 600px;
+  }
+}
+
+@media (max-width: 992px) {
+  .home-four-columns .course-status-column {
+    display: none;
+  }
+}

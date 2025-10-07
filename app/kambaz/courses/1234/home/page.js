@@ -1,30 +1,57 @@
+'use client';
 import Image from 'next/image';
+import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaPlus, FaCheckCircle, FaChevronDown, FaEllipsisV, FaFile, FaVideo, FaPencilAlt } from 'react-icons/fa';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../styles.css';
 
 export default function CourseHomePage() {
   return (
     <div className="kambaz-container">
       <nav className="sidebar">
         <div className="nav-links">
+          <a href="/kambaz" className="kambaz-brand">Kambaz</a>
           <div className="nav-item">
-            <a href="https://northeastern.edu" target="_blank">NEU</a>
+            <a href="https://northeastern.edu" target="_blank">
+              <img src="/org-neu.svg" 
+                   alt="NEU" style={{width: '20px', height: '20px'}} />
+              NEU
+            </a>
+          </div>
+          <div className="nav-item account">
+            <a href="/kambaz/account">
+              <FaUser className="nav-icon" />
+              Account
+            </a>
           </div>
           <div className="nav-item">
-            <a href="/kambaz/account">Account</a>
+            <a href="/kambaz/dashboard">
+              <FaTachometerAlt className="nav-icon" />
+              Dashboard
+            </a>
           </div>
           <div className="nav-item">
-            <a href="/kambaz/dashboard">Dashboard</a>
-          </div>
-          <div className="nav-item active">
-            <a href="/kambaz/courses">Courses</a>
-          </div>
-          <div className="nav-item">
-            <a href="/kambaz/calendar">Calendar</a>
+            <a href="/kambaz/dashboard">
+              <FaBook className="nav-icon" />
+              Courses
+            </a>
           </div>
           <div className="nav-item">
-            <a href="/kambaz/inbox">Inbox</a>
+            <a href="/kambaz/calendar">
+              <FaCalendarAlt className="nav-icon" />
+              Calendar
+            </a>
           </div>
           <div className="nav-item">
-            <a href="/labs">Labs</a>
+            <a href="/kambaz/inbox">
+              <FaInbox className="nav-icon" />
+              Inbox
+            </a>
+          </div>
+          <div className="nav-item">
+            <a href="/labs">
+              <FaFlask className="nav-icon" />
+              Labs
+            </a>
           </div>
         </div>
       </nav>
@@ -59,52 +86,126 @@ export default function CourseHomePage() {
             </div>
           </div>
           
-          <div className="course-main-content" style={{display: 'flex', gap: '20px'}}>
-            <div style={{flex: '1'}}>
-              <h2>CS4550 - Web Development</h2>
-              <p>Welcome to CS4550 Web Development! This course covers modern web development technologies including HTML, CSS, JavaScript, React, and Node.js.</p>
+          <div className="course-main-content">
+            <div className="home-layout">
+              <div className="home-main-content">
+                <div className="modules-content">
+                  <div className="control-buttons">
+                    <button className="btn-grey">
+                      Collapse All
+                    </button>
+                    <button className="btn-grey">
+                      View Progress
+                    </button>
+                    <button className="btn-red">
+                      <FaPlus /> Module
+                    </button>
+                    <div className="dropdown">
+                      <button className="btn-grey">
+                        <FaCheckCircle /> Publish All <FaChevronDown />
+                      </button>
+                      <div className="dropdown-content">
+                        <a href="#"><FaCheckCircle /> Publish All</a>
+                        <a href="#"><FaCheckCircle /> Publish All & Notify</a>
+                        <a href="#">� Unpublish All</a>
+                        <a href="#">👀 View All Modules</a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="module">
+                    <div className="module-header">
+                      <div className="module-title">
+                        <FaChevronDown />
+                        Week 1 - Introduction to Web Development
+                      </div>
+                      <div className="module-controls">
+                        <FaEllipsisV />
+                      </div>
+                    </div>
+                    <div className="lesson">
+                      <div className="lesson-title">
+                        <FaFile />
+                        Learning Objectives
+                      </div>
+                      <div className="module-controls">
+                        <FaEllipsisV />
+                      </div>
+                    </div>
+                    <div className="lesson">
+                      <div className="lesson-title">
+                        <FaVideo />
+                        Introduction Video
+                      </div>
+                      <div className="module-controls">
+                        <FaEllipsisV />
+                      </div>
+                    </div>
+                    <div className="lesson">
+                      <div className="lesson-title">
+                        <FaPencilAlt />
+                        Reading Assignment
+                      </div>
+                      <div className="module-controls">
+                        <FaEllipsisV />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="module">
+                    <div className="module-header">
+                      <div className="module-title">
+                        <FaChevronDown />
+                        Week 2 - HTML & CSS Fundamentals
+                      </div>
+                      <div className="module-controls">
+                        <FaEllipsisV />
+                      </div>
+                    </div>
+                    <div className="lesson">
+                      <div className="lesson-title">
+                        <FaFile />
+                        HTML Basics
+                      </div>
+                      <div className="module-controls">
+                        <FaEllipsisV />
+                      </div>
+                    </div>
+                    <div className="lesson">
+                      <div className="lesson-title">
+                        <FaFile />
+                        CSS Styling
+                      </div>
+                      <div className="module-controls">
+                        <FaEllipsisV />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
               
-              <div className="course-section">
-                <h3>Course Information</h3>
-                <p><strong>Instructor:</strong> Dr. Johnson</p>
-                <p><strong>Credits:</strong> 4</p>
-                <p><strong>Prerequisites:</strong> CS3500 Object-Oriented Design</p>
-                <p><strong>Meeting Time:</strong> MWF 2:50-3:55 PM</p>
-              </div>
-
-              <div className="course-section">
-                <h3>Course Description</h3>
-                <p>
-                  This course introduces students to web development using modern technologies. 
-                  Students will learn to create interactive web applications using HTML5, CSS3, 
-                  JavaScript ES6+, React, and server-side development with Node.js and Express.
-                </p>
-              </div>
-
-              <div className="course-section">
-                <h3>Recent Activity</h3>
-                <ul>
-                  <li>Assignment 1: HTML/CSS Portfolio - Due Sept 30</li>
-                  <li>Lab 2: JavaScript Fundamentals - Due Oct 5</li>
-                  <li>Quiz 1: Web Basics - Oct 10</li>
-                </ul>
-              </div>
-            </div>
-            
-            <div style={{width: '250px', padding: '20px'}}>
-              <h3>Course Status</h3>
-              <div style={{marginBottom: '10px'}}>
-                <button style={{marginRight: '10px'}}>Unpublish</button>
-                <button>Publish</button>
-              </div>
-              <div>
-                <div><button style={{display: 'block', marginBottom: '5px', width: '100%', textAlign: 'left'}}>Import Existing Content</button></div>
-                <div><button style={{display: 'block', marginBottom: '5px', width: '100%', textAlign: 'left'}}>Import from Commons</button></div>
-                <div><button style={{display: 'block', marginBottom: '5px', width: '100%', textAlign: 'left'}}>Choose Home Page</button></div>
-                <div><button style={{display: 'block', marginBottom: '5px', width: '100%', textAlign: 'left'}}>View Course Stream</button></div>
-                <div><button style={{display: 'block', marginBottom: '5px', width: '100%', textAlign: 'left'}}>New Announcement</button></div>
-                <div><button style={{display: 'block', marginBottom: '5px', width: '100%', textAlign: 'left'}}>New Analytics</button></div>
-                <div><button style={{display: 'block', marginBottom: '5px', width: '100%', textAlign: 'left'}}>View Course Notifications</button></div>
+              <div className="home-sidebar">
+                <div className="course-status-section">
+                  <h5>Course Status</h5>
+                  <button className="status-item">
+                    <span>Import Existing Content</span>
+                  </button>
+                  <button className="status-item">
+                    <span>Import from Commons</span>
+                  </button>
+                  <button className="status-item">
+                    <span>Choose Home Page</span>
+                  </button>
+                  <button className="status-item">
+                    <span>View Course Stream</span>
+                  </button>
+                  <button className="status-item">
+                    <span>New Analytics</span>
+                  </button>
+                  <button className="status-item">
+                    <span>View Course Notifications</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>

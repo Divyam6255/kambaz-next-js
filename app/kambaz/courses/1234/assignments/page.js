@@ -1,28 +1,55 @@
+'use client';
+import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaSearch, FaPlus, FaEllipsisV } from 'react-icons/fa';
+import '../../styles.css';
+
 export default function AssignmentsPage() {
   return (
     <div className="kambaz-container">
       <nav className="sidebar">
         <div className="nav-links">
+          <a href="/kambaz" className="kambaz-brand">Kambaz</a>
           <div className="nav-item">
-            <a href="https://northeastern.edu" target="_blank">NEU</a>
+            <a href="https://northeastern.edu" target="_blank">
+              <img src="/org-neu.svg" 
+                   alt="NEU" style={{width: '20px', height: '20px'}} />
+              NEU
+            </a>
+          </div>
+          <div className="nav-item account">
+            <a href="/kambaz/account">
+              <FaUser className="nav-icon" />
+              Account
+            </a>
           </div>
           <div className="nav-item">
-            <a href="/kambaz/account">Account</a>
-          </div>
-          <div className="nav-item">
-            <a href="/kambaz/dashboard">Dashboard</a>
+            <a href="/kambaz/dashboard">
+              <FaTachometerAlt className="nav-icon" />
+              Dashboard
+            </a>
           </div>
           <div className="nav-item active">
-            <a href="/kambaz/courses">Courses</a>
+            <a href="/kambaz/courses">
+              <FaBook className="nav-icon" />
+              Courses
+            </a>
           </div>
           <div className="nav-item">
-            <a href="/kambaz/calendar">Calendar</a>
+            <a href="/kambaz/calendar">
+              <FaCalendarAlt className="nav-icon" />
+              Calendar
+            </a>
           </div>
           <div className="nav-item">
-            <a href="/kambaz/inbox">Inbox</a>
+            <a href="/kambaz/inbox">
+              <FaInbox className="nav-icon" />
+              Inbox
+            </a>
           </div>
           <div className="nav-item">
-            <a href="/labs">Labs</a>
+            <a href="/labs">
+              <FaFlask className="nav-icon" />
+              Labs
+            </a>
           </div>
         </div>
       </nav>
@@ -39,6 +66,9 @@ export default function AssignmentsPage() {
             </div>
             <div className="course-nav-item">
               <a href="/kambaz/courses/1234/modules">Modules</a>
+            </div>
+            <div className="course-nav-item">
+              <a href="/kambaz/courses/1234/people">People</a>
             </div>
             <div className="course-nav-item">
               <a href="#">Piazza</a>
@@ -59,49 +89,53 @@ export default function AssignmentsPage() {
           
           <div className="course-main-content">
             <div className="assignments-content">
-          <div className="assignments-header">
-            <input type="text" placeholder="Search for Assignments" className="search-field" />
-            <div className="assignment-buttons">
-              <button>+ Group</button>
-              <button>+ Assignment</button>
-              <button>+ Manage</button>
-              <button>Import</button>
-            </div>
-          </div>
+              <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px'}}>
+                <div className="assignment-search">
+                  <FaSearch className="search-icon" />
+                  <input type="text" placeholder="Search for Assignments" />
+                </div>
+                <div className="control-buttons">
+                  <button className="btn-grey">
+                    <FaPlus /> Group
+                  </button>
+                  <button className="btn-red">
+                    <FaPlus /> Assignment
+                  </button>
+                </div>
+              </div>
           
-          <div className="assignments-sections">
-            <div className="assignment-section">
-              <h3>ASSIGNMENTS</h3>
-              <ul>
-                <li><a href="/kambaz/courses/1234/assignments/editor">A1 - ENV + HTML</a></li>
-                <li><a href="/kambaz/courses/1234/assignments/editor">A2 - CSS + BOOTSTRAP</a></li>
-                <li><a href="/kambaz/courses/1234/assignments/editor">A3 - JS + REACT</a></li>
-              </ul>
-            </div>
-            
-            <div className="assignment-section">
-              <h3>QUIZZES</h3>
-              <ul>
-                <li><a href="#">Q1 - HTML</a></li>
-                <li><a href="#">Q2 - CSS</a></li>
-              </ul>
-            </div>
-            
-            <div className="assignment-section">
-              <h3>EXAMS</h3>
-              <ul>
-                <li><a href="#">Midterm Exam</a></li>
-                <li><a href="#">Final Exam</a></li>
-              </ul>
-            </div>
-            
-            <div className="assignment-section">
-              <h3>PROJECT</h3>
-              <ul>
-                <li><a href="#">Final Project</a></li>
-              </ul>
-            </div>
-          </div>
+              <div className="assignment-item">
+                <div className="assignment-info">
+                  <h4><a href="/kambaz/courses/1234/assignments/editor">A1 - ENV + HTML</a></h4>
+                  <p><strong>Multiple Modules</strong> | <strong>Due</strong> Sep 18 at 11:59pm | <strong>Available until</strong> Sep 25 at 11:59pm</p>
+                  <p>100 pts</p>
+                </div>
+                <div className="assignment-controls">
+                  <FaEllipsisV />
+                </div>
+              </div>
+
+              <div className="assignment-item">
+                <div className="assignment-info">
+                  <h4><a href="/kambaz/courses/1234/assignments/editor">A2 - CSS + BOOTSTRAP</a></h4>
+                  <p><strong>Multiple Modules</strong> | <strong>Due</strong> Oct 2 at 11:59pm | <strong>Available until</strong> Oct 9 at 11:59pm</p>
+                  <p>100 pts</p>
+                </div>
+                <div className="assignment-controls">
+                  <FaEllipsisV />
+                </div>
+              </div>
+
+              <div className="assignment-item">
+                <div className="assignment-info">
+                  <h4><a href="/kambaz/courses/1234/assignments/editor">A3 - JS + REACT</a></h4>
+                  <p><strong>Multiple Modules</strong> | <strong>Due</strong> Oct 16 at 11:59pm | <strong>Available until</strong> Oct 23 at 11:59pm</p>
+                  <p>100 pts</p>
+                </div>
+                <div className="assignment-controls">
+                  <FaEllipsisV />
+                </div>
+              </div>
             </div>
           </div>
         </div>

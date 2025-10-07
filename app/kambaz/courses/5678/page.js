@@ -5,8 +5,13 @@ export default function Course5678Page() {
     <div className="kambaz-container">
       <nav className="sidebar">
         <div className="nav-links">
+          <a href="/kambaz" className="kambaz-brand">Kambaz</a>
           <div className="nav-item">
-            <a href="https://northeastern.edu" target="_blank">NEU</a>
+            <a href="https://northeastern.edu" target="_blank">
+              <img src="/org-neu.svg" 
+                   alt="NEU" style={{width: '20px', height: '20px'}} />
+              NEU
+            </a>
           </div>
           <div className="nav-item">
             <a href="/kambaz/account">Account</a>

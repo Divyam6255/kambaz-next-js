@@ -1,30 +1,56 @@
+'use client';
 import Image from 'next/image';
+import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaPlus, FaEllipsisV, FaChevronDown, FaFile, FaVideo, FaPencilAlt, FaCheckCircle } from 'react-icons/fa';
+import '../../styles.css';
 
 export default function ModulesPage() {
   return (
     <div className="kambaz-container">
       <nav className="sidebar">
         <div className="nav-links">
+          <a href="/kambaz" className="kambaz-brand">Kambaz</a>
           <div className="nav-item">
-            <a href="https://northeastern.edu" target="_blank">NEU</a>
+            <a href="https://northeastern.edu" target="_blank">
+              <img src="/org-neu.svg" 
+                   alt="NEU" style={{width: '20px', height: '20px'}} />
+              NEU
+            </a>
+          </div>
+          <div className="nav-item account">
+            <a href="/kambaz/account">
+              <FaUser className="nav-icon" />
+              Account
+            </a>
           </div>
           <div className="nav-item">
-            <a href="/kambaz/account">Account</a>
-          </div>
-          <div className="nav-item">
-            <a href="/kambaz/dashboard">Dashboard</a>
+            <a href="/kambaz/dashboard">
+              <FaTachometerAlt className="nav-icon" />
+              Dashboard
+            </a>
           </div>
           <div className="nav-item active">
-            <a href="/kambaz/courses">Courses</a>
+            <a href="/kambaz/courses">
+              <FaBook className="nav-icon" />
+              Courses
+            </a>
           </div>
           <div className="nav-item">
-            <a href="/kambaz/calendar">Calendar</a>
+            <a href="/kambaz/calendar">
+              <FaCalendarAlt className="nav-icon" />
+              Calendar
+            </a>
           </div>
           <div className="nav-item">
-            <a href="/kambaz/inbox">Inbox</a>
+            <a href="/kambaz/inbox">
+              <FaInbox className="nav-icon" />
+              Inbox
+            </a>
           </div>
           <div className="nav-item">
-            <a href="/labs">Labs</a>
+            <a href="/labs">
+              <FaFlask className="nav-icon" />
+              Labs
+            </a>
           </div>
         </div>
       </nav>
@@ -41,6 +67,9 @@ export default function ModulesPage() {
             </div>
             <div className="course-nav-item active">
               <a href="/kambaz/courses/1234/modules">Modules</a>
+            </div>
+            <div className="course-nav-item">
+              <a href="/kambaz/courses/1234/people">People</a>
             </div>
             <div className="course-nav-item">
               <a href="#">Piazza</a>
@@ -61,72 +90,94 @@ export default function ModulesPage() {
           
           <div className="course-main-content">
             <div className="modules-content">
-              <div className="course-hero-image">
-                <Image src="/1_V-Jp13LvtVc2IiY2fp4qYw.jpg" alt="Web Development Technologies" width={300} height={200} style={{borderRadius: '8px', marginBottom: '20px'}} />
-              </div>
-              <div className="modules-controls">
-                <button>Collapse All</button>
-                <button>View Progress</button>
-                <select>
-                  <option>Publish All</option>
-                </select>
-                <button>+ Module</button>
-              </div>
-              
-              <div className="module-list">
-                <div className="module-item">
-                  <h3>Week 1, Lecture 1 - Course Introduction, Syllabus, Agenda</h3>
-                  <div className="module-content">
-                    <h4>LEARNING OBJECTIVES</h4>
-                    <ul>
-                      <li>Brief introduction to the course</li>
-                      <li>Learn what is Web Development</li>
-                    </ul>
-                    <h4>READING</h4>
-                    <ul>
-                      <li>Full Stack Developer - Chapter 1 - Introduction</li>
-                      <li>Full Stack Developer - Chapter 2 - Creating Us</li>
-                    </ul>
-                    <h4>SLIDES</h4>
-                    <ul>
-                      <li>Introduction to Web Development</li>
-                      <li>Creating an HTTP server with Node.js</li>
-                      <li>Creating a React Application</li>
-                    </ul>
+              <div className="control-buttons">
+                <button className="btn-grey">
+                  Collapse All
+                </button>
+                <button className="btn-grey">
+                  View Progress
+                </button>
+                <button className="btn-red">
+                  <FaPlus /> Module
+                </button>
+                <div className="dropdown">
+                  <button className="btn-grey">
+                    <FaCheckCircle /> Publish All <FaChevronDown />
+                  </button>
+                  <div className="dropdown-content">
+                    <a href="#"><FaCheckCircle /> Publish All</a>
+                    <a href="#"><FaCheckCircle /> Publish All & Notify</a>
+                    <a href="#">📋 Unpublish All</a>
+                    <a href="#">👀 View All Modules</a>
                   </div>
                 </div>
-                
-                <div className="module-item">
-                  <h3>Week 1, Lecture 2 - Formatting User Interfaces with HTML</h3>
-                  <div className="module-content">
-                    <h4>LEARNING OBJECTIVES</h4>
-                    <ul>
-                      <li>Learn how to create user interfaces with HTML</li>
-                      <li>Deploy the assignment to Netlify</li>
-                    </ul>
-                    <h4>SLIDES</h4>
-                    <ul>
-                      <li>Introduction to HTML and the DOM</li>
-                      <li>Formatting Web content with Headings and</li>
-                      <li>Formatting content with Lists and Tables</li>
-                    </ul>
+              </div>
+
+              <div className="module">
+                <div className="module-header">
+                  <div className="module-title">
+                    <FaChevronDown />
+                    Week 1 - Introduction to Web Development
+                  </div>
+                  <div className="module-controls">
+                    <FaEllipsisV />
                   </div>
                 </div>
-                
-                <div className="module-item">
-                  <h3>Week 2 - Advanced HTML and CSS</h3>
-                  <div className="module-content">
-                    <h4>LEARNING OBJECTIVES</h4>
-                    <ul>
-                      <li>Advanced HTML elements and attributes</li>
-                      <li>CSS styling and layout techniques</li>
-                    </ul>
-                    <h4>SLIDES</h4>
-                    <ul>
-                      <li>Forms and Input Elements</li>
-                      <li>CSS Selectors and Properties</li>
-                      <li>Responsive Design Principles</li>
-                    </ul>
+                <div className="lesson">
+                  <div className="lesson-title">
+                    <FaFile />
+                    Learning Objectives
+                  </div>
+                  <div className="module-controls">
+                    <FaEllipsisV />
+                  </div>
+                </div>
+                <div className="lesson">
+                  <div className="lesson-title">
+                    <FaVideo />
+                    Introduction Video
+                  </div>
+                  <div className="module-controls">
+                    <FaEllipsisV />
+                  </div>
+                </div>
+                <div className="lesson">
+                  <div className="lesson-title">
+                    <FaPencilAlt />
+                    Reading Assignment
+                  </div>
+                  <div className="module-controls">
+                    <FaEllipsisV />
+                  </div>
+                </div>
+              </div>
+
+              <div className="module">
+                <div className="module-header">
+                  <div className="module-title">
+                    <FaChevronDown />
+                    Week 2 - HTML & CSS Fundamentals
+                  </div>
+                  <div className="module-controls">
+                    <FaEllipsisV />
+                  </div>
+                </div>
+                <div className="lesson">
+                  <div className="lesson-title">
+                    <FaFile />
+                    HTML Basics
+                  </div>
+                  <div className="module-controls">
+                    <FaEllipsisV />
+                  </div>
+                </div>
+                <div className="lesson">
+                  <div className="lesson-title">
+                    <FaFile />
+                    CSS Styling
+                  </div>
+                  <div className="module-controls">
+                    <FaEllipsisV />
                   </div>
                 </div>
               </div>
