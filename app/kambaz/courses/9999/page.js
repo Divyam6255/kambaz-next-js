@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaGraduationCap } from 'react-icons/fa';
 import '../styles.css';
-import { courses } from '../../../data/courses';
+import { courses } from '../../data/courses';
 import { navigationLinks } from '../../data/navigation';
 import { usePathname } from 'next/navigation';
 

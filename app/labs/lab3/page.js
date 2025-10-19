@@ -349,12 +349,12 @@ export default function Lab3Page() {
       <h1 className="mb-4">Lab 3</h1>
 
       
-      <p>"Variables and Constants"</p>
+  <p>&quot;Variables and Constants&quot;</p>
         <p><strong>Constant:</strong> {constantValue}</p>
         <p><strong>Variable:</strong> {variableValue}</p>
       <hr></hr>
 
-      <p>"Variable Types"</p>
+  <p>&quot;Variable Types&quot;</p>
         <p><strong>String:</strong> {stringVar}</p>
         <p><strong>Number:</strong> {numberVar}</p>
         <p><strong>Boolean:</strong> {booleanVar.toString()}</p>
@@ -362,70 +362,70 @@ export default function Lab3Page() {
         <p><strong>Object:</strong> {JSON.stringify(objectVar)}</p>
       <hr></hr>
 
-      <p>"Boolean Variables"</p>
+  <p>&quot;Boolean Variables&quot;</p>
         <p>Logged In: {isLoggedIn.toString()}</p>
         <p>Has Permission: {hasPermission.toString()}</p>
         <p>Is Admin: {isAdmin.toString()}</p>
       <hr></hr>
 
       
-      <p>"If Else Statements"</p>
+  <p>&quot;If Else Statements&quot;</p>
         <p>{getGreeting(10)} (morning)</p>
         <p>{getGreeting(15)} (afternoon)</p>
         <p>{getGreeting(20)} (evening)</p>
       <hr></hr>
 
       
-      <p>"Ternary Operator"</p>
+  <p>&quot;Ternary Operator&quot;</p>
         <p>Status: {getStatus(true)}</p>
         <p>Status: {getStatus(false)}</p>
       <hr></hr>
 
       
-      <p>"Conditional Output"</p>
+  <p>&quot;Conditional Output&quot;</p>
         <ConditionalOutput condition={true} />
         <ConditionalOutput condition={false} />
       <hr></hr>
 
       
-      <p>"Welcome Messages"</p>
+  <p>&quot;Welcome Messages&quot;</p>
         <WelcomeMessage user={{ name: "Alice" }} />
         <WelcomeMessage user={null} />
       <hr></hr>
 
       
-      <p>"Login Prompts"</p>
+  <p>&quot;Login Prompts&quot;</p>
         <LoginPrompt loggedIn={true} />
         <LoginPrompt loggedIn={false} />
       <hr></hr>
 
       
-      <p>"Functions"</p>
+  <p>&quot;Functions&quot;</p>
         <p><strong>ES5 Function:</strong> {legacyFunction("World")}</p>
         <p><strong>ES6 Arrow Function:</strong> {arrowFunction("World")}</p>
         <p><strong>Implied Return:</strong> 5 + 3 = {impliedReturn(5, 3)}</p>
       <hr></hr>
 
       
-      <p>"Template Literals"</p>
+  <p>&quot;Template Literals&quot;</p>
         <p>{templateLiteral("Bob", 28)}</p>
       <hr></hr>
 
       
-      <p>"Arrays"</p>
+  <p>&quot;Arrays&quot;</p>
         <p><strong>Fruits:</strong> {fruits.join(", ")}</p>
         <p><strong>Array Info:</strong> {JSON.stringify(getArrayInfo(fruits))}</p>
         <p><strong>More Fruits:</strong> {JSON.stringify(getArrayInfo(moreFruits))}</p>
       <hr></hr>
 
       
-      <p>"Dynamic Arrays"</p>
+  <p>&quot;Dynamic Arrays&quot;</p>
         <p>Current Array: {dynamicArray.join(", ")}</p>
         <button className="btn btn-success me-2" onClick={addToArray}>Add Item</button>
         <button className="btn btn-danger" onClick={removeFromArray}>Remove Item</button>
       <hr></hr>
 
-      <p>"For Loops"</p>
+  <p>&quot;For Loops&quot;</p>
         <ul>
           {forLoopExample().map((item, index) => (
             <li key={index}>{item}</li>
@@ -434,7 +434,7 @@ export default function Lab3Page() {
       <hr></hr>
 
       
-      <p>"Array Methods"</p>
+  <p>&quot;Array Methods&quot;</p>
         <p><strong>Map (doubled):</strong> {mapExample.join(", ")}</p>
         <p><strong>Find (first &gt; 3):</strong> {findExample}</p>
         <p><strong>Find Index (first &gt; 3):</strong> {findIndexExample}</p>
@@ -442,12 +442,12 @@ export default function Lab3Page() {
       <hr></hr>
 
       
-      <p>"JSON Example"</p>
+  <p>&quot;JSON Example&quot;</p>
         <pre>{JSON.stringify(jsonExample, null, 2)}</pre>
       <hr></hr>
 
       
-      <p>"Todo List"</p>
+  <p>&quot;Todo List&quot;</p>
         <div className="mb-3">
           <input
             type="text"
@@ -462,19 +462,19 @@ export default function Lab3Page() {
       <hr></hr>
 
       
-      <p>"Spread Operator"</p>
+  <p>&quot;Spread Operator&quot;</p>
         <p><strong>Array Spread:</strong> {spreadExample.join(", ")}</p>
         <p><strong>Object Spread:</strong> {JSON.stringify(spreadObjectExample)}</p>
       <hr></hr>
 
       
-      <p>"Destructuring"</p>
+  <p>&quot;Destructuring&quot;</p>
         <p><strong>Array Destructuring:</strong> first: {first}, second: {second}, rest: {rest.join(", ")}</p>
         <p><strong>Object Destructuring:</strong> {getUserInfo({ name, age })}</p>
       <hr></hr>
 
       
-      <p>"HTML Classes"</p>
+  <p>&quot;HTML Classes&quot;</p>
         <button
           className={`btn ${isDanger ? 'btn-danger' : 'btn-success'} me-2`}
           onClick={() => setIsDanger(!isDanger)}
@@ -495,7 +495,7 @@ export default function Lab3Page() {
       <hr></hr>
 
       
-      <p>"HTML Style Attribute"</p>
+  <p>&quot;HTML Style Attribute&quot;</p>
         <div style={styleExample}>Yellow background with inline styles</div>
       <hr></hr>
 
@@ -507,26 +507,26 @@ export default function Lab3Page() {
       <hr></hr>
 
       
-      <p>"Parameterized Components"</p>
+  <p>&quot;Parameterized Components&quot;</p>
         <ColoredBox color="lightblue">Light Blue Box</ColoredBox>
         <ColoredBox color="lightgreen">Light Green Box</ColoredBox>
         <ColoredBox color="lightcoral">Light Coral Box</ColoredBox>
       <hr></hr>
 
       
-      <p>"Child Components"</p>
+  <p>&quot;Child Components&quot;</p>
         <Card title="Nested Card">
           <p>This is a nested card component!</p>
         </Card>
       <hr></hr>
 
       
-      <p>"Current Location"</p>
+  <p>&quot;Current Location&quot;</p>
         <p>Current Path: {currentPath}</p>
       <hr></hr>
 
       
-      <p>"Navigation Highlighting"</p>
+  <p>&quot;Navigation Highlighting&quot;</p>
         <nav className="nav nav-pills">
           <NavLink href="/labs/lab3">Lab 3</NavLink>
           <NavLink href="/labs/lab2">Lab 2</NavLink>
@@ -534,13 +534,13 @@ export default function Lab3Page() {
         </nav>
       <hr></hr>
 
-      <p>"Path Parameter Encoding"</p>
+  <p>&quot;Path Parameter Encoding&quot;</p>
         <p>Encoded &quot;hello world&quot;: {encodePath("hello world")}</p>
         <p>Encoded &quot;user@example.com&quot;: {encodePath("user@example.com")}</p>
       <hr></hr>  
 
       
-      <p>"Calculator Component"</p>
+  <p>&quot;Calculator Component&quot;</p>
         <Calculator a={1} b={2} />
         <Calculator a={3} b={4} />
     </div>
