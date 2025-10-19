@@ -8,8 +8,8 @@ import { navigationLinks } from '../../data/navigation';
 import { usePathname } from 'next/navigation';
 
 export default function CoursePage() {
-  // Find course data for 1234
-  const course = courses.find(c => c.id === '1234');
+  // Find course data for 9999
+  const course = courses.find(c => c.id === '9999');
   const pathname = usePathname();
 
   return (
@@ -52,9 +52,10 @@ export default function CoursePage() {
       <main className="main-content">
         <div className="course-header">
           <h1>{course.code} - {course.name}</h1>
+          <h3>Instructor: {course.instructor}</h3>
         </div>
         <div className="course-layout">
-          <div className="course-nav-sidebar">
+          <div className="course-nav-sidebar" style={{backgroundColor: 'white'}}>
             <div className="course-nav-item"><a href={`/kambaz/courses/${course.id}/home`}>Home</a></div>
             {course.modules.map(module => (
               <div className="course-nav-item" key={module.id}>

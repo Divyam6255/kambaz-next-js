@@ -1,17 +1,15 @@
 "use client";
-import { usePathname } from 'next/navigation';
-import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask } from 'react-icons/fa';
-import { courses } from '../../../data/courses';
-import { peopleByCourse } from '../../../data/people';
-import '../../styles.css';
 
-export default function PeoplePage() {
+import { usePathname } from 'next/navigation';
+import Image from 'next/image';
+import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaPlus, FaEllipsisV, FaChevronDown, FaFile, FaVideo, FaPencilAlt, FaCheckCircle } from 'react-icons/fa';
+import '../../styles.css';
+import { courses } from '../../../data/courses';
+
+export default function ModulesPage() {
   const pathname = usePathname();
-  const course = courses.find(c => c.id === '1234');
-  // Extract course id from the pathname (e.g., /kambaz/courses/1234/people)
-  const match = pathname.match(/\/courses\/(\d+)\//);
-  const courseId = match ? match[1] : '1234';
-  const coursePeople = peopleByCourse[courseId] || [];
+  // Get course data for 9999
+  const course = courses.find(c => c.id === '9999');
   return (
     <div className="kambaz-container">
       <nav className="sidebar">
@@ -62,22 +60,20 @@ export default function PeoplePage() {
           </div>
         </div>
       </nav>
-      
       <main className="main-content">
         <div className="course-header">
           <h1>{course.code} - {course.name}</h1>
         </div>
-        
         <div className="course-layout">
-          <div className="course-nav-sidebar" style={{backgroundColor: 'white'}}>
+          <div className="course-nav-sidebar" style={{ backgroundColor: 'white' }}>
             <div className={`course-nav-item${pathname.endsWith('/home') ? ' active' : ''}`}>
-              <a href="/kambaz/courses/1234/home">Home</a>
+              <a href="/kambaz/courses/9999/home">Home</a>
             </div>
             <div className={`course-nav-item${pathname.includes('/modules') ? ' active' : ''}`}>
-              <a href="/kambaz/courses/1234/modules">Modules</a>
+              <a href="/kambaz/courses/9999/modules">Modules</a>
             </div>
             <div className={`course-nav-item${pathname.includes('/people') ? ' active' : ''}`}>
-              <a href="/kambaz/courses/1234/people">People</a>
+              <a href="/kambaz/courses/9999/people">People</a>
             </div>
             <div className="course-nav-item">
               <a href="#">Piazza</a>
@@ -86,7 +82,7 @@ export default function PeoplePage() {
               <a href="#">Zoom</a>
             </div>
             <div className={`course-nav-item${pathname.includes('/assignments') ? ' active' : ''}`}>
-              <a href="/kambaz/courses/1234/assignments">Assignments</a>
+              <a href="/kambaz/courses/9999/assignments">Assignments</a>
             </div>
             <div className="course-nav-item">
               <a href="#">Quizzes</a>
@@ -95,44 +91,50 @@ export default function PeoplePage() {
               <a href="#">Grades</a>
             </div>
           </div>
-          
           <div className="course-main-content">
-            <div className="people-content">
-              <h2>People</h2>
-              
-              <div className="people-table-container">
-                <table className="people-table">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Login ID</th>
-                      <th>Section</th>
-                      <th>Role</th>
-                      <th>Last Activity</th>
-                      <th>Total Activity</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {coursePeople.map(person => (
-                      <tr key={person.id}>
-                        <td>
-                          <div className="person-name">
-                            <div className="person-avatar">
-                              <FaUser className="avatar-icon" />
-                            </div>
-                            <span>{person.name}</span>
-                          </div>
-                        </td>
-                        <td>{person.email}</td>
-                        <td>S101</td>
-                        <td>{person.role.toUpperCase()}</td>
-                        <td>2025-10-01T00:00:00.000Z</td>
-                        <td>10:21:32</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+            <div className="modules-content">
+              <div className="control-buttons">
+                <button className="btn-grey">Collapse All</button>
+                <button className="btn-grey">View Progress</button>
+                <button className="btn-red"><FaPlus /> Module</button>
+                <div className="dropdown">
+                  <button className="btn-grey">
+                    <FaCheckCircle /> Publish All <FaChevronDown />
+                  </button>
+                  <div className="dropdown-content">
+                    <a href="#"><FaCheckCircle /> Publish All</a>
+                    <a href="#"><FaCheckCircle /> Publish All & Notify</a>
+                    <a href="#">Unpublish All</a>
+                    <a href="#">View All Modules</a>
+                  </div>
+                </div>
               </div>
+              {/* Render modules from data */}
+              {course.modules.map(module => (
+                <div className="module" key={module.id}>
+                  <div className="module-header">
+                    <div className="module-title">
+                      <FaChevronDown /> {module.title}
+                    </div>
+                    <div className="module-controls">
+                      <FaEllipsisV />
+                    </div>
+                  </div>
+                  {module.items.map((item, idx) => (
+                    <div className="lesson" key={idx}>
+                      <div className="lesson-title">
+                        {item.type === 'file' && <FaFile />} 
+                        {item.type === 'video' && <FaVideo />} 
+                        {item.type === 'assignment' && <FaPencilAlt />} 
+                        {item.title}
+                      </div>
+                      <div className="module-controls">
+                        <FaEllipsisV />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ))}
             </div>
           </div>
         </div>

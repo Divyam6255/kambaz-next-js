@@ -72,7 +72,7 @@ body {
   color: white;
 }
 
-.nav-item.dashboard a {
+.nav-item.account.active a {
   background-color: white;
   color: red;
 }
@@ -86,7 +86,7 @@ body {
   color: white;
 }
 
-.nav-item.dashboard .nav-icon {
+.nav-item.account.active .nav-icon {
   color: red;
 }
 

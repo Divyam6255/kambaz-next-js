@@ -2,11 +2,12 @@
 import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../../styles.css';
+import { courses } from '../../../../data/courses';
 import { usePathname } from 'next/navigation';
 
 export default function AssignmentEditorPage() {
   const pathname = usePathname();
-  
+  const course = courses.find(c => c.id === '9999');
   return (
     <div className="kambaz-container">
       <nav className="sidebar">
@@ -60,19 +61,19 @@ export default function AssignmentEditorPage() {
       
       <main className="main-content">
         <div className="course-header">
-          <h1>Course 1234 - Web Development</h1>
+          <h1>{course.code} - {course.name}</h1>
         </div>
         
         <div className="course-layout">
           <div className="course-nav-sidebar" style={{backgroundColor: 'white'}}>
             <div className={`course-nav-item${pathname.endsWith('/home') ? ' active' : ''}`}>
-              <a href="/kambaz/courses/1234/home">Home</a>
+              <a href="/kambaz/courses/9999/home">Home</a>
             </div>
             <div className={`course-nav-item${pathname.includes('/modules') ? ' active' : ''}`}>
-              <a href="/kambaz/courses/1234/modules">Modules</a>
+              <a href="/kambaz/courses/9999/modules">Modules</a>
             </div>
             <div className={`course-nav-item${pathname.includes('/people') ? ' active' : ''}`}>
-              <a href="/kambaz/courses/1234/people">People</a>
+              <a href="/kambaz/courses/9999/people">People</a>
             </div>
             <div className="course-nav-item">
               <a href="#">Piazza</a>
@@ -81,7 +82,7 @@ export default function AssignmentEditorPage() {
               <a href="#">Zoom</a>
             </div>
             <div className={`course-nav-item${pathname.includes('/assignments') ? ' active' : ''}`}>
-              <a href="/kambaz/courses/1234/assignments">Assignments</a>
+              <a href="/kambaz/courses/9999/assignments">Assignments</a>
             </div>
             <div className="course-nav-item">
               <a href="#">Quizzes</a>
@@ -261,7 +262,7 @@ export default function AssignmentEditorPage() {
                 
                 <div className="row">
                   <div className="col-12">
-                    <button type="button" className="btn btn-secondary me-2" onClick={() => window.location.href='/kambaz/courses/1234/assignments'}>
+                    <button type="button" className="btn btn-secondary me-2" onClick={() => window.location.href='/kambaz/courses/9999/assignments'}>
                       Cancel
                     </button>
                     <button type="submit" className="btn btn-danger">

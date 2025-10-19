@@ -1,6 +1,17 @@
-import Image from 'next/image';
+'use client';
 
-export default function Course5678Page() {
+import Image from 'next/image';
+import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaGraduationCap } from 'react-icons/fa';
+import '../styles.css';
+import { courses } from '../../../data/courses';
+import { navigationLinks } from '../../data/navigation';
+import { usePathname } from 'next/navigation';
+
+export default function CoursePage() {
+  // Find course data for 5678
+  const course = courses.find(c => c.id === '5678');
+  const pathname = usePathname();
+
   return (
     <div className="kambaz-container">
       <nav className="sidebar">
@@ -8,37 +19,41 @@ export default function Course5678Page() {
           <a href="/kambaz" className="kambaz-brand">Kambaz</a>
           <div className="nav-item">
             <a href="https://northeastern.edu" target="_blank">
-              <img src="/org-neu.svg" 
+              <img src="/org-neu.svg"
                    alt="NEU" style={{width: '20px', height: '20px'}} />
               NEU
             </a>
           </div>
+          {navigationLinks.map(link => {
+            const isActive = pathname === link.href || (link.href !== '/kambaz' && pathname.startsWith(link.href));
+            return (
+              <div className={`nav-item ${isActive ? 'active' : ''}`} key={link.href}>
+                <a href={link.href}>
+                  {link.label === 'Account' && <FaUser className="nav-icon" />}
+                  {link.label === 'Dashboard' && <FaTachometerAlt className="nav-icon" />}
+                  {link.label === 'Courses' && <FaBook className="nav-icon" />}
+                  {link.label === 'Calendar' && <FaCalendarAlt className="nav-icon" />}
+                  {link.label === 'Inbox' && <FaInbox className="nav-icon" />}
+                  {link.label === 'Labs' && <FaFlask className="nav-icon" />}
+                  {link.label}
+                </a>
+              </div>
+            );
+          })}
           <div className="nav-item">
-            <a href="/kambaz/account">Account</a>
-          </div>
-          <div className="nav-item">
-            <a href="/kambaz/dashboard">Dashboard</a>
-          </div>
-          <div className="nav-item active">
-            <a href="/kambaz/courses">Courses</a>
-          </div>
-          <div className="nav-item">
-            <a href="/kambaz/calendar">Calendar</a>
-          </div>
-          <div className="nav-item">
-            <a href="/kambaz/inbox">Inbox</a>
-          </div>
-          <div className="nav-item">
-            <a href="/labs">Labs</a>
+            <a href="/labs">
+              <FaGraduationCap className="nav-icon" />
+              Grades
+            </a>
           </div>
         </div>
       </nav>
-      
+
       <main className="main-content">
         <div className="course-header">
-          <h1>Course 5678 - Programming Design and Paradigm</h1>
+          <h1>{course.code} - {course.name}</h1>
         </div>
-        
+
         <div className="course-layout">
           <div className="course-nav-sidebar">
             <div className="course-nav-item">
@@ -61,17 +76,6 @@ export default function Course5678Page() {
             </div>
             <div className="course-nav-item">
               <a href="#">Grades</a>
-            </div>
-          </div>
-          
-          <div className="course-main-content">
-            <div className="course-content">
-              <div className="course-hero-image">
-                <Image src="/PDP_textbook.jpg" alt="Programming Design and Paradigm" width={300} height={200} style={{borderRadius: '8px', marginBottom: '20px'}} />
-              </div>
-              <p>Welcome to Course 5678 - Programming Design and Paradigm</p>
-              <p>This course covers programming design principles, design patterns, and programming paradigms including object-oriented and functional programming.</p>
-              <p>Please select a section from the navigation above.</p>
             </div>
           </div>
         </div>

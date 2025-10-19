@@ -1,9 +1,15 @@
-'use client';
+"use client";
 import Image from 'next/image';
 import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaPlus, FaEllipsisV, FaChevronDown, FaFile, FaVideo, FaPencilAlt, FaCheckCircle } from 'react-icons/fa';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../styles.css';
+import { usePathname } from 'next/navigation';
+import { courses } from '../../../data/courses';
 
 export default function ModulesPage() {
+  const pathname = usePathname();
+  // Get course data for 1234
+  const course = courses.find(c => c.id === '1234');
   return (
     <div className="kambaz-container">
       <nav className="sidebar">
@@ -11,8 +17,7 @@ export default function ModulesPage() {
           <a href="/kambaz" className="kambaz-brand">Kambaz</a>
           <div className="nav-item">
             <a href="https://northeastern.edu" target="_blank">
-              <img src="/org-neu.svg" 
-                   alt="NEU" style={{width: '20px', height: '20px'}} />
+              <img src="/org-neu.svg" alt="NEU" style={{ width: '20px', height: '20px' }} />
               NEU
             </a>
           </div>
@@ -28,7 +33,7 @@ export default function ModulesPage() {
               Dashboard
             </a>
           </div>
-          <div className="nav-item active">
+          <div className={`nav-item${pathname.includes('/courses') ? ' active' : ''}`}> 
             <a href="/kambaz/courses">
               <FaBook className="nav-icon" />
               Courses
@@ -54,21 +59,19 @@ export default function ModulesPage() {
           </div>
         </div>
       </nav>
-      
       <main className="main-content">
         <div className="course-header">
-          <h1>Course 1234 - Web Development</h1>
+          <h1>{course.code} - {course.name}</h1>
         </div>
-        
         <div className="course-layout">
-          <div className="course-nav-sidebar">
-            <div className="course-nav-item">
+          <div className="course-nav-sidebar" style={{ backgroundColor: 'white' }}>
+            <div className={`course-nav-item${pathname.endsWith('/home') ? ' active' : ''}`}>
               <a href="/kambaz/courses/1234/home">Home</a>
             </div>
-            <div className="course-nav-item active">
+            <div className={`course-nav-item${pathname.includes('/modules') ? ' active' : ''}`}>
               <a href="/kambaz/courses/1234/modules">Modules</a>
             </div>
-            <div className="course-nav-item">
+            <div className={`course-nav-item${pathname.includes('/people') ? ' active' : ''}`}>
               <a href="/kambaz/courses/1234/people">People</a>
             </div>
             <div className="course-nav-item">
@@ -77,7 +80,7 @@ export default function ModulesPage() {
             <div className="course-nav-item">
               <a href="#">Zoom</a>
             </div>
-            <div className="course-nav-item">
+            <div className={`course-nav-item${pathname.includes('/assignments') ? ' active' : ''}`}>
               <a href="/kambaz/courses/1234/assignments">Assignments</a>
             </div>
             <div className="course-nav-item">
@@ -87,19 +90,12 @@ export default function ModulesPage() {
               <a href="#">Grades</a>
             </div>
           </div>
-          
           <div className="course-main-content">
             <div className="modules-content">
               <div className="control-buttons">
-                <button className="btn-grey">
-                  Collapse All
-                </button>
-                <button className="btn-grey">
-                  View Progress
-                </button>
-                <button className="btn-red">
-                  <FaPlus /> Module
-                </button>
+                <button className="btn-grey">Collapse All</button>
+                <button className="btn-grey">View Progress</button>
+                <button className="btn-red"><FaPlus /> Module</button>
                 <div className="dropdown">
                   <button className="btn-grey">
                     <FaCheckCircle /> Publish All <FaChevronDown />
@@ -107,80 +103,37 @@ export default function ModulesPage() {
                   <div className="dropdown-content">
                     <a href="#"><FaCheckCircle /> Publish All</a>
                     <a href="#"><FaCheckCircle /> Publish All & Notify</a>
-                    <a href="#">📋 Unpublish All</a>
-                    <a href="#">👀 View All Modules</a>
+                    <a href="#">Unpublish All</a>
+                    <a href="#">View All Modules</a>
                   </div>
                 </div>
               </div>
-
-              <div className="module">
-                <div className="module-header">
-                  <div className="module-title">
-                    <FaChevronDown />
-                    Week 1 - Introduction to Web Development
+              {/* Render modules from data */}
+              {course.modules.map(module => (
+                <div className="module" key={module.id}>
+                  <div className="module-header">
+                    <div className="module-title">
+                      <FaChevronDown /> {module.title}
+                    </div>
+                    <div className="module-controls">
+                      <FaEllipsisV />
+                    </div>
                   </div>
-                  <div className="module-controls">
-                    <FaEllipsisV />
-                  </div>
+                  {module.items.map((item, idx) => (
+                    <div className="lesson" key={idx}>
+                      <div className="lesson-title">
+                        {item.type === 'file' && <FaFile />}
+                        {item.type === 'video' && <FaVideo />}
+                        {item.type === 'assignment' && <FaPencilAlt />}
+                        {item.title}
+                      </div>
+                      <div className="module-controls">
+                        <FaEllipsisV />
+                      </div>
+                    </div>
+                  ))}
                 </div>
-                <div className="lesson">
-                  <div className="lesson-title">
-                    <FaFile />
-                    Learning Objectives
-                  </div>
-                  <div className="module-controls">
-                    <FaEllipsisV />
-                  </div>
-                </div>
-                <div className="lesson">
-                  <div className="lesson-title">
-                    <FaVideo />
-                    Introduction Video
-                  </div>
-                  <div className="module-controls">
-                    <FaEllipsisV />
-                  </div>
-                </div>
-                <div className="lesson">
-                  <div className="lesson-title">
-                    <FaPencilAlt />
-                    Reading Assignment
-                  </div>
-                  <div className="module-controls">
-                    <FaEllipsisV />
-                  </div>
-                </div>
-              </div>
-
-              <div className="module">
-                <div className="module-header">
-                  <div className="module-title">
-                    <FaChevronDown />
-                    Week 2 - HTML & CSS Fundamentals
-                  </div>
-                  <div className="module-controls">
-                    <FaEllipsisV />
-                  </div>
-                </div>
-                <div className="lesson">
-                  <div className="lesson-title">
-                    <FaFile />
-                    HTML Basics
-                  </div>
-                  <div className="module-controls">
-                    <FaEllipsisV />
-                  </div>
-                </div>
-                <div className="lesson">
-                  <div className="lesson-title">
-                    <FaFile />
-                    CSS Styling
-                  </div>
-                  <div className="module-controls">
-                    <FaEllipsisV />
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>

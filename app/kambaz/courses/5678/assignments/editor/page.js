@@ -3,8 +3,11 @@ import Image from 'next/image';
 import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../../styles.css';
+import { usePathname } from 'next/navigation';
 
 export default function Course5678AssignmentEditorPage() {
+  const pathname = usePathname();
+
   return (
     <div className="kambaz-container">
       <nav className="sidebar">
@@ -62,15 +65,15 @@ export default function Course5678AssignmentEditorPage() {
         </div>
         
         <div className="course-layout">
-          <div className="course-nav-sidebar">
-            <div className="course-nav-item">
+          <div className="course-nav-sidebar" style={{backgroundColor: 'white'}}>
+            <div className={`course-nav-item${pathname.endsWith('/home') ? ' active' : ''}`}>
               <a href="/kambaz/courses/5678/home">Home</a>
             </div>
-            <div className="course-nav-item">
+            <div className={`course-nav-item${pathname.includes('/modules') ? ' active' : ''}`}>
               <a href="/kambaz/courses/5678/modules">Modules</a>
             </div>
-            <div className="course-nav-item">
-              <a href="#">People</a>
+            <div className={`course-nav-item${pathname.includes('/people') ? ' active' : ''}`}>
+              <a href="/kambaz/courses/5678/people">People</a>
             </div>
             <div className="course-nav-item">
               <a href="#">Piazza</a>
@@ -78,7 +81,7 @@ export default function Course5678AssignmentEditorPage() {
             <div className="course-nav-item">
               <a href="#">Zoom</a>
             </div>
-            <div className="course-nav-item active">
+            <div className={`course-nav-item${pathname.includes('/assignments') ? ' active' : ''}`}>
               <a href="/kambaz/courses/5678/assignments">Assignments</a>
             </div>
             <div className="course-nav-item">

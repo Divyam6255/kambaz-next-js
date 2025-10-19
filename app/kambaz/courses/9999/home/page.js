@@ -1,15 +1,14 @@
 "use client";
 import { usePathname } from 'next/navigation';
-import Image from 'next/image';
-import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaPlus, FaCheckCircle, FaChevronDown, FaEllipsisV, FaFile, FaVideo, FaPencilAlt } from 'react-icons/fa';
+import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaPlus, FaEllipsisV, FaChevronDown, FaFile, FaVideo, FaPencilAlt, FaCheckCircle } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../styles.css';
-import { courses } from '../../../data/courses';
+import { courses } from '../../../data/courses.js';
 
-export default function Course5678HomePage() {
+export default function CourseHomePage() {
   const pathname = usePathname();
-  const course = courses.find(c => c.id === '5678');
-  
+  // Get course data for 9999
+  const course = courses.find(c => c.id === '9999');
   return (
     <div className="kambaz-container">
       <nav className="sidebar">
@@ -60,22 +59,20 @@ export default function Course5678HomePage() {
           </div>
         </div>
       </nav>
-      
       <main className="main-content">
         <div className="course-header">
           <h1>{course.code} - {course.name}</h1>
         </div>
-        
         <div className="course-layout">
           <div className="course-nav-sidebar" style={{backgroundColor: 'white'}}>
             <div className={`course-nav-item${pathname.endsWith('/home') ? ' active' : ''}`}>
-              <a href="/kambaz/courses/5678/home">Home</a>
+              <a href="/kambaz/courses/9999/home">Home</a>
             </div>
             <div className={`course-nav-item${pathname.includes('/modules') ? ' active' : ''}`}>
-              <a href="/kambaz/courses/5678/modules">Modules</a>
+              <a href="/kambaz/courses/9999/modules">Modules</a>
             </div>
             <div className={`course-nav-item${pathname.includes('/people') ? ' active' : ''}`}>
-              <a href="/kambaz/courses/5678/people">People</a>
+              <a href="/kambaz/courses/9999/people">People</a>
             </div>
             <div className="course-nav-item">
               <a href="#">Piazza</a>
@@ -84,7 +81,7 @@ export default function Course5678HomePage() {
               <a href="#">Zoom</a>
             </div>
             <div className={`course-nav-item${pathname.includes('/assignments') ? ' active' : ''}`}>
-              <a href="/kambaz/courses/5678/assignments">Assignments</a>
+              <a href="/kambaz/courses/9999/assignments">Assignments</a>
             </div>
             <div className="course-nav-item">
               <a href="#">Quizzes</a>
@@ -93,21 +90,14 @@ export default function Course5678HomePage() {
               <a href="#">Grades</a>
             </div>
           </div>
-          
           <div className="course-main-content">
             <div className="home-layout">
               <div className="home-main-content">
                 <div className="modules-content">
                   <div className="control-buttons">
-                    <button className="btn-grey">
-                      Collapse All
-                    </button>
-                    <button className="btn-grey">
-                      View Progress
-                    </button>
-                    <button className="btn-red">
-                      <FaPlus /> Module
-                    </button>
+                    <button className="btn-grey">Collapse All</button>
+                    <button className="btn-grey">View Progress</button>
+                    <button className="btn-red"><FaPlus /> Module</button>
                     <div className="dropdown">
                       <button className="btn-grey">
                         <FaCheckCircle /> Publish All <FaChevronDown />
@@ -115,83 +105,39 @@ export default function Course5678HomePage() {
                       <div className="dropdown-content">
                         <a href="#"><FaCheckCircle /> Publish All</a>
                         <a href="#"><FaCheckCircle /> Publish All & Notify</a>
-                        <a href="#">� Unpublish All</a>
-                        <a href="#">👀 View All Modules</a>
+                        <a href="#">Unpublish All</a>
+                        <a href="#">View All Modules</a>
                       </div>
                     </div>
                   </div>
-
-                  <div className="module">
-                    <div className="module-header">
-                      <div className="module-title">
-                        <FaChevronDown />
-                        Week 1 - Object-Oriented Fundamentals
+                  {/* Render modules from data */}
+                  {course.modules.map(module => (
+                    <div className="module" key={module.id}>
+                      <div className="module-header">
+                        <div className="module-title">
+                          <FaChevronDown /> {module.title}
+                        </div>
+                        <div className="module-controls">
+                          <FaEllipsisV />
+                        </div>
                       </div>
-                      <div className="module-controls">
-                        <FaEllipsisV />
-                      </div>
+                      {module.items.map((item, idx) => (
+                        <div className="lesson" key={idx}>
+                          <div className="lesson-title">
+                            {item.type === 'file' && <FaFile />} 
+                            {item.type === 'video' && <FaVideo />} 
+                            {item.type === 'assignment' && <FaPencilAlt />} 
+                            {item.title}
+                          </div>
+                          <div className="module-controls">
+                            <FaEllipsisV />
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                    <div className="lesson">
-                      <div className="lesson-title">
-                        <FaFile />
-                        Learning Objectives
-                      </div>
-                      <div className="module-controls">
-                        <FaEllipsisV />
-                      </div>
-                    </div>
-                    <div className="lesson">
-                      <div className="lesson-title">
-                        <FaVideo />
-                        OOP Concepts Video
-                      </div>
-                      <div className="module-controls">
-                        <FaEllipsisV />
-                      </div>
-                    </div>
-                    <div className="lesson">
-                      <div className="lesson-title">
-                        <FaPencilAlt />
-                        Design Patterns Assignment
-                      </div>
-                      <div className="module-controls">
-                        <FaEllipsisV />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="module">
-                    <div className="module-header">
-                      <div className="module-title">
-                        <FaChevronDown />
-                        Week 2 - SOLID Principles
-                      </div>
-                      <div className="module-controls">
-                        <FaEllipsisV />
-                      </div>
-                    </div>
-                    <div className="lesson">
-                      <div className="lesson-title">
-                        <FaFile />
-                        SOLID Overview
-                      </div>
-                      <div className="module-controls">
-                        <FaEllipsisV />
-                      </div>
-                    </div>
-                    <div className="lesson">
-                      <div className="lesson-title">
-                        <FaFile />
-                        Code Examples
-                      </div>
-                      <div className="module-controls">
-                        <FaEllipsisV />
-                      </div>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
-              
               <div className="home-sidebar">
                 <div className="course-status-section">
                   <h5>Course Status</h5>

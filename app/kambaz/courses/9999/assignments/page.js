@@ -1,17 +1,12 @@
 "use client";
 import { usePathname } from 'next/navigation';
-import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask } from 'react-icons/fa';
-import { courses } from '../../../data/courses';
-import { peopleByCourse } from '../../../data/people';
+import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaSearch, FaPlus, FaEllipsisV } from 'react-icons/fa';
 import '../../styles.css';
+import { courses } from '../../../data/courses';
 
-export default function PeoplePage() {
+export default function AssignmentsPage() {
   const pathname = usePathname();
-  const course = courses.find(c => c.id === '1234');
-  // Extract course id from the pathname (e.g., /kambaz/courses/1234/people)
-  const match = pathname.match(/\/courses\/(\d+)\//);
-  const courseId = match ? match[1] : '1234';
-  const coursePeople = peopleByCourse[courseId] || [];
+  const course = courses.find(c => c.id === '9999');
   return (
     <div className="kambaz-container">
       <nav className="sidebar">
@@ -69,15 +64,15 @@ export default function PeoplePage() {
         </div>
         
         <div className="course-layout">
-          <div className="course-nav-sidebar" style={{backgroundColor: 'white'}}>
+          <div className="course-nav-sidebar" style={{ backgroundColor: 'white' }}>
             <div className={`course-nav-item${pathname.endsWith('/home') ? ' active' : ''}`}>
-              <a href="/kambaz/courses/1234/home">Home</a>
+              <a href="/kambaz/courses/9999/home">Home</a>
             </div>
             <div className={`course-nav-item${pathname.includes('/modules') ? ' active' : ''}`}>
-              <a href="/kambaz/courses/1234/modules">Modules</a>
+              <a href="/kambaz/courses/9999/modules">Modules</a>
             </div>
             <div className={`course-nav-item${pathname.includes('/people') ? ' active' : ''}`}>
-              <a href="/kambaz/courses/1234/people">People</a>
+              <a href="/kambaz/courses/9999/people">People</a>
             </div>
             <div className="course-nav-item">
               <a href="#">Piazza</a>
@@ -86,7 +81,7 @@ export default function PeoplePage() {
               <a href="#">Zoom</a>
             </div>
             <div className={`course-nav-item${pathname.includes('/assignments') ? ' active' : ''}`}>
-              <a href="/kambaz/courses/1234/assignments">Assignments</a>
+              <a href="/kambaz/courses/9999/assignments">Assignments</a>
             </div>
             <div className="course-nav-item">
               <a href="#">Quizzes</a>
@@ -97,42 +92,35 @@ export default function PeoplePage() {
           </div>
           
           <div className="course-main-content">
-            <div className="people-content">
-              <h2>People</h2>
-              
-              <div className="people-table-container">
-                <table className="people-table">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Login ID</th>
-                      <th>Section</th>
-                      <th>Role</th>
-                      <th>Last Activity</th>
-                      <th>Total Activity</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {coursePeople.map(person => (
-                      <tr key={person.id}>
-                        <td>
-                          <div className="person-name">
-                            <div className="person-avatar">
-                              <FaUser className="avatar-icon" />
-                            </div>
-                            <span>{person.name}</span>
-                          </div>
-                        </td>
-                        <td>{person.email}</td>
-                        <td>S101</td>
-                        <td>{person.role.toUpperCase()}</td>
-                        <td>2025-10-01T00:00:00.000Z</td>
-                        <td>10:21:32</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+            <div className="assignments-content">
+              <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px'}}>
+                <div className="assignment-search">
+                  <FaSearch className="search-icon" />
+                  <input type="text" placeholder="Search for Assignments" />
+                </div>
+                <div className="control-buttons">
+                  <button className="btn-grey">
+                    <FaPlus /> Group
+                  </button>
+                  <button className="btn-red">
+                    <FaPlus /> Assignment
+                  </button>
+                </div>
               </div>
+          
+              {/* Render assignments from data */}
+              {course.assignments.map(assignment => (
+                <div className="assignment-item" key={assignment.id}>
+                  <div className="assignment-info">
+                    <h4><a href="/kambaz/courses/9999/assignments/editor">{assignment.title}</a></h4>
+                    <p><strong>Multiple Modules</strong> | <strong>Due</strong> {assignment.due} | <strong>Available until</strong> ... </p>
+                    <p>{assignment.points} pts</p>
+                  </div>
+                  <div className="assignment-controls">
+                    <FaEllipsisV />
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

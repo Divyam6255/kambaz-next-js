@@ -1,8 +1,13 @@
-'use client';
+"use client";
+import { usePathname } from 'next/navigation';
 import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaSearch, FaPlus, FaEllipsisV } from 'react-icons/fa';
+import { courses } from '../../../data/courses';
 import '../../styles.css';
 
 export default function Course5678AssignmentsPage() {
+  const pathname = usePathname();
+  const course = courses.find(c => c.id === '5678');
+  
   return (
     <div className="kambaz-container">
       <nav className="sidebar">
@@ -27,7 +32,7 @@ export default function Course5678AssignmentsPage() {
               Dashboard
             </a>
           </div>
-          <div className="nav-item active">
+          <div className={`nav-item${pathname.includes('/courses') ? ' active' : ''}`}> 
             <a href="/kambaz/courses">
               <FaBook className="nav-icon" />
               Courses
@@ -56,19 +61,19 @@ export default function Course5678AssignmentsPage() {
       
       <main className="main-content">
         <div className="course-header">
-          <h1>Course 5678 - Programming Design and Paradigm</h1>
+          <h1>{course.code} - {course.name}</h1>
         </div>
         
         <div className="course-layout">
-          <div className="course-nav-sidebar">
-            <div className="course-nav-item">
+          <div className="course-nav-sidebar" style={{ backgroundColor: 'white' }}>
+            <div className={`course-nav-item${pathname.endsWith('/home') ? ' active' : ''}`}>
               <a href="/kambaz/courses/5678/home">Home</a>
             </div>
-            <div className="course-nav-item">
+            <div className={`course-nav-item${pathname.includes('/modules') ? ' active' : ''}`}>
               <a href="/kambaz/courses/5678/modules">Modules</a>
             </div>
-            <div className="course-nav-item">
-              <a href="#">People</a>
+            <div className={`course-nav-item${pathname.includes('/people') ? ' active' : ''}`}>
+              <a href="/kambaz/courses/5678/people">People</a>
             </div>
             <div className="course-nav-item">
               <a href="#">Piazza</a>
@@ -76,7 +81,7 @@ export default function Course5678AssignmentsPage() {
             <div className="course-nav-item">
               <a href="#">Zoom</a>
             </div>
-            <div className="course-nav-item active">
+            <div className={`course-nav-item${pathname.includes('/assignments') ? ' active' : ''}`}>
               <a href="/kambaz/courses/5678/assignments">Assignments</a>
             </div>
             <div className="course-nav-item">

@@ -1,8 +1,17 @@
+'use client';
+
 import Image from 'next/image';
 import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask } from 'react-icons/fa';
 import './styles.css';
+import { navigationLinks } from '../data/navigation';
+import { dashboardData } from '../data/dashboard';
+import { courses } from '../data/courses';
+import { usePathname } from 'next/navigation';
+
 
 export default function DashboardPage() {
+  const pathname = usePathname();
+
   return (
     <div className="kambaz-container">
       <nav className="sidebar">
@@ -10,102 +19,58 @@ export default function DashboardPage() {
           <a href="/kambaz" className="kambaz-brand">Kambaz</a>
           <div className="nav-item">
             <a href="https://northeastern.edu" target="_blank">
-              <Image src="/org-neu.svg" 
-                     alt="NEU" width={30} height={20} />
+              <Image src="/org-neu.svg" alt="NEU" width={30} height={20} />
               NEU
             </a>
           </div>
-          <div className="nav-item account">
-            <a href="/kambaz/account">
-              <FaUser className="nav-icon" />
-              Account
-            </a>
-          </div>
-          <div className="nav-item dashboard">
-            <a href="/kambaz/dashboard">
-              <FaTachometerAlt className="nav-icon" />
-              Dashboard
-            </a>
-          </div>
-          <div className="nav-item">
-            <a href="/kambaz/courses">
-              <FaBook className="nav-icon" />
-              Courses
-            </a>
-          </div>
-          <div className="nav-item">
-            <a href="/kambaz/calendar">
-              <FaCalendarAlt className="nav-icon" />
-              Calendar
-            </a>
-          </div>
-          <div className="nav-item">
-            <a href="/kambaz/inbox">
-              <FaInbox className="nav-icon" />
-              Inbox
-            </a>
-          </div>
-          <div className="nav-item">
-            <a href="/labs">
-              <FaFlask className="nav-icon" />
-              Labs  
-            </a>
-          </div>
+          {navigationLinks.map(link => {
+            const isActive = pathname === link.href || (link.href !== '/kambaz' && pathname.startsWith(link.href));
+            return (
+              <div className={`nav-item ${isActive ? 'active' : ''}`} key={link.href}>
+                <a href={link.href}>
+                  {link.label === 'Account' && <FaUser className="nav-icon" />}
+                  {link.label === 'Dashboard' && <FaTachometerAlt className="nav-icon" />}
+                  {link.label === 'Courses' && <FaBook className="nav-icon" />}
+                  {link.label === 'Calendar' && <FaCalendarAlt className="nav-icon" />}
+                  {link.label === 'Inbox' && <FaInbox className="nav-icon" />}
+                  {link.label === 'Labs' && <FaFlask className="nav-icon" />}
+                  {link.label}
+                </a>
+              </div>
+            );
+          })}
         </div>
       </nav>
-      
       <main className="main-content">
         <div className="dashboard-container">
           <h1>Dashboard</h1>
           <h2>Published Courses</h2>
-          
           <div className="courses-grid">
-            <div className="course-card">
-              <a href="/kambaz/courses/1234/home">
-                <Image src="/1_V-Jp13LvtVc2IiY2fp4qYw.jpg" alt="Course 1234" width={300} height={150} />
-                <div className="course-info">
-                  <h3>CS 4550</h3>
-                  <p>Web Development</p>
-                </div>
-              </a>
-            </div>
-            
-            <div className="course-card">
-              <a href="/kambaz/courses/5678/home">
-                <Image src="/PDP_textbook.jpg" alt="Course 5678" width={300} height={150} />
-                <div className="course-info">
-                  <h3>CS 3500</h3>
-                  <p>Object-Oriented Design</p>
-                </div>
-              </a>
-            </div>
+            {dashboardData.enrolledCourses.map((course) => {
+              // Find course details for image and description
+              const courseDetails = courses.find(c => c.id === course.id);
+              let imgSrc = "/1_V-Jp13LvtVc2IiY2fp4qYw.jpg";
+              let desc = courseDetails ? courseDetails.name : course.name;
+              if (course.id === '5678') imgSrc = "/PDP_textbook.jpg";
 
-            <div className="course-card">
-              <a href="/kambaz/courses/9999/home">
-                <div style={{background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', height: '150px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '24px', fontWeight: 'bold'}}>
-                  CS 2500
-                </div>
-                <div className="course-info">
-                  <h3>CS 2500</h3>
-                  <p>Fundamentals of Computer Science</p>
-                </div>
-              </a>
-            </div>
+              // Check if this course is currently active (user is viewing it)
+              const isActive = pathname.includes(`/courses/${course.id}`);
 
-            <div className="course-card">
-              <a href="/kambaz/courses/1111/home">
-                <div style={{background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)', height: '150px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '24px', fontWeight: 'bold'}}>
-                  MATH 1365
+              return (
+                <div className={`course-card ${isActive ? 'active' : ''}`} key={course.id}>
+                  <a href={`/kambaz/courses/${course.id}/home`}>
+                    <Image src={imgSrc} alt={`Course ${course.id}`} width={300} height={150} />
+                    <div className="course-info">
+                      <h3>{course.code}</h3>
+                      <p>{desc}</p>
+                    </div>
+                  </a>
                 </div>
-                <div className="course-info">
-                  <h3>MATH 1365</h3>
-                  <p>Introduction to Mathematical Reasoning</p>
-                </div>
-              </a>
-            </div>
+              );
+            })}
           </div>
         </div>
       </main>
     </div>
   );
-}
+}              

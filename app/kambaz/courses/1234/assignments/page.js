@@ -1,8 +1,12 @@
-'use client';
+"use client";
 import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaSearch, FaPlus, FaEllipsisV } from 'react-icons/fa';
 import '../../styles.css';
+import { usePathname } from 'next/navigation';
+import { courses } from '../../../data/courses';
 
 export default function AssignmentsPage() {
+  const pathname = usePathname();
+  const course = courses.find(c => c.id === '1234');
   return (
     <div className="kambaz-container">
       <nav className="sidebar">
@@ -10,8 +14,7 @@ export default function AssignmentsPage() {
           <a href="/kambaz" className="kambaz-brand">Kambaz</a>
           <div className="nav-item">
             <a href="https://northeastern.edu" target="_blank">
-              <img src="/org-neu.svg" 
-                   alt="NEU" style={{width: '20px', height: '20px'}} />
+              <img src="/org-neu.svg" alt="NEU" style={{ width: '20px', height: '20px' }} />
               NEU
             </a>
           </div>
@@ -27,7 +30,7 @@ export default function AssignmentsPage() {
               Dashboard
             </a>
           </div>
-          <div className="nav-item active">
+          <div className={`nav-item${pathname.includes('/courses') ? ' active' : ''}`}> 
             <a href="/kambaz/courses">
               <FaBook className="nav-icon" />
               Courses
@@ -53,21 +56,19 @@ export default function AssignmentsPage() {
           </div>
         </div>
       </nav>
-      
       <main className="main-content">
         <div className="course-header">
-          <h1>Course 1234 - Web Development</h1>
+          <h1>{course.code} - {course.name}</h1>
         </div>
-        
         <div className="course-layout">
-          <div className="course-nav-sidebar">
-            <div className="course-nav-item">
+          <div className="course-nav-sidebar" style={{ backgroundColor: 'white' }}>
+            <div className={`course-nav-item${pathname.endsWith('/home') ? ' active' : ''}`}>
               <a href="/kambaz/courses/1234/home">Home</a>
             </div>
-            <div className="course-nav-item">
+            <div className={`course-nav-item${pathname.includes('/modules') ? ' active' : ''}`}>
               <a href="/kambaz/courses/1234/modules">Modules</a>
             </div>
-            <div className="course-nav-item">
+            <div className={`course-nav-item${pathname.includes('/people') ? ' active' : ''}`}>
               <a href="/kambaz/courses/1234/people">People</a>
             </div>
             <div className="course-nav-item">
@@ -76,7 +77,7 @@ export default function AssignmentsPage() {
             <div className="course-nav-item">
               <a href="#">Zoom</a>
             </div>
-            <div className="course-nav-item active">
+            <div className={`course-nav-item${pathname.includes('/assignments') ? ' active' : ''}`}>
               <a href="/kambaz/courses/1234/assignments">Assignments</a>
             </div>
             <div className="course-nav-item">
@@ -86,10 +87,9 @@ export default function AssignmentsPage() {
               <a href="#">Grades</a>
             </div>
           </div>
-          
           <div className="course-main-content">
             <div className="assignments-content">
-              <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px'}}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                 <div className="assignment-search">
                   <FaSearch className="search-icon" />
                   <input type="text" placeholder="Search for Assignments" />
@@ -103,39 +103,19 @@ export default function AssignmentsPage() {
                   </button>
                 </div>
               </div>
-          
-              <div className="assignment-item">
-                <div className="assignment-info">
-                  <h4><a href="/kambaz/courses/1234/assignments/editor">A1 - ENV + HTML</a></h4>
-                  <p><strong>Multiple Modules</strong> | <strong>Due</strong> Sep 18 at 11:59pm | <strong>Available until</strong> Sep 25 at 11:59pm</p>
-                  <p>100 pts</p>
+              {/* Render assignments from data */}
+              {course.assignments.map(assignment => (
+                <div className="assignment-item" key={assignment.id}>
+                  <div className="assignment-info">
+                    <h4><a href="/kambaz/courses/1234/assignments/editor" style={{ color: '#007bff', textDecoration: 'none' }}>{assignment.title}</a></h4>
+                    <p><strong>Multiple Modules</strong> | <strong>Due</strong> {assignment.due} | <strong>Available until</strong> ... </p>
+                    <p>{assignment.points} pts</p>
+                  </div>
+                  <div className="assignment-controls">
+                    <FaEllipsisV />
+                  </div>
                 </div>
-                <div className="assignment-controls">
-                  <FaEllipsisV />
-                </div>
-              </div>
-
-              <div className="assignment-item">
-                <div className="assignment-info">
-                  <h4><a href="/kambaz/courses/1234/assignments/editor">A2 - CSS + BOOTSTRAP</a></h4>
-                  <p><strong>Multiple Modules</strong> | <strong>Due</strong> Oct 2 at 11:59pm | <strong>Available until</strong> Oct 9 at 11:59pm</p>
-                  <p>100 pts</p>
-                </div>
-                <div className="assignment-controls">
-                  <FaEllipsisV />
-                </div>
-              </div>
-
-              <div className="assignment-item">
-                <div className="assignment-info">
-                  <h4><a href="/kambaz/courses/1234/assignments/editor">A3 - JS + REACT</a></h4>
-                  <p><strong>Multiple Modules</strong> | <strong>Due</strong> Oct 16 at 11:59pm | <strong>Available until</strong> Oct 23 at 11:59pm</p>
-                  <p>100 pts</p>
-                </div>
-                <div className="assignment-controls">
-                  <FaEllipsisV />
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
