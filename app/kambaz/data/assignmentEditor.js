@@ -1,4 +1,3 @@
-// Data for Assignment Editor (data-driven by course and assignment id)
 export const assignmentEditorData = {
   '1234': {
     'a1': {
@@ -11,7 +10,6 @@ export const assignmentEditorData = {
       onlineEntryOptions: ['Text Entry'],
       assignTo: 'Everyone',
     },
-    // Add more assignments as needed
   },
   '5678': {
     'a1': {

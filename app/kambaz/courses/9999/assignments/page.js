@@ -108,7 +108,6 @@ export default function AssignmentsPage() {
                 </div>
               </div>
           
-              {/* Render assignments from data */}
               {course.assignments.map(assignment => (
                 <div className="assignment-item" key={assignment.id}>
                   <div className="assignment-info">

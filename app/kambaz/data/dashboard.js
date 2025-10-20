@@ -1,4 +1,3 @@
-// Data for Kambaz Dashboard (data-driven)
 export const dashboardData = {
   enrolledCourses: [
     { id: '1234', name: 'Web Development', code: 'CS1234' },

@@ -8,7 +8,6 @@ import { courses } from '../../../data/courses';
 
 export default function ModulesPage() {
   const pathname = usePathname();
-  // Get course data for 1234
   const course = courses.find(c => c.id === '1234');
   return (
     <div className="kambaz-container">

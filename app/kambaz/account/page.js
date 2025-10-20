@@ -5,7 +5,6 @@ import './styles.css';
 
 export default function AccountPage() {
   useEffect(() => {
-    // Redirect to signin page by default
     window.location.href = '/kambaz/account/signin';
   }, []);
 

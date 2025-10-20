@@ -8,7 +8,6 @@ import { navigationLinks } from '../../data/navigation';
 import { usePathname } from 'next/navigation';
 
 export default function CoursePage() {
-  // Find course data for 1234
   const course = courses.find(c => c.id === '1234');
   const pathname = usePathname();
 

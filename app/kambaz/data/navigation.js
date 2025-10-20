@@ -1,4 +1,3 @@
-// Data for Kambaz Navigation (data-driven)
 export const navigationLinks = [
   { label: 'Account', href: '/kambaz/account' },
   { label: 'Dashboard', href: '/kambaz/dashboard' },

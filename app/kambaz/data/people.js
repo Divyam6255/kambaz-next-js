@@ -1,4 +1,3 @@
-// Data for Kambaz People (data-driven by course)
 export const peopleByCourse = {
   '1234': [
     { id: 1, name: 'Alice Smith', email: 'alice@northeastern.edu', role: 'Student' },

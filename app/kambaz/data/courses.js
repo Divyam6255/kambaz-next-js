@@ -1,4 +1,3 @@
-// Data for Kambaz Courses (data-driven)
 export const courses = [
   {
     id: '1234',

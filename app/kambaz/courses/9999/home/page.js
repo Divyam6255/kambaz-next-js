@@ -110,7 +110,6 @@ export default function CourseHomePage() {
                       </div>
                     </div>
                   </div>
-                  {/* Render modules from data */}
                   {course.modules.map(module => (
                     <div className="module" key={module.id}>
                       <div className="module-header">

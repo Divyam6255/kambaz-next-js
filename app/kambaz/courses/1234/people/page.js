@@ -8,7 +8,6 @@ import '../../styles.css';
 export default function PeoplePage() {
   const pathname = usePathname();
   const course = courses.find(c => c.id === '1234');
-  // Extract course id from the pathname (e.g., /kambaz/courses/1234/people)
   const match = pathname.match(/\/courses\/(\d+)\//);
   const courseId = match ? match[1] : '1234';
   const coursePeople = peopleByCourse[courseId] || [];
