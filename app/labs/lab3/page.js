@@ -1,6 +1,5 @@
 "use client";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { get } from 'http';
 import { useState } from 'react';
 import PathParameters from "./PathParameters";
 
@@ -96,20 +95,12 @@ export default function Lab3Page() {
   );
 
   // HTML Classes
-  const [isDanger, setIsDanger] = useState(false);
-  const [isBlue, setIsBlue] = useState(false);
   const RedBackground = ({ children }) => (
     <div className="bg-danger text-white p-3 mb-3">{children}</div>
   );
   const BlueBackground = ({ children }) => (
     <div className="bg-primary text-white p-3 mb-3">{children}</div>
   );
-  const styleExample = {
-    backgroundColor: 'yellow',
-    color: 'black',
-    padding: '10px',
-    margin: '10px 0'
-  };
   const YellowBackground = ({ children }) => (
     <div style={{ backgroundColor: 'yellow', padding: '10px', margin: '10px 0' }}>{children}</div>
   );
