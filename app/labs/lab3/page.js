@@ -146,9 +146,9 @@ export default function Lab3Page() {
     <div className="container-fluid p-4">
       <h1 className="mb-4">Lab 3</h1>
       {/* Variables and Constants */}
-      <h2>Variables and Constants</h2>
-      <p><strong>Constant:</strong> {constantValue}</p>
-      <p><strong>Variable:</strong> {variableValue}</p>
+  <h2>Variables and Constants</h2>
+  <p><strong>Constant:</strong> {constantValue}</p>
+  <p><strong>Variable:</strong> {variableValue}</p>
       <hr />
 
       {/* Variable Types */}
@@ -189,11 +189,11 @@ export default function Lab3Page() {
       </div>
 
       {/* Conditional Output Sections */}
-      <h2>Generating Conditional Output</h2>
-      <p>conditionTrue = {true.toString()}</p>
-      <p>conditionFalse = {false.toString()}</p>
-      <p>Output (True): {true ? "True Output" : "False Output"}</p>
-      <p>Output (False): {false ? "True Output" : "False Output"}</p>
+  <h2>Generating Conditional Output</h2>
+  <p>conditionTrue = {true.toString()}</p>
+  <p>conditionFalse = {false.toString()}</p>
+  <p>Output (True): {true ? "True Output" : "False Output"}</p>
+  <p>Output (False): {false ? "True Output" : "False Output"}</p>
       <hr />
 
       <h2>Welcome If Else</h2>
@@ -208,9 +208,9 @@ export default function Lab3Page() {
       })()}</p>
       <hr />
 
-      <h2>Please login Inline</h2>
-      <p>loggedInInline = {false.toString()}</p>
-      <p>Output: {false ? "Welcome Inline" : "Please login Inline"}</p>
+  <h2>Please login Inline</h2>
+  <p>loggedInInline = {false.toString()}</p>
+  <p>Output: {false ? "Welcome Inline" : "Please login Inline"}</p>
       <hr />
 
       {/* Functions */}
