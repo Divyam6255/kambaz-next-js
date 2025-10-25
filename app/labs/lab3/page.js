@@ -394,7 +394,7 @@ export default function Lab3Page() {
         const { name, age } = person;
         return (
           <>
-            <div>const {'{ name, age }'} = {'{ name: "John", age: 25 }'}</div>
+            <div>const {'{ name, age }'} = {'{ name: &quot;John&quot;, age: 25 }'}</div>
             <p>name = {name}</p>
             <p>age = {age}</p>
           </>
@@ -406,7 +406,7 @@ export default function Lab3Page() {
         const [first, second, third] = arr;
         return (
           <>
-            <div>const [first, second, third] = ["one", "two", "three"]</div>
+            <div>const [first, second, third] = [&quot;one&quot;, &quot;two&quot;, &quot;three&quot;]</div>
             <p>first = {first}</p>
             <p>second = {second}</p>
             <p>third = {third}</p>
