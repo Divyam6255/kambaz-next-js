@@ -1,14 +1,62 @@
 "use client";
+import { useState } from 'react';
 import Image from 'next/image';
-import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaPlus, FaEllipsisV, FaChevronDown, FaFile, FaVideo, FaPencilAlt, FaCheckCircle } from 'react-icons/fa';
+import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaPlus, FaEllipsisV, FaChevronDown, FaFile, FaVideo, FaPencilAlt, FaCheckCircle, FaTrash, FaEdit } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../styles.css';
 import { usePathname } from 'next/navigation';
-import { courses } from '../../../data/courses';
+import { useSelector, useDispatch } from 'react-redux';
+import { addModule, updateModule, deleteModule } from '../../../store';
 
 export default function ModulesPage() {
   const pathname = usePathname();
+  const dispatch = useDispatch();
+  const courses = useSelector((state) => state.courses);
   const course = courses.find(c => c.id === '1234');
+
+  const [showAddDialog, setShowAddDialog] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
+  const [editingModule, setEditingModule] = useState(null);
+  const [newModule, setNewModule] = useState({
+    id: '',
+    title: '',
+    items: []
+  });
+
+  const handleAddModule = () => {
+    if (newModule.id && newModule.title) {
+      dispatch(addModule({ 
+        courseId: '1234', 
+        module: { ...newModule, items: [] } 
+      }));
+      setNewModule({ id: '', title: '', items: [] });
+      setShowAddDialog(false);
+    }
+  };
+
+  const handleEditModule = () => {
+    if (editingModule) {
+      dispatch(updateModule({
+        courseId: '1234',
+        moduleId: editingModule.id,
+        updates: { title: editingModule.title }
+      }));
+      setShowEditDialog(false);
+      setEditingModule(null);
+    }
+  };
+
+  const handleDeleteModule = (moduleId) => {
+    if (confirm('Are you sure you want to delete this module?')) {
+      dispatch(deleteModule({ courseId: '1234', moduleId }));
+    }
+  };
+
+  const openEditDialog = (module) => {
+    setEditingModule({ ...module });
+    setShowEditDialog(true);
+  };
+
   return (
     <div className="kambaz-container">
       <nav className="sidebar">
@@ -94,7 +142,7 @@ export default function ModulesPage() {
               <div className="control-buttons">
                 <button className="btn-grey">Collapse All</button>
                 <button className="btn-grey">View Progress</button>
-                <button className="btn-red"><FaPlus /> Module</button>
+                <button className="btn-red" onClick={() => setShowAddDialog(true)}><FaPlus /> Module</button>
                 <div className="dropdown">
                   <button className="btn-grey">
                     <FaCheckCircle /> Publish All <FaChevronDown />
@@ -107,15 +155,48 @@ export default function ModulesPage() {
                   </div>
                 </div>
               </div>
-              {/* Render modules from data */}
+              {/* Render modules from Redux store */}
               {course.modules.map(module => (
                 <div className="module" key={module.id}>
                   <div className="module-header">
                     <div className="module-title">
                       <FaChevronDown /> {module.title}
                     </div>
-                    <div className="module-controls">
-                      <FaEllipsisV />
+                    <div className="module-controls" style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                      <button
+                        onClick={() => openEditDialog(module)}
+                        style={{
+                          padding: '5px 10px',
+                          backgroundColor: '#007bff',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '4px',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '4px'
+                        }}
+                        title="Edit Module"
+                      >
+                        <FaEdit />
+                      </button>
+                      <button
+                        onClick={() => handleDeleteModule(module.id)}
+                        style={{
+                          padding: '5px 10px',
+                          backgroundColor: '#dc3545',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '4px',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '4px'
+                        }}
+                        title="Delete Module"
+                      >
+                        <FaTrash />
+                      </button>
                     </div>
                   </div>
                   {module.items.map((item, idx) => (
@@ -136,6 +217,183 @@ export default function ModulesPage() {
             </div>
           </div>
         </div>
+
+        {/* Add Module Dialog */}
+        {showAddDialog && (
+          <div style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 1000
+          }}>
+            <div style={{
+              backgroundColor: 'white',
+              padding: '30px',
+              borderRadius: '8px',
+              width: '500px',
+              maxWidth: '90%'
+            }}>
+              <h2>Add New Module</h2>
+              <div style={{ marginBottom: '15px' }}>
+                <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Module ID</label>
+                <input
+                  type="text"
+                  value={newModule.id}
+                  onChange={(e) => setNewModule({ ...newModule, id: e.target.value })}
+                  style={{ 
+                    width: '100%', 
+                    padding: '8px', 
+                    border: '1px solid #ddd', 
+                    borderRadius: '4px',
+                    fontSize: '14px'
+                  }}
+                  placeholder="e.g., m3"
+                />
+              </div>
+              <div style={{ marginBottom: '20px' }}>
+                <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Module Title</label>
+                <input
+                  type="text"
+                  value={newModule.title}
+                  onChange={(e) => setNewModule({ ...newModule, title: e.target.value })}
+                  style={{ 
+                    width: '100%', 
+                    padding: '8px', 
+                    border: '1px solid #ddd', 
+                    borderRadius: '4px',
+                    fontSize: '14px'
+                  }}
+                  placeholder="e.g., React Hooks"
+                />
+              </div>
+              <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
+                <button
+                  onClick={() => {
+                    setShowAddDialog(false);
+                    setNewModule({ id: '', title: '', items: [] });
+                  }}
+                  style={{
+                    padding: '10px 20px',
+                    backgroundColor: '#6c757d',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleAddModule}
+                  style={{
+                    padding: '10px 20px',
+                    backgroundColor: '#28a745',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Add Module
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Edit Module Dialog */}
+        {showEditDialog && editingModule && (
+          <div style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 1000
+          }}>
+            <div style={{
+              backgroundColor: 'white',
+              padding: '30px',
+              borderRadius: '8px',
+              width: '500px',
+              maxWidth: '90%'
+            }}>
+              <h2>Edit Module</h2>
+              <div style={{ marginBottom: '15px' }}>
+                <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Module ID</label>
+                <input
+                  type="text"
+                  value={editingModule.id}
+                  disabled
+                  style={{ 
+                    width: '100%', 
+                    padding: '8px', 
+                    border: '1px solid #ddd', 
+                    borderRadius: '4px',
+                    fontSize: '14px',
+                    backgroundColor: '#f0f0f0'
+                  }}
+                />
+              </div>
+              <div style={{ marginBottom: '20px' }}>
+                <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Module Title</label>
+                <input
+                  type="text"
+                  value={editingModule.title}
+                  onChange={(e) => setEditingModule({ ...editingModule, title: e.target.value })}
+                  style={{ 
+                    width: '100%', 
+                    padding: '8px', 
+                    border: '1px solid #ddd', 
+                    borderRadius: '4px',
+                    fontSize: '14px'
+                  }}
+                />
+              </div>
+              <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
+                <button
+                  onClick={() => {
+                    setShowEditDialog(false);
+                    setEditingModule(null);
+                  }}
+                  style={{
+                    padding: '10px 20px',
+                    backgroundColor: '#6c757d',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleEditModule}
+                  style={{
+                    padding: '10px 20px',
+                    backgroundColor: '#007bff',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Save Changes
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );
