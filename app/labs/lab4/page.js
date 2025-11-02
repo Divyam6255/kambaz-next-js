@@ -316,20 +316,10 @@ function TodoListRedux() {
 function Lab4Content() {
   // Component State Variables
   const [integerState, setIntegerState] = useState(0);
-  const [booleanState, setBooleanState] = useState(false);
   const [stringState, setStringState] = useState('');
-  const [dateState, setDateState] = useState(new Date());
-  const [objectState, setObjectState] = useState({ name: '', email: '' });
-  const [arrayState, setArrayState] = useState([1, 2, 3]);
 
   // Sharing State
   const [sharedState, setSharedState] = useState('Shared Value');
-
-  // Event Object
-  const handleEventObject = (e) => {
-    console.log('Event Object:', e);
-    console.log('Target Value:', e.target.value);
-  };
 
   // Click Event functions
   const hello = () => {

@@ -142,9 +142,9 @@ const coursesSlice = createSlice({
       const { courseId, moduleId, updates } = action.payload;
       const course = state.find(c => c.id === courseId);
       if (course) {
-        const module = course.modules.find(m => m.id === moduleId);
-        if (module) {
-          Object.assign(module, updates);
+        const moduleToUpdate = course.modules.find(m => m.id === moduleId);
+        if (moduleToUpdate) {
+          Object.assign(moduleToUpdate, updates);
         }
       }
     },
