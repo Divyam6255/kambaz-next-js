@@ -44,12 +44,6 @@ export default function AssignmentsPage() {
     description: ''
   });
 
-  const course = courses.find(c => c.id === '9999' || c.number === '9999');
-
-  if (!course) {
-    return <div>Loading course...</div>;
-  }
-
   const handleAddAssignment = async () => {
     if (newAssignment.id && newAssignment.title && newAssignment.due && newAssignment.points) {
       await dispatch(addAssignmentThunk({ 
@@ -91,6 +85,10 @@ export default function AssignmentsPage() {
     setEditingAssignment({ ...assignment });
     setShowEditDialog(true);
   };
+
+  if (!course) {
+    return <div>Loading course...</div>;
+  }
 
   return (
     <div className="kambaz-container">

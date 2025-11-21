@@ -176,27 +176,6 @@ export default function Course5678HomePage() {
                       ))}
                     </div>
                   ))}
-                      </div>
-                    </div>
-                    <div className="lesson">
-                      <div className="lesson-title">
-                        <FaFile />
-                        SOLID Overview
-                      </div>
-                      <div className="module-controls">
-                        <FaEllipsisV />
-                      </div>
-                    </div>
-                    <div className="lesson">
-                      <div className="lesson-title">
-                        <FaFile />
-                        Code Examples
-                      </div>
-                      <div className="module-controls">
-                        <FaEllipsisV />
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
               
