@@ -46,10 +46,6 @@ export default function ModulesPage() {
     items: []
   });
 
-  if (!course) {
-    return <div>Loading course...</div>;
-  }
-
   const handleAddModule = async () => {
     if (newModule.id && newModule.title) {
       await dispatch(addModuleThunk({ 
