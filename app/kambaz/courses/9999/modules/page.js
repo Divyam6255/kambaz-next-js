@@ -47,10 +47,15 @@ export default function ModulesPage() {
   });
 
   const handleAddModule = async () => {
-    if (newModule.id && newModule.title) {
+    if (newModule.title) {
+      const moduleToAdd = {
+        ...newModule,
+        id: newModule.id || `m${Date.now()}`,
+        items: []
+      };
       await dispatch(addModuleThunk({ 
         courseId: '9999', 
-        module: { ...newModule, items: [] } 
+        module: moduleToAdd
       }));
       setNewModule({ id: '', title: '', items: [] });
       setShowAddDialog(false);
@@ -264,7 +269,7 @@ export default function ModulesPage() {
             }}>
               <h2>Add New Module</h2>
               <div style={{ marginBottom: '15px' }}>
-                <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Module ID</label>
+                <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Module ID (Optional)</label>
                 <input
                   type="text"
                   value={newModule.id}
@@ -276,7 +281,7 @@ export default function ModulesPage() {
                     borderRadius: '4px',
                     fontSize: '14px'
                   }}
-                  placeholder="e.g., m3"
+                  placeholder="Leave empty to auto-generate"
                 />
               </div>
               <div style={{ marginBottom: '20px' }}>
