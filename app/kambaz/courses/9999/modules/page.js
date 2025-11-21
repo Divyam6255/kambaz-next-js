@@ -7,31 +7,35 @@ import '../../styles.css';
 import { usePathname } from 'next/navigation';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCourses, addModuleThunk, updateModuleThunk, deleteModuleThunk } from '../../../store';
-import axios from 'axios';
+import * as client from '../../../client';
 
 export default function ModulesPage() {
   const pathname = usePathname();
   const dispatch = useDispatch();
   const courses = useSelector((state) => state.courses);
+  const [course, setCourse] = useState(null);
+  const [loading, setLoading] = useState(true);
   
   useEffect(() => {
-    const fetchCourses = async () => {
-      if (courses.length === 0) {
-        try {
-          const response = await axios.get('http://localhost:4000/api/courses', {
-            withCredentials: true
-          });
-          dispatch(setCourses(response.data));
-        } catch (error) {
-          console.error('Failed to fetch courses:', error);
+    const fetchCourse = async () => {
+      try {
+        const courseData = await client.getCourse('9999');
+        setCourse(courseData);
+        
+        if (courses.length === 0) {
+          const allCourses = await client.getAllCourses();
+          dispatch(setCourses(allCourses));
         }
+      } catch (error) {
+        console.error('Error fetching course:', error);
+      } finally {
+        setLoading(false);
       }
     };
-    fetchCourses();
-  }, [dispatch, courses.length]);
+    fetchCourse();
+  }, [courses.length, dispatch]);
   
   const courseFromRedux = courses.find(c => c.id === '9999' || c.number === '9999');
-  const course = courseFromRedux;
 
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [showEditDialog, setShowEditDialog] = useState(false);

@@ -1,40 +1,44 @@
 "use client";
+import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaPlus, FaCheckCircle, FaChevronDown, FaEllipsisV, FaFile, FaVideo, FaPencilAlt } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../styles.css';
-import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCourses } from '../../../store';
-import axios from 'axios';
+import * as client from '../../../client';
 
 export default function Course5678HomePage() {
   const pathname = usePathname();
   const dispatch = useDispatch();
   const courses = useSelector((state) => state.courses);
+  const [course, setCourse] = useState(null);
+  const [loading, setLoading] = useState(true);
   
   useEffect(() => {
-    const fetchCourses = async () => {
-      if (courses.length === 0) {
-        try {
-          const response = await axios.get('http://localhost:4000/api/courses', {
-            withCredentials: true
-          });
-          dispatch(setCourses(response.data));
-        } catch (error) {
-          console.error('Failed to fetch courses:', error);
+    const fetchCourse = async () => {
+      try {
+        const courseData = await client.getCourse('5678');
+        setCourse(courseData);
+        
+        if (courses.length === 0) {
+          const allCourses = await client.getAllCourses();
+          dispatch(setCourses(allCourses));
         }
+      } catch (error) {
+        console.error('Error fetching course:', error);
+      } finally {
+        setLoading(false);
       }
     };
-    fetchCourses();
-  }, [dispatch, courses.length]);
+    fetchCourse();
+  }, [courses.length, dispatch]);
   
-  const course = courses.find(c => c.id === '5678' || c.number === '5678');
+  const courseFromRedux = courses.find(c => c.id === '5678' || c.number === '5678');
 
-  if (!course) {
-    return <div>Loading course...</div>;
-  }
+  if (loading) return <div>Loading...</div>;
+  if (!course) return <div>Course not found</div>;
 
   return (
     <div className="kambaz-container">
@@ -141,59 +145,37 @@ export default function Course5678HomePage() {
                       <div className="dropdown-content">
                         <a href="#"><FaCheckCircle /> Publish All</a>
                         <a href="#"><FaCheckCircle /> Publish All & Notify</a>
-                        <a href="#">� Unpublish All</a>
-                        <a href="#">👀 View All Modules</a>
+                        <a href="#">Unpublish All</a>
+                        <a href="#">View All Modules</a>
                       </div>
                     </div>
                   </div>
 
-                  <div className="module">
-                    <div className="module-header">
-                      <div className="module-title">
-                        <FaChevronDown />
-                        Week 1 - Object-Oriented Fundamentals
+                  {courseFromRedux?.modules?.map(module => (
+                    <div className="module" key={module.id}>
+                      <div className="module-header">
+                        <div className="module-title">
+                          <FaChevronDown /> {module.title}
+                        </div>
+                        <div className="module-controls">
+                          <FaEllipsisV />
+                        </div>
                       </div>
-                      <div className="module-controls">
-                        <FaEllipsisV />
-                      </div>
+                      {module.items?.map((item, idx) => (
+                        <div className="lesson" key={idx}>
+                          <div className="lesson-title">
+                            {item.type === 'file' && <FaFile />} 
+                            {item.type === 'video' && <FaVideo />} 
+                            {item.type === 'assignment' && <FaPencilAlt />} 
+                            {item.title}
+                          </div>
+                          <div className="module-controls">
+                            <FaEllipsisV />
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                    <div className="lesson">
-                      <div className="lesson-title">
-                        <FaFile />
-                        Learning Objectives
-                      </div>
-                      <div className="module-controls">
-                        <FaEllipsisV />
-                      </div>
-                    </div>
-                    <div className="lesson">
-                      <div className="lesson-title">
-                        <FaVideo />
-                        OOP Concepts Video
-                      </div>
-                      <div className="module-controls">
-                        <FaEllipsisV />
-                      </div>
-                    </div>
-                    <div className="lesson">
-                      <div className="lesson-title">
-                        <FaPencilAlt />
-                        Design Patterns Assignment
-                      </div>
-                      <div className="module-controls">
-                        <FaEllipsisV />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="module">
-                    <div className="module-header">
-                      <div className="module-title">
-                        <FaChevronDown />
-                        Week 2 - SOLID Principles
-                      </div>
-                      <div className="module-controls">
-                        <FaEllipsisV />
+                  ))}
                       </div>
                     </div>
                     <div className="lesson">
