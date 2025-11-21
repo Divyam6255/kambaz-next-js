@@ -92,18 +92,31 @@ export default function DashboardPage() {
         const userEnrollments = await client.getCurrentUserEnrollments();
         console.log('Raw enrollment response:', userEnrollments);
         setEnrollments(userEnrollments);
+        
         // Store both _id and number to ensure proper matching
         const enrolledIds = new Set();
         userEnrollments.forEach(e => {
-          if (e.course._id) enrolledIds.add(e.course._id);
-          if (e.course.number) enrolledIds.add(e.course.number);
+          console.log('Processing enrollment:', e);
+          // Handle both populated (e.course is object) and non-populated (e.course is string ID)
+          if (typeof e.course === 'string') {
+            enrolledIds.add(e.course);
+          } else if (e.course && typeof e.course === 'object') {
+            if (e.course._id) enrolledIds.add(e.course._id);
+            if (e.course.number) enrolledIds.add(e.course.number);
+            if (e.course.id) enrolledIds.add(e.course.id);
+          }
+          // Also try direct enrollment fields
+          if (e._id) enrolledIds.add(e._id);
+          if (e.courseId) enrolledIds.add(e.courseId);
         });
+        
         setEnrolledCourseIds(enrolledIds);
-        console.log('Loaded enrollments:', Array.from(enrolledIds));
-        console.log('User enrollments:', userEnrollments.map(e => ({
-          id: e.course._id,
-          number: e.course.number,
-          name: e.course.name
+        console.log('Loaded enrollments - enrolled IDs:', Array.from(enrolledIds));
+        console.log('Enrollments details:', userEnrollments.map(e => ({
+          enrollmentId: e._id,
+          courseId: typeof e.course === 'string' ? e.course : e.course?._id,
+          courseNumber: typeof e.course === 'object' ? e.course?.number : null,
+          courseName: typeof e.course === 'object' ? e.course?.name : null
         })));
       } catch (err) {
         console.error('Error fetching enrollments - full error:', err);
@@ -238,8 +251,13 @@ export default function DashboardPage() {
             setEnrollments(userEnrollments);
             const enrolledIds = new Set();
             userEnrollments.forEach(e => {
-              if (e.course._id) enrolledIds.add(e.course._id);
-              if (e.course.number) enrolledIds.add(e.course.number);
+              if (typeof e.course === 'string') {
+                enrolledIds.add(e.course);
+              } else if (e.course && typeof e.course === 'object') {
+                if (e.course._id) enrolledIds.add(e.course._id);
+                if (e.course.number) enrolledIds.add(e.course.number);
+                if (e.course.id) enrolledIds.add(e.course.id);
+              }
             });
             setEnrolledCourseIds(enrolledIds);
           } catch (err) {
@@ -319,8 +337,13 @@ export default function DashboardPage() {
             setEnrollments(userEnrollments);
             const enrolledIds = new Set();
             userEnrollments.forEach(e => {
-              if (e.course._id) enrolledIds.add(e.course._id);
-              if (e.course.number) enrolledIds.add(e.course.number);
+              if (typeof e.course === 'string') {
+                enrolledIds.add(e.course);
+              } else if (e.course && typeof e.course === 'object') {
+                if (e.course._id) enrolledIds.add(e.course._id);
+                if (e.course.number) enrolledIds.add(e.course.number);
+                if (e.course.id) enrolledIds.add(e.course.id);
+              }
             });
             setEnrolledCourseIds(enrolledIds);
           } catch (err) {
