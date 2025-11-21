@@ -189,7 +189,7 @@ export default function AssignmentsPage() {
                   </button>
                 </div>
               </div>
-              {courseFromRedux?.assignments.map(assignment => (
+              {courseFromRedux?.assignments?.map(assignment => (
                 <div className="assignment-item" key={assignment.id} style={{ position: 'relative' }}>
                   <div className="assignment-info">
                     <h4>

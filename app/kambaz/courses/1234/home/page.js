@@ -151,7 +151,7 @@ export default function CourseHomePage() {
                           <FaEllipsisV />
                         </div>
                       </div>
-                      {module.items.map((item, idx) => (
+                      {module.items?.map((item, idx) => (
                         <div className="lesson" key={idx}>
                           <div className="lesson-title">
                             {item.type === 'file' && <FaFile />} 

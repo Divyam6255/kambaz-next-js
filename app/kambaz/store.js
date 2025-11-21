@@ -166,7 +166,7 @@ const coursesSlice = createSlice({
   reducers: {
     setCourses: (state, action) => {
       // Map courses from API to include 'id' and 'code' for compatibility
-      return action.payload.map(course => ({
+      return (action.payload || []).map(course => ({
         ...course,
         id: course.number,  // Use number as id for consistency
         code: course.number  // Use number as code for compatibility
