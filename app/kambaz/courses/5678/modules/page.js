@@ -183,7 +183,7 @@ export default function ModulesPage() {
                 </div>
               </div>
               {/* Render modules from Redux store */}
-              {course.modules.map(module => (
+              {courseFromRedux?.modules?.map(module => (
                 <div className="module" key={module.id}>
                   <div className="module-header">
                     <div className="module-title">

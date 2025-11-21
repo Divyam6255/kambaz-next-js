@@ -186,7 +186,7 @@ export default function AssignmentsPage() {
                   </button>
                 </div>
               </div>
-              {course.assignments.map(assignment => (
+              {course?.assignments?.map(assignment => (
                 <div className="assignment-item" key={assignment.id} style={{ position: 'relative' }}>
                   <div className="assignment-info">
                     <h4>
