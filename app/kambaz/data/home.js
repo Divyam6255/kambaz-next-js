@@ -1,9 +1,2 @@
-import { courses } from './dashboard';
-
-export const homeScreens = (courses || []).map(course => ({
-  id: course.id,
-  name: course.name,
-  code: course.code,
-  instructor: course.instructor,
-  announcements: course.home?.announcements || [],
-}));
+// Home screen data - not actively used, kept for reference
+export const homeScreens = [];
