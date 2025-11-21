@@ -312,7 +312,7 @@ export default function DashboardPage() {
           {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
           <h2>Published Courses</h2>
           <div className="courses-grid">
-            {courses.map((course) => {
+            {courses && Array.isArray(courses) && courses.map((course) => {
               let imgSrc = "/1_V-Jp13LvtVc2IiY2fp4qYw.jpg";
               let desc = course.name;
               if (course.number === '5678') imgSrc = "/PDP_textbook.jpg";
