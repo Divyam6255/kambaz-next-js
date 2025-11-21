@@ -3,12 +3,34 @@ import { usePathname } from 'next/navigation';
 import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaPlus, FaEllipsisV, FaChevronDown, FaFile, FaVideo, FaPencilAlt, FaCheckCircle } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../styles.css';
-import { courses } from '../../../data/courses.js';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCourses } from '../../../store';
+import axios from 'axios';
 
 export default function CourseHomePage() {
   const pathname = usePathname();
+  const dispatch = useDispatch();
+  const courses = useSelector((state) => state.courses);
+  
+  useEffect(() => {
+    const fetchCourses = async () => {
+      if (courses.length === 0) {
+        try {
+          const response = await axios.get('http://localhost:4000/api/courses', {
+            withCredentials: true
+          });
+          dispatch(setCourses(response.data));
+        } catch (error) {
+          console.error('Failed to fetch courses:', error);
+        }
+      }
+    };
+    fetchCourses();
+  }, [dispatch, courses.length]);
+  
   // Get course data for 9999
-  const course = courses.find(c => c.id === '9999');
+  const course = courses.find(c => c.id === '9999' || c.number === '9999');
   return (
     <div className="kambaz-container">
       <nav className="sidebar">
@@ -61,7 +83,7 @@ export default function CourseHomePage() {
       </nav>
       <main className="main-content">
         <div className="course-header">
-          <h1>{course.code} - {course.name}</h1>
+          <h1>{course?.number} - {course?.name}</h1>
         </div>
         <div className="course-layout">
           <div className="course-nav-sidebar" style={{backgroundColor: 'white'}}>

@@ -1,13 +1,45 @@
 "use client";
+import { useState, useEffect } from 'react';
 import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaPlus, FaEllipsisV, FaChevronDown, FaFile, FaVideo, FaPencilAlt, FaCheckCircle } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../styles.css';
 import { usePathname } from 'next/navigation';
-import { courses } from '../../../data/courses.js';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCourses } from '../../../store';
+import * as client from '../../../client';
 
 export default function CourseHomePage() {
   const pathname = usePathname();
-  const course = courses.find(c => c.id === '1234');
+  const dispatch = useDispatch();
+  const courses = useSelector((state) => state.courses);
+  const [course, setCourse] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCourse = async () => {
+      try {
+        const courseData = await client.getCourse('1234');
+        setCourse(courseData);
+        
+        // If Redux courses are empty, fetch all courses
+        if (courses.length === 0) {
+          const allCourses = await client.getAllCourses();
+          dispatch(setCourses(allCourses));
+        }
+      } catch (error) {
+        console.error('Error fetching course:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCourse();
+  }, [courses.length, dispatch]);
+
+  // Get course from Redux for modules data (for now)
+  const courseFromRedux = courses.find(c => c.id === '1234' || c.number === '1234');
+
+  if (loading) return <div>Loading...</div>;
+  if (!course) return <div>Course not found</div>;
   return (
     <div className="kambaz-container">
       <nav className="sidebar">
@@ -60,7 +92,7 @@ export default function CourseHomePage() {
       </nav>
       <main className="main-content">
         <div className="course-header">
-          <h1>{course.code} - {course.name}</h1>
+          <h1>{course.number} - {course.name}</h1>
         </div>
         <div className="course-layout">
           <div className="course-nav-sidebar" style={{backgroundColor: 'white'}}>
@@ -109,7 +141,7 @@ export default function CourseHomePage() {
                       </div>
                     </div>
                   </div>
-                  {course.modules.map(module => (
+                  {courseFromRedux?.modules.map(module => (
                     <div className="module" key={module.id}>
                       <div className="module-header">
                         <div className="module-title">

@@ -1,8 +1,66 @@
 'use client';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux';
 import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaGraduationCap } from 'react-icons/fa';
 import '../styles.css';
+import * as client from '../../client';
+import { setCurrentUser } from '../../store';
 
 export default function SignupPage() {
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const [userData, setUserData] = useState({
+    username: '',
+    password: '',
+    verifyPassword: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    dob: '',
+    role: 'STUDENT'
+  });
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    setError('');
+
+    // Validate passwords match
+    if (userData.password !== userData.verifyPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const user = await client.signup({
+        username: userData.username,
+        password: userData.password,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        email: userData.email,
+        dob: userData.dob,
+        role: userData.role
+      });
+      
+      // Auto sign in after signup
+      const signedInUser = await client.signin({
+        username: userData.username,
+        password: userData.password
+      });
+      
+      dispatch(setCurrentUser(signedInUser));
+      router.push('/kambaz/dashboard');
+    } catch (err) {
+      console.error('Signup error:', err);
+      setError(err.response?.data?.message || 'Error creating account');
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div className="kambaz-container">
       <nav className="sidebar">
@@ -72,14 +130,28 @@ export default function SignupPage() {
           
           <div className="signup-form">
             <h2>Sign Up</h2>
-            <form>
+            {error && (
+              <div style={{
+                background: '#f8d7da',
+                color: '#721c24',
+                padding: '12px',
+                borderRadius: 4,
+                marginBottom: 16,
+                border: '1px solid #f5c6cb'
+              }}>
+                {error}
+              </div>
+            )}
+            <form onSubmit={handleSignup}>
               <div className="form-group">
                 <label htmlFor="username">Username:</label>
                 <input 
                   type="text" 
                   id="username" 
                   name="username" 
-                  defaultValue="bob"
+                  value={userData.username}
+                  onChange={(e) => setUserData({ ...userData, username: e.target.value })}
+                  required
                 />
               </div>
               
@@ -89,7 +161,9 @@ export default function SignupPage() {
                   type="password" 
                   id="password" 
                   name="password" 
-                  defaultValue="password123"
+                  value={userData.password}
+                  onChange={(e) => setUserData({ ...userData, password: e.target.value })}
+                  required
                 />
               </div>
               
@@ -99,16 +173,77 @@ export default function SignupPage() {
                   type="password" 
                   id="verifyPassword" 
                   name="verifyPassword" 
-                  defaultValue="password123"
+                  value={userData.verifyPassword}
+                  onChange={(e) => setUserData({ ...userData, verifyPassword: e.target.value })}
+                  required
                 />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="firstName">First Name:</label>
+                <input 
+                  type="text" 
+                  id="firstName" 
+                  name="firstName" 
+                  value={userData.firstName}
+                  onChange={(e) => setUserData({ ...userData, firstName: e.target.value })}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="lastName">Last Name:</label>
+                <input 
+                  type="text" 
+                  id="lastName" 
+                  name="lastName" 
+                  value={userData.lastName}
+                  onChange={(e) => setUserData({ ...userData, lastName: e.target.value })}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="email">Email:</label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  name="email" 
+                  value={userData.email}
+                  onChange={(e) => setUserData({ ...userData, email: e.target.value })}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="dob">Date of Birth:</label>
+                <input 
+                  type="date" 
+                  id="dob" 
+                  name="dob" 
+                  value={userData.dob}
+                  onChange={(e) => setUserData({ ...userData, dob: e.target.value })}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="role">Role:</label>
+                <select 
+                  id="role" 
+                  name="role" 
+                  value={userData.role}
+                  onChange={(e) => setUserData({ ...userData, role: e.target.value })}
+                >
+                  <option value="STUDENT">Student</option>
+                  <option value="FACULTY">Faculty</option>
+                  <option value="TA">TA</option>
+                  <option value="ADMIN">Admin</option>
+                </select>
               </div>
               
               <div className="form-buttons">
-                <button type="button" onClick={() => window.location.href='/kambaz/account/signin'}>
+                <button type="button" onClick={() => router.push('/kambaz/account/signin')}>
                   Sign In
                 </button>
-                <button type="button" onClick={() => window.location.href='/kambaz/account/profile'}>
-                  Sign Up
+                <button type="submit" disabled={loading}>
+                  {loading ? 'Creating account...' : 'Sign Up'}
                 </button>
               </div>
             </form>

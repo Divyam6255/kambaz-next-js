@@ -1,8 +1,38 @@
 'use client';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux';
 import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaGraduationCap } from 'react-icons/fa';
 import '../styles.css';
+import * as client from '../../client';
+import { setCurrentUser } from '../../store';
 
 export default function SigninPage() {
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const [credentials, setCredentials] = useState({
+    username: '',
+    password: ''
+  });
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleSignin = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    try {
+      const user = await client.signin(credentials);
+      dispatch(setCurrentUser(user));
+      router.push('/kambaz/dashboard');
+    } catch (err) {
+      console.error('Signin error:', err);
+      setError(err.response?.data?.message || 'Invalid username or password');
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div className="kambaz-container">
       <nav className="sidebar">
@@ -72,14 +102,28 @@ export default function SigninPage() {
           
           <div className="signin-form">
             <h2>Sign In</h2>
-            <form>
+            {error && (
+              <div style={{
+                background: '#f8d7da',
+                color: '#721c24',
+                padding: '12px',
+                borderRadius: 4,
+                marginBottom: 16,
+                border: '1px solid #f5c6cb'
+              }}>
+                {error}
+              </div>
+            )}
+            <form onSubmit={handleSignin}>
               <div className="form-group">
                 <label htmlFor="username">Username:</label>
                 <input 
                   type="text" 
                   id="username" 
                   name="username" 
-                  defaultValue="alice"
+                  value={credentials.username}
+                  onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
+                  required
                 />
               </div>
               
@@ -89,15 +133,17 @@ export default function SigninPage() {
                   type="password" 
                   id="password" 
                   name="password" 
-                  defaultValue="secret123"
+                  value={credentials.password}
+                  onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
+                  required
                 />
               </div>
               
               <div className="form-buttons">
-                <button type="button" onClick={() => window.location.href='/kambaz/dashboard'}>
-                  Sign In
+                <button type="submit" disabled={loading}>
+                  {loading ? 'Signing in...' : 'Sign In'}
                 </button>
-                <button type="button" onClick={() => window.location.href='/kambaz/account/signup'}>
+                <button type="button" onClick={() => router.push('/kambaz/account/signup')}>
                   Sign Up
                 </button>
               </div>

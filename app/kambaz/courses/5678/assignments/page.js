@@ -1,16 +1,34 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaSearch, FaPlus, FaEllipsisV, FaEdit, FaTrash } from 'react-icons/fa';
 import '../../styles.css';
 import { usePathname } from 'next/navigation';
 import { useSelector, useDispatch } from 'react-redux';
-import { addAssignment, updateAssignment, deleteAssignment } from '../../../store';
+import { setCourses, addAssignmentThunk, updateAssignmentThunk, deleteAssignmentThunk } from '../../../store';
+import axios from 'axios';
 
 export default function AssignmentsPage() {
   const pathname = usePathname();
   const dispatch = useDispatch();
   const courses = useSelector((state) => state.courses);
-  const course = courses.find(c => c.id === '5678');
+  
+  useEffect(() => {
+    const fetchCourses = async () => {
+      if (courses.length === 0) {
+        try {
+          const response = await axios.get('http://localhost:4000/api/courses', {
+            withCredentials: true
+          });
+          dispatch(setCourses(response.data));
+        } catch (error) {
+          console.error('Failed to fetch courses:', error);
+        }
+      }
+    };
+    fetchCourses();
+  }, [dispatch, courses.length]);
+  
+  const course = courses.find(c => c.id === '5678' || c.number === '5678');
 
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [showEditDialog, setShowEditDialog] = useState(false);
@@ -23,9 +41,9 @@ export default function AssignmentsPage() {
     description: ''
   });
 
-  const handleAddAssignment = () => {
+  const handleAddAssignment = async () => {
     if (newAssignment.id && newAssignment.title && newAssignment.due && newAssignment.points) {
-      dispatch(addAssignment({ 
+      await dispatch(addAssignmentThunk({ 
         courseId: '5678', 
         assignment: { 
           ...newAssignment, 
@@ -37,9 +55,9 @@ export default function AssignmentsPage() {
     }
   };
 
-  const handleEditAssignment = () => {
+  const handleEditAssignment = async () => {
     if (editingAssignment) {
-      dispatch(updateAssignment({
+      await dispatch(updateAssignmentThunk({
         courseId: '5678',
         assignmentId: editingAssignment.id,
         updates: { 
@@ -54,9 +72,9 @@ export default function AssignmentsPage() {
     }
   };
 
-  const handleDeleteAssignment = (assignmentId) => {
+  const handleDeleteAssignment = async (assignmentId) => {
     if (confirm('Are you sure you want to delete this assignment?')) {
-      dispatch(deleteAssignment({ courseId: '5678', assignmentId }));
+      await dispatch(deleteAssignmentThunk({ courseId: '5678', assignmentId }));
     }
   };
 
@@ -116,7 +134,7 @@ export default function AssignmentsPage() {
       </nav>
       <main className="main-content">
         <div className="course-header">
-          <h1>{course.code} - {course.name}</h1>
+          <h1>{course?.number} - {course?.name}</h1>
         </div>
         <div className="course-layout">
           <div className="course-nav-sidebar" style={{ backgroundColor: 'white' }}>

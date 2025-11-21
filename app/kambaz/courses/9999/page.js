@@ -3,13 +3,35 @@
 import Image from 'next/image';
 import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaGraduationCap } from 'react-icons/fa';
 import '../styles.css';
-import { courses } from '../../data/courses';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCourses } from '../../store';
+import axios from 'axios';
 import { navigationLinks } from '../../data/navigation';
 import { usePathname } from 'next/navigation';
 
 export default function CoursePage() {
-  const course = courses.find(c => c.id === '9999');
   const pathname = usePathname();
+  const dispatch = useDispatch();
+  const courses = useSelector((state) => state.courses);
+  
+  useEffect(() => {
+    const fetchCourses = async () => {
+      if (courses.length === 0) {
+        try {
+          const response = await axios.get('http://localhost:4000/api/courses', {
+            withCredentials: true
+          });
+          dispatch(setCourses(response.data));
+        } catch (error) {
+          console.error('Failed to fetch courses:', error);
+        }
+      }
+    };
+    fetchCourses();
+  }, [dispatch, courses.length]);
+  
+  const course = courses.find(c => c.id === '9999' || c.number === '9999');
 
   return (
     <div className="kambaz-container">

@@ -4,11 +4,33 @@ import Image from 'next/image';
 import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaPlus, FaCheckCircle, FaChevronDown, FaEllipsisV, FaFile, FaVideo, FaPencilAlt } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../styles.css';
-import { courses } from '../../../data/courses';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCourses } from '../../../store';
+import axios from 'axios';
 
 export default function Course5678HomePage() {
   const pathname = usePathname();
-  const course = courses.find(c => c.id === '5678');
+  const dispatch = useDispatch();
+  const courses = useSelector((state) => state.courses);
+  
+  useEffect(() => {
+    const fetchCourses = async () => {
+      if (courses.length === 0) {
+        try {
+          const response = await axios.get('http://localhost:4000/api/courses', {
+            withCredentials: true
+          });
+          dispatch(setCourses(response.data));
+        } catch (error) {
+          console.error('Failed to fetch courses:', error);
+        }
+      }
+    };
+    fetchCourses();
+  }, [dispatch, courses.length]);
+  
+  const course = courses.find(c => c.id === '5678' || c.number === '5678');
   
   return (
     <div className="kambaz-container">
@@ -63,7 +85,7 @@ export default function Course5678HomePage() {
       
       <main className="main-content">
         <div className="course-header">
-          <h1>{course.code} - {course.name}</h1>
+          <h1>{course?.number} - {course?.name}</h1>
         </div>
         
         <div className="course-layout">

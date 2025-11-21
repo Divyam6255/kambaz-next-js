@@ -1,18 +1,43 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaPlus, FaEllipsisV, FaChevronDown, FaFile, FaVideo, FaPencilAlt, FaCheckCircle, FaTrash, FaEdit } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../styles.css';
 import { usePathname } from 'next/navigation';
 import { useSelector, useDispatch } from 'react-redux';
-import { addModule, updateModule, deleteModule } from '../../../store';
+import { setCourses, addModuleThunk, updateModuleThunk, deleteModuleThunk } from '../../../store';
+import * as client from '../../../client';
 
 export default function ModulesPage() {
   const pathname = usePathname();
   const dispatch = useDispatch();
   const courses = useSelector((state) => state.courses);
-  const course = courses.find(c => c.id === '1234');
+  const [course, setCourse] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCourse = async () => {
+      try {
+        const courseData = await client.getCourse('1234');
+        setCourse(courseData);
+        
+        // If Redux courses are empty, fetch all courses
+        if (courses.length === 0) {
+          const allCourses = await client.getAllCourses();
+          dispatch(setCourses(allCourses));
+        }
+      } catch (error) {
+        console.error('Error fetching course:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCourse();
+  }, [courses.length, dispatch]);
+
+  // Get course from Redux for modules data (for now)
+  const courseFromRedux = courses.find(c => c.id === '1234' || c.number === '1234');
 
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [showEditDialog, setShowEditDialog] = useState(false);
@@ -23,9 +48,9 @@ export default function ModulesPage() {
     items: []
   });
 
-  const handleAddModule = () => {
+  const handleAddModule = async () => {
     if (newModule.id && newModule.title) {
-      dispatch(addModule({ 
+      await dispatch(addModuleThunk({ 
         courseId: '1234', 
         module: { ...newModule, items: [] } 
       }));
@@ -34,9 +59,9 @@ export default function ModulesPage() {
     }
   };
 
-  const handleEditModule = () => {
+  const handleEditModule = async () => {
     if (editingModule) {
-      dispatch(updateModule({
+      await dispatch(updateModuleThunk({
         courseId: '1234',
         moduleId: editingModule.id,
         updates: { title: editingModule.title }
@@ -46,9 +71,9 @@ export default function ModulesPage() {
     }
   };
 
-  const handleDeleteModule = (moduleId) => {
+  const handleDeleteModule = async (moduleId) => {
     if (confirm('Are you sure you want to delete this module?')) {
-      dispatch(deleteModule({ courseId: '1234', moduleId }));
+      await dispatch(deleteModuleThunk({ courseId: '1234', moduleId }));
     }
   };
 
@@ -56,6 +81,10 @@ export default function ModulesPage() {
     setEditingModule({ ...module });
     setShowEditDialog(true);
   };
+
+  if (loading) return <div>Loading...</div>;
+  if (!course) return <div>Course not found</div>;
+  if (!courseFromRedux) return <div>Loading course modules...</div>;
 
   return (
     <div className="kambaz-container">
@@ -108,7 +137,7 @@ export default function ModulesPage() {
       </nav>
       <main className="main-content">
         <div className="course-header">
-          <h1>{course.code} - {course.name}</h1>
+          <h1>{course.number} - {course.name}</h1>
         </div>
         <div className="course-layout">
           <div className="course-nav-sidebar" style={{ backgroundColor: 'white' }}>
@@ -156,7 +185,7 @@ export default function ModulesPage() {
                 </div>
               </div>
               {/* Render modules from Redux store */}
-              {course.modules.map(module => (
+              {courseFromRedux?.modules.map(module => (
                 <div className="module" key={module.id}>
                   <div className="module-header">
                     <div className="module-title">

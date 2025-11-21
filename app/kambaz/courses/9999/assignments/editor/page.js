@@ -61,7 +61,7 @@ export default function AssignmentEditorPage() {
       
       <main className="main-content">
         <div className="course-header">
-          <h1>{course.code} - {course.name}</h1>
+          <h1>{course?.number} - {course?.name}</h1>
         </div>
         
         <div className="course-layout">

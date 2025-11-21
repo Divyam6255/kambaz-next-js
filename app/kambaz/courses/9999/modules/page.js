@@ -1,18 +1,37 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaPlus, FaEllipsisV, FaChevronDown, FaFile, FaVideo, FaPencilAlt, FaCheckCircle, FaTrash, FaEdit } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../styles.css';
 import { usePathname } from 'next/navigation';
 import { useSelector, useDispatch } from 'react-redux';
-import { addModule, updateModule, deleteModule } from '../../../store';
+import { setCourses, addModuleThunk, updateModuleThunk, deleteModuleThunk } from '../../../store';
+import axios from 'axios';
 
 export default function ModulesPage() {
   const pathname = usePathname();
   const dispatch = useDispatch();
   const courses = useSelector((state) => state.courses);
-  const course = courses.find(c => c.id === '9999');
+  
+  useEffect(() => {
+    const fetchCourses = async () => {
+      if (courses.length === 0) {
+        try {
+          const response = await axios.get('http://localhost:4000/api/courses', {
+            withCredentials: true
+          });
+          dispatch(setCourses(response.data));
+        } catch (error) {
+          console.error('Failed to fetch courses:', error);
+        }
+      }
+    };
+    fetchCourses();
+  }, [dispatch, courses.length]);
+  
+  const courseFromRedux = courses.find(c => c.id === '9999' || c.number === '9999');
+  const course = courseFromRedux;
 
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [showEditDialog, setShowEditDialog] = useState(false);
@@ -23,9 +42,9 @@ export default function ModulesPage() {
     items: []
   });
 
-  const handleAddModule = () => {
+  const handleAddModule = async () => {
     if (newModule.id && newModule.title) {
-      dispatch(addModule({ 
+      await dispatch(addModuleThunk({ 
         courseId: '9999', 
         module: { ...newModule, items: [] } 
       }));
@@ -34,9 +53,9 @@ export default function ModulesPage() {
     }
   };
 
-  const handleEditModule = () => {
+  const handleEditModule = async () => {
     if (editingModule) {
-      dispatch(updateModule({
+      await dispatch(updateModuleThunk({
         courseId: '9999',
         moduleId: editingModule.id,
         updates: { title: editingModule.title }
@@ -46,9 +65,9 @@ export default function ModulesPage() {
     }
   };
 
-  const handleDeleteModule = (moduleId) => {
+  const handleDeleteModule = async (moduleId) => {
     if (confirm('Are you sure you want to delete this module?')) {
-      dispatch(deleteModule({ courseId: '9999', moduleId }));
+      await dispatch(deleteModuleThunk({ courseId: '9999', moduleId }));
     }
   };
 
@@ -108,7 +127,7 @@ export default function ModulesPage() {
       </nav>
       <main className="main-content">
         <div className="course-header">
-          <h1>{course.code} - {course.name}</h1>
+          <h1>{course?.number} - {course?.name}</h1>
         </div>
         <div className="course-layout">
           <div className="course-nav-sidebar" style={{ backgroundColor: 'white' }}>

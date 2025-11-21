@@ -1,16 +1,37 @@
 "use client";
+import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask } from 'react-icons/fa';
-import { courses } from '../../../data/courses';
 import { peopleByCourse } from '../../../data/people';
 import '../../styles.css';
+import * as client from '../../../client';
 
 export default function PeoplePage() {
   const pathname = usePathname();
-  const course = courses.find(c => c.id === '1234');
+  const [course, setCourse] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCourse = async () => {
+      try {
+        const courseData = await client.getCourse('1234');
+        setCourse(courseData);
+      } catch (error) {
+        console.error('Error fetching course:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCourse();
+  }, []);
+
   const match = pathname.match(/\/courses\/(\d+)\//);
   const courseId = match ? match[1] : '1234';
   const coursePeople = peopleByCourse[courseId] || [];
+
+  if (loading) return <div>Loading...</div>;
+  if (!course) return <div>Course not found</div>;
+
   return (
     <div className="kambaz-container">
       <nav className="sidebar">
@@ -64,7 +85,7 @@ export default function PeoplePage() {
       
       <main className="main-content">
         <div className="course-header">
-          <h1>{course.code} - {course.name}</h1>
+          <h1>{course.number} - {course.name}</h1>
         </div>
         
         <div className="course-layout">

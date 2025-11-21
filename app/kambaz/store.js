@@ -1,11 +1,63 @@
-import { configureStore, createSlice } from '@reduxjs/toolkit';
+import { configureStore, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import * as client from './client';
 
-// Initial data
+// Async thunks for modules
+export const addModuleThunk = createAsyncThunk(
+  'courses/addModule',
+  async ({ courseId, module }) => {
+    const updatedCourse = await client.addModule(courseId, module);
+    return updatedCourse;
+  }
+);
+
+export const updateModuleThunk = createAsyncThunk(
+  'courses/updateModule',
+  async ({ courseId, moduleId, updates }) => {
+    const updatedCourse = await client.updateModule(courseId, moduleId, updates);
+    return updatedCourse;
+  }
+);
+
+export const deleteModuleThunk = createAsyncThunk(
+  'courses/deleteModule',
+  async ({ courseId, moduleId }) => {
+    const updatedCourse = await client.deleteModule(courseId, moduleId);
+    return updatedCourse;
+  }
+);
+
+// Async thunks for assignments
+export const addAssignmentThunk = createAsyncThunk(
+  'courses/addAssignment',
+  async ({ courseId, assignment }) => {
+    const updatedCourse = await client.addAssignment(courseId, assignment);
+    return updatedCourse;
+  }
+);
+
+export const updateAssignmentThunk = createAsyncThunk(
+  'courses/updateAssignment',
+  async ({ courseId, assignmentId, updates }) => {
+    const updatedCourse = await client.updateAssignment(courseId, assignmentId, updates);
+    return updatedCourse;
+  }
+);
+
+export const deleteAssignmentThunk = createAsyncThunk(
+  'courses/deleteAssignment',
+  async ({ courseId, assignmentId }) => {
+    const updatedCourse = await client.deleteAssignment(courseId, assignmentId);
+    return updatedCourse;
+  }
+);
+
+// Initial data - keep for modules/assignments structure until Phase 3/4
 const initialCourses = [
   {
     id: '1234',
     name: 'Web Development',
     code: 'CS1234',
+    number: '1234',
     instructor: 'Bob Johnson',
     modules: [
       { 
@@ -39,6 +91,7 @@ const initialCourses = [
     id: '5678',
     name: 'Programming Design and Paradigm',
     code: 'CS5678',
+    number: '5678',
     instructor: 'Carol Lee',
     modules: [
       { 
@@ -72,6 +125,7 @@ const initialCourses = [
     id: '9999',
     name: 'Advanced Algorithms',
     code: 'CS9999',
+    number: '9999',
     instructor: 'Eve Davis',
     modules: [
       { 
@@ -108,29 +162,40 @@ const initialCourses = [
 // Courses Slice
 const coursesSlice = createSlice({
   name: 'courses',
-  initialState: initialCourses,
+  initialState: [],
   reducers: {
+    setCourses: (state, action) => {
+      // Map courses from API to include 'id' and 'code' for compatibility
+      return action.payload.map(course => ({
+        ...course,
+        id: course.number,  // Use number as id for consistency
+        code: course.number  // Use number as code for compatibility
+      }));
+    },
     addCourse: (state, action) => {
       state.push({
         ...action.payload,
-        modules: [],
-        assignments: [],
-        people: [],
-        home: {
+        id: action.payload.number || action.payload._id,
+        code: action.payload.number,
+        modules: action.payload.modules || [],
+        assignments: action.payload.assignments || [],
+        people: action.payload.people || [],
+        home: action.payload.home || {
           welcome: `Welcome to ${action.payload.name}!`,
           announcements: [],
         },
       });
     },
     updateCourse: (state, action) => {
-      const index = state.findIndex(c => c.id === action.payload.id);
+      const index = state.findIndex(c => c._id === action.payload._id);
       if (index !== -1) {
         state[index] = { ...state[index], ...action.payload };
       }
     },
     deleteCourse: (state, action) => {
-      return state.filter(c => c.id !== action.payload);
+      return state.filter(c => c._id !== action.payload);
     },
+    // Keep local-only actions for backward compatibility
     addModule: (state, action) => {
       const { courseId, module } = action.payload;
       const course = state.find(c => c.id === courseId);
@@ -180,9 +245,105 @@ const coursesSlice = createSlice({
       }
     },
   },
+  extraReducers: (builder) => {
+    // Handle module async thunks
+    builder
+      .addCase(addModuleThunk.fulfilled, (state, action) => {
+        const updatedCourse = action.payload;
+        const index = state.findIndex(c => c.number === updatedCourse.number);
+        if (index !== -1) {
+          state[index] = {
+            ...updatedCourse,
+            id: updatedCourse.number,
+            code: updatedCourse.number
+          };
+        }
+      })
+      .addCase(updateModuleThunk.fulfilled, (state, action) => {
+        const updatedCourse = action.payload;
+        const index = state.findIndex(c => c.number === updatedCourse.number);
+        if (index !== -1) {
+          state[index] = {
+            ...updatedCourse,
+            id: updatedCourse.number,
+            code: updatedCourse.number
+          };
+        }
+      })
+      .addCase(deleteModuleThunk.fulfilled, (state, action) => {
+        const updatedCourse = action.payload;
+        const index = state.findIndex(c => c.number === updatedCourse.number);
+        if (index !== -1) {
+          state[index] = {
+            ...updatedCourse,
+            id: updatedCourse.number,
+            code: updatedCourse.number
+          };
+        }
+      })
+      // Handle assignment async thunks
+      .addCase(addAssignmentThunk.fulfilled, (state, action) => {
+        const updatedCourse = action.payload;
+        const index = state.findIndex(c => c.number === updatedCourse.number);
+        if (index !== -1) {
+          state[index] = {
+            ...updatedCourse,
+            id: updatedCourse.number,
+            code: updatedCourse.number
+          };
+        }
+      })
+      .addCase(updateAssignmentThunk.fulfilled, (state, action) => {
+        const updatedCourse = action.payload;
+        const index = state.findIndex(c => c.number === updatedCourse.number);
+        if (index !== -1) {
+          state[index] = {
+            ...updatedCourse,
+            id: updatedCourse.number,
+            code: updatedCourse.number
+          };
+        }
+      })
+      .addCase(deleteAssignmentThunk.fulfilled, (state, action) => {
+        const updatedCourse = action.payload;
+        const index = state.findIndex(c => c.number === updatedCourse.number);
+        if (index !== -1) {
+          state[index] = {
+            ...updatedCourse,
+            id: updatedCourse.number,
+            code: updatedCourse.number
+          };
+        }
+      });
+  },
+});
+
+// User slice for authentication
+const usersSlice = createSlice({
+  name: 'users',
+  initialState: {
+    currentUser: null,
+    isAuthenticated: false,
+  },
+  reducers: {
+    setCurrentUser: (state, action) => {
+      state.currentUser = action.payload;
+      state.isAuthenticated = !!action.payload;
+    },
+    clearCurrentUser: (state) => {
+      state.currentUser = null;
+      state.isAuthenticated = false;
+    },
+    updateCurrentUser: (state, action) => {
+      if (state.currentUser) {
+        state.currentUser = { ...state.currentUser, ...action.payload };
+      }
+    },
+  },
 });
 
 export const {
+  setCourses,
   addCourse,
   updateCourse,
   deleteCourse,
@@ -194,9 +355,16 @@ export const {
   deleteAssignment,
 } = coursesSlice.actions;
 
+export const {
+  setCurrentUser,
+  clearCurrentUser,
+  updateCurrentUser,
+} = usersSlice.actions;
+
 const store = configureStore({
   reducer: {
     courses: coursesSlice.reducer,
+    users: usersSlice.reducer,
   },
 });
 
