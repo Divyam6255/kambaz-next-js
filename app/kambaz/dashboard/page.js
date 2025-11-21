@@ -402,19 +402,22 @@ export default function DashboardPage() {
               // Check if this course is currently active (user is viewing it)
               const isActive = pathname.includes(`/courses/${course.number}`);
               const courseKey = course._id || course.id || course.number;
-              const isEnrolled = enrolledCourseIds.has(course._id) || enrolledCourseIds.has(course.number);
               
-              // Debug logging
-              if (course.number === '1234') {
-                console.log('Course 1234 check:', {
-                  courseId: course._id,
-                  courseNumber: course.number,
-                  enrolledIds: Array.from(enrolledCourseIds),
-                  hasId: enrolledCourseIds.has(course._id),
-                  hasNumber: enrolledCourseIds.has(course.number),
-                  isEnrolled
-                });
-              }
+              // More comprehensive enrollment check
+              const isEnrolled = enrolledCourseIds.has(course._id) || 
+                                 enrolledCourseIds.has(course.number) ||
+                                 enrolledCourseIds.has(course.id) ||
+                                 enrolledCourseIds.has(courseKey);
+              
+              // Debug logging for enrollment status
+              console.log(`Course ${course.number} enrollment check:`, {
+                courseId: course._id,
+                courseNumber: course.number,
+                courseKey,
+                enrolledIdsArray: Array.from(enrolledCourseIds),
+                isEnrolled,
+                enrollmentCount: enrollments.length
+              });
 
               return (
                 <div className={`course-card ${isActive ? 'active' : ''}`} key={courseKey} style={{ position: 'relative' }}>
