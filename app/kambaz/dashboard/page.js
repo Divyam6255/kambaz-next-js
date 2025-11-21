@@ -172,6 +172,88 @@ export default function DashboardPage() {
     }
   };
 
+  const handleToggleEnrollment = async (courseId) => {
+    if (!currentUser) {
+      alert('Please sign in to enroll');
+      return;
+    }
+    
+    const course = courses.find(c => c._id === courseId || c.number === courseId);
+    const isEnrolled = enrolledCourseIds.has(courseId) || 
+                       enrolledCourseIds.has(course?._id) || 
+                       enrolledCourseIds.has(course?.number);
+    
+    if (isEnrolled) {
+      // Unenroll
+      try {
+        await client.unenrollFromCourse(currentUser._id, courseId);
+        setEnrolledCourseIds(prev => {
+          const newSet = new Set(prev);
+          newSet.delete(courseId);
+          if (course) {
+            if (course._id) newSet.delete(course._id);
+            if (course.number) newSet.delete(course.number);
+          }
+          return newSet;
+        });
+        alert('✓ Successfully unenrolled from course');
+        // Refresh enrollments in background
+        setTimeout(async () => {
+          try {
+            const userEnrollments = await client.getCurrentUserEnrollments();
+            setEnrollments(userEnrollments);
+            const enrolledIds = new Set();
+            userEnrollments.forEach(e => {
+              if (e.course._id) enrolledIds.add(e.course._id);
+              if (e.course.number) enrolledIds.add(e.course.number);
+            });
+            setEnrolledCourseIds(enrolledIds);
+          } catch (err) {
+            console.error('Error refreshing enrollments:', err);
+          }
+        }, 100);
+      } catch (err) {
+        console.error('Error unenrolling:', err);
+        const errorMsg = err.response?.data?.message || 'Failed to unenroll from course';
+        alert('❌ ' + errorMsg);
+      }
+    } else {
+      // Enroll
+      try {
+        await client.enrollInCourse(currentUser._id, courseId, 'STUDENT');
+        setEnrolledCourseIds(prev => {
+          const newSet = new Set(prev);
+          newSet.add(courseId);
+          if (course) {
+            if (course._id) newSet.add(course._id);
+            if (course.number) newSet.add(course.number);
+          }
+          return newSet;
+        });
+        alert('✓ Successfully enrolled in course!');
+        // Refresh enrollments in background
+        setTimeout(async () => {
+          try {
+            const userEnrollments = await client.getCurrentUserEnrollments();
+            setEnrollments(userEnrollments);
+            const enrolledIds = new Set();
+            userEnrollments.forEach(e => {
+              if (e.course._id) enrolledIds.add(e.course._id);
+              if (e.course.number) enrolledIds.add(e.course.number);
+            });
+            setEnrolledCourseIds(enrolledIds);
+          } catch (err) {
+            console.error('Error refreshing enrollments:', err);
+          }
+        }, 100);
+      } catch (err) {
+        console.error('Error enrolling:', err);
+        const errorMsg = err.response?.data?.message || 'Failed to enroll in course';
+        alert('❌ ' + errorMsg);
+      }
+    }
+  };
+
   const handleEnroll = async (courseId) => {
     if (!currentUser) {
       alert('Please sign in to enroll');
@@ -365,47 +447,25 @@ export default function DashboardPage() {
                     borderRadius: '4px'
                   }}>
                     {currentUser && (
-                      isEnrolled ? (
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            handleUnenroll(course._id);
-                          }}
-                          style={{
-                            padding: '5px 10px',
-                            backgroundColor: '#ffc107',
-                            color: 'black',
-                            border: 'none',
-                            borderRadius: '4px',
-                            cursor: 'pointer',
-                            fontSize: '12px',
-                            fontWeight: 'bold'
-                          }}
-                          title="Unenroll from Course"
-                        >
-                          Unenroll
-                        </button>
-                      ) : (
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            handleEnroll(course._id);
-                          }}
-                          style={{
-                            padding: '5px 10px',
-                            backgroundColor: '#28a745',
-                            color: 'white',
-                            border: 'none',
-                            borderRadius: '4px',
-                            cursor: 'pointer',
-                            fontSize: '12px',
-                            fontWeight: 'bold'
-                          }}
-                          title="Enroll in Course"
-                        >
-                          Enroll
-                        </button>
-                      )
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleToggleEnrollment(course._id);
+                        }}
+                        style={{
+                          padding: '5px 10px',
+                          backgroundColor: isEnrolled ? '#ffc107' : '#28a745',
+                          color: isEnrolled ? 'black' : 'white',
+                          border: 'none',
+                          borderRadius: '4px',
+                          cursor: 'pointer',
+                          fontSize: '12px',
+                          fontWeight: 'bold'
+                        }}
+                        title={isEnrolled ? 'Unenroll from Course' : 'Enroll in Course'}
+                      >
+                        {isEnrolled ? 'Unenroll' : 'Enroll'}
+                      </button>
                     )}
                     <button
                       onClick={(e) => {
