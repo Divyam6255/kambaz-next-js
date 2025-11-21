@@ -250,7 +250,7 @@ const coursesSlice = createSlice({
     builder
       .addCase(addModuleThunk.fulfilled, (state, action) => {
         const updatedCourse = action.payload;
-        const index = state.findIndex(c => c.number === updatedCourse.number);
+        const index = state.findIndex(c => c.number === updatedCourse.number || c._id === updatedCourse._id);
         if (index !== -1) {
           state[index] = {
             ...updatedCourse,
@@ -261,7 +261,7 @@ const coursesSlice = createSlice({
       })
       .addCase(updateModuleThunk.fulfilled, (state, action) => {
         const updatedCourse = action.payload;
-        const index = state.findIndex(c => c.number === updatedCourse.number);
+        const index = state.findIndex(c => c.number === updatedCourse.number || c._id === updatedCourse._id);
         if (index !== -1) {
           state[index] = {
             ...updatedCourse,
@@ -272,7 +272,7 @@ const coursesSlice = createSlice({
       })
       .addCase(deleteModuleThunk.fulfilled, (state, action) => {
         const updatedCourse = action.payload;
-        const index = state.findIndex(c => c.number === updatedCourse.number);
+        const index = state.findIndex(c => c.number === updatedCourse.number || c._id === updatedCourse._id);
         if (index !== -1) {
           state[index] = {
             ...updatedCourse,
@@ -284,7 +284,7 @@ const coursesSlice = createSlice({
       // Handle assignment async thunks
       .addCase(addAssignmentThunk.fulfilled, (state, action) => {
         const updatedCourse = action.payload;
-        const index = state.findIndex(c => c.number === updatedCourse.number);
+        const index = state.findIndex(c => c.number === updatedCourse.number || c._id === updatedCourse._id);
         if (index !== -1) {
           state[index] = {
             ...updatedCourse,
@@ -295,7 +295,7 @@ const coursesSlice = createSlice({
       })
       .addCase(updateAssignmentThunk.fulfilled, (state, action) => {
         const updatedCourse = action.payload;
-        const index = state.findIndex(c => c.number === updatedCourse.number);
+        const index = state.findIndex(c => c.number === updatedCourse.number || c._id === updatedCourse._id);
         if (index !== -1) {
           state[index] = {
             ...updatedCourse,
@@ -306,7 +306,7 @@ const coursesSlice = createSlice({
       })
       .addCase(deleteAssignmentThunk.fulfilled, (state, action) => {
         const updatedCourse = action.payload;
-        const index = state.findIndex(c => c.number === updatedCourse.number);
+        const index = state.findIndex(c => c.number === updatedCourse.number || c._id === updatedCourse._id);
         if (index !== -1) {
           state[index] = {
             ...updatedCourse,
