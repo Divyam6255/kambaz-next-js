@@ -28,8 +28,6 @@ export default function AssignmentsPage() {
     fetchCourses();
   }, [dispatch, courses.length]);
   
-  const course = courses.find(c => c.id === '5678' || c.number === '5678');
-
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [editingAssignment, setEditingAssignment] = useState(null);
@@ -40,6 +38,12 @@ export default function AssignmentsPage() {
     points: '',
     description: ''
   });
+
+  const course = courses.find(c => c.id === '5678' || c.number === '5678');
+
+  if (!course) {
+    return <div>Loading course...</div>;
+  }
 
   const handleAddAssignment = async () => {
     if (newAssignment.id && newAssignment.title && newAssignment.due && newAssignment.points) {

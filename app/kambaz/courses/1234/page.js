@@ -33,6 +33,10 @@ export default function CoursePage() {
   
   const course = courses.find(c => c.id === '1234' || c.number === '1234');
 
+  if (!course) {
+    return <div>Loading course...</div>;
+  }
+
   return (
     <div className="kambaz-container">
       <nav className="sidebar">

@@ -13,7 +13,7 @@ export default function WorkingWithObjects() {
     score: 0,
   });
 
-  const [module, setModule] = useState({
+  const [module] = useState({
     id: "CS101",
     name: "Introduction to Computer Science",
     description: "Learn the fundamentals of programming and computer science",
