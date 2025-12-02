@@ -4,5 +4,6 @@ export const navigationLinks = [
   { label: 'Courses', href: '/kambaz/courses' },
   { label: 'Calendar', href: '/kambaz/calendar' },
   { label: 'Inbox', href: '/kambaz/inbox' },
+  { label: 'Users', href: '/kambaz/users' },
   { label: 'Labs', href: '/labs' },
 ];

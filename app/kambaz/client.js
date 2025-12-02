@@ -39,6 +39,27 @@ export const updateProfile = async (profileData) => {
   return response.data;
 };
 
+// Admin User Management APIs
+export const getAllUsers = async () => {
+  const response = await axios.get(USERS_API);
+  return response.data;
+};
+
+export const createUser = async (userData) => {
+  const response = await axios.post(USERS_API, userData);
+  return response.data;
+};
+
+export const updateUser = async (userId, userData) => {
+  const response = await axios.put(`${USERS_API}/${userId}`, userData);
+  return response.data;
+};
+
+export const deleteUser = async (userId) => {
+  const response = await axios.delete(`${USERS_API}/${userId}`);
+  return response.data;
+};
+
 // Courses APIs
 export const getAllCourses = async () => {
   const response = await axios.get(COURSES_API);

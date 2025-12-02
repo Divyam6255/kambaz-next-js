@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaPlus, FaTrash, FaEdit } from 'react-icons/fa';
+import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaPlus, FaTrash, FaEdit, FaUsers } from 'react-icons/fa';
 import './styles.css';
 import { navigationLinks } from '../data/navigation';
 import { usePathname } from 'next/navigation';
@@ -33,6 +33,7 @@ export default function DashboardPage() {
   const [enrollments, setEnrollments] = useState([]);
   const [enrolledCourseIds, setEnrolledCourseIds] = useState(new Set());
   const [userLoading, setUserLoading] = useState(true);
+  const [showAllCourses, setShowAllCourses] = useState(true);
 
   // Fetch current user
   useEffect(() => {
@@ -139,6 +140,24 @@ export default function DashboardPage() {
       try {
         const createdCourse = await client.createCourse(newCourse);
         dispatch(addCourse(createdCourse));
+        
+        // Auto-enroll faculty when creating course
+        if (currentUser && currentUser.role === 'FACULTY') {
+          try {
+            await client.enrollInCourse(currentUser._id, createdCourse._id || createdCourse.number, 'FACULTY');
+            // Update enrolled courses set
+            setEnrolledCourseIds(prev => {
+              const newSet = new Set(prev);
+              if (createdCourse._id) newSet.add(createdCourse._id);
+              if (createdCourse.number) newSet.add(createdCourse.number);
+              return newSet;
+            });
+            console.log('Faculty auto-enrolled in new course');
+          } catch (enrollErr) {
+            console.error('Error auto-enrolling faculty:', enrollErr);
+          }
+        }
+        
         setNewCourse({ 
           name: '', 
           number: '', 
@@ -384,6 +403,7 @@ export default function DashboardPage() {
                   {link.label === 'Courses' && <FaBook className="nav-icon" />}
                   {link.label === 'Calendar' && <FaCalendarAlt className="nav-icon" />}
                   {link.label === 'Inbox' && <FaInbox className="nav-icon" />}
+                  {link.label === 'Users' && <FaUsers className="nav-icon" />}
                   {link.label === 'Labs' && <FaFlask className="nav-icon" />}
                   {link.label}
                 </a>
@@ -396,28 +416,71 @@ export default function DashboardPage() {
         <div className="dashboard-container">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
             <h1>Dashboard</h1>
-            <button 
-              className="btn-red"
-              onClick={() => setShowAddDialog(true)}
-              style={{ 
-                padding: '10px 20px', 
-                backgroundColor: '#dc3545', 
-                color: 'white', 
-                border: 'none', 
-                borderRadius: '4px',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px'
-              }}
-            >
-              <FaPlus /> Add Course
-            </button>
+            <div style={{ display: 'flex', gap: '10px' }}>
+              {currentUser && (
+                <div style={{ display: 'flex', gap: '5px', marginRight: '10px' }}>
+                  <button
+                    onClick={() => setShowAllCourses(true)}
+                    style={{
+                      padding: '10px 20px',
+                      backgroundColor: showAllCourses ? '#007bff' : '#6c757d',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '4px',
+                      cursor: 'pointer',
+                      fontWeight: showAllCourses ? 'bold' : 'normal'
+                    }}
+                  >
+                    All Courses
+                  </button>
+                  <button
+                    onClick={() => setShowAllCourses(false)}
+                    style={{
+                      padding: '10px 20px',
+                      backgroundColor: !showAllCourses ? '#007bff' : '#6c757d',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '4px',
+                      cursor: 'pointer',
+                      fontWeight: !showAllCourses ? 'bold' : 'normal'
+                    }}
+                  >
+                    My Courses
+                  </button>
+                </div>
+              )}
+              <button 
+                className="btn-red"
+                onClick={() => setShowAddDialog(true)}
+                style={{ 
+                  padding: '10px 20px', 
+                  backgroundColor: '#dc3545', 
+                  color: 'white', 
+                  border: 'none', 
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px'
+                }}
+              >
+                <FaPlus /> Add Course
+              </button>
+            </div>
           </div>
           {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
-          <h2>Published Courses</h2>
+          <h2>{showAllCourses ? 'Published Courses' : 'My Enrolled Courses'}</h2>
           <div className="courses-grid">
-            {courses && Array.isArray(courses) && courses.map((course) => {
+            {courses && Array.isArray(courses) && courses
+              .filter(course => {
+                if (showAllCourses) return true;
+                // Show only enrolled courses
+                const isEnrolled = enrolledCourseIds.has(course._id) || 
+                                   enrolledCourseIds.has(course.number) ||
+                                   enrolledCourseIds.has(course.id);
+                return isEnrolled;
+              })
+              .map((course) => {
               let imgSrc = "/1_V-Jp13LvtVc2IiY2fp4qYw.jpg";
               let desc = course.name;
               if (course.number === '5678') imgSrc = "/PDP_textbook.jpg";
@@ -472,7 +535,7 @@ export default function DashboardPage() {
                     padding: '5px',
                     borderRadius: '4px'
                   }}>
-                    {currentUser && (
+                    {currentUser && showAllCourses && (
                       <button
                         onClick={(e) => {
                           e.preventDefault();
