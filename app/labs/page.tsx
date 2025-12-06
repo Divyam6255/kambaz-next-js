@@ -153,6 +153,22 @@ export default function LabsPage() {
             </a>
           </li>
         </ul>
+        <ul style={{ listStyle: 'none', padding: '0' }}>
+          <li style={{ marginBottom: '15px' }}>
+            <a 
+              href="https://github.com/Divyam6255/kambaz-node-server-app.git" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              style={{ 
+                color: '#007bff', 
+                textDecoration: 'underline', 
+                fontSize: '16px'
+              }}
+            >
+              Kambaz Server Application Repository
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
   );
