@@ -90,7 +90,7 @@ export default function CoursePage() {
             <div className="course-nav-item"><a href="#">Piazza</a></div>
             <div className="course-nav-item"><a href="#">Zoom</a></div>
             <div className="course-nav-item"><a href={`/kambaz/courses/${course.id}/assignments`}>Assignments</a></div>
-            <div className="course-nav-item"><a href="#">Quizzes</a></div>
+            <div className="course-nav-item"><a href="/kambaz/courses//quizzes">Quizzes</a></div>
             <div className="course-nav-item"><a href="#">Grades</a></div>
           </div>
           <div className="course-main-content">

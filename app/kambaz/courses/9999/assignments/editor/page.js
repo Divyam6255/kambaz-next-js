@@ -85,7 +85,7 @@ export default function AssignmentEditorPage() {
               <a href="/kambaz/courses/9999/assignments">Assignments</a>
             </div>
             <div className="course-nav-item">
-              <a href="#">Quizzes</a>
+              <a href="/kambaz/courses/9999/quizzes">Quizzes</a>
             </div>
             <div className="course-nav-item">
               <a href="#">Grades</a>

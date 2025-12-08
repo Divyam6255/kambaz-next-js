@@ -114,8 +114,8 @@ export default function CourseHomePage() {
             <div className={`course-nav-item${pathname.includes('/assignments') ? ' active' : ''}`}>
               <a href="/kambaz/courses/1234/assignments">Assignments</a>
             </div>
-            <div className="course-nav-item">
-              <a href="#">Quizzes</a>
+            <div className={`course-nav-item${pathname.includes('/quizzes') ? ' active' : ''}`}>
+              <a href="/kambaz/courses/1234/quizzes">Quizzes</a>
             </div>
             <div className="course-nav-item">
               <a href="#">Grades</a>

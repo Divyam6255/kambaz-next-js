@@ -4,6 +4,9 @@ const HTTP_SERVER = process.env.NEXT_PUBLIC_HTTP_SERVER || 'http://localhost:400
 const USERS_API = `${HTTP_SERVER}/api/users`;
 const COURSES_API = `${HTTP_SERVER}/api/courses`;
 const ENROLLMENTS_API = `${HTTP_SERVER}/api/enrollments`;
+const QUIZZES_API = `${HTTP_SERVER}/api/quizzes`;
+const QUESTIONS_API = `${HTTP_SERVER}/api/questions`;
+const ATTEMPTS_API = `${HTTP_SERVER}/api/attempts`;
 
 // Configure axios to send cookies
 axios.defaults.withCredentials = true;
@@ -148,3 +151,77 @@ export const checkEnrollment = async (courseId) => {
   const response = await axios.get(`${ENROLLMENTS_API}/check/${courseId}`);
   return response.data;
 };
+
+// Quizzes APIs
+export const getCourseQuizzes = async (courseId) => {
+  const response = await axios.get(`${COURSES_API}/${courseId}/quizzes`);
+  return response.data;
+};
+
+export const getQuiz = async (quizId) => {
+  const response = await axios.get(`${QUIZZES_API}/${quizId}`);
+  return response.data;
+};
+
+export const createQuiz = async (courseId, quizData) => {
+  const response = await axios.post(`${COURSES_API}/${courseId}/quizzes`, quizData);
+  return response.data;
+};
+
+export const updateQuiz = async (quizId, quizData) => {
+  const response = await axios.put(`${QUIZZES_API}/${quizId}`, quizData);
+  return response.data;
+};
+
+export const deleteQuiz = async (quizId) => {
+  const response = await axios.delete(`${QUIZZES_API}/${quizId}`);
+  return response.data;
+};
+
+export const publishQuiz = async (quizId, published) => {
+  const response = await axios.patch(`${QUIZZES_API}/${quizId}/publish`, { published });
+  return response.data;
+};
+
+// Questions APIs
+export const getQuizQuestions = async (quizId) => {
+  const response = await axios.get(`${QUIZZES_API}/${quizId}/questions`);
+  return response.data;
+};
+
+export const createQuestion = async (quizId, questionData) => {
+  const response = await axios.post(`${QUIZZES_API}/${quizId}/questions`, questionData);
+  return response.data;
+};
+
+export const updateQuestion = async (questionId, questionData) => {
+  const response = await axios.put(`${QUESTIONS_API}/${questionId}`, questionData);
+  return response.data;
+};
+
+export const deleteQuestion = async (questionId) => {
+  const response = await axios.delete(`${QUESTIONS_API}/${questionId}`);
+  return response.data;
+};
+
+// Quiz Attempts APIs
+export const getQuizAttempts = async (quizId) => {
+  const response = await axios.get(`${QUIZZES_API}/${quizId}/attempts`);
+  return response.data;
+};
+
+export const getAttempt = async (attemptId) => {
+  const response = await axios.get(`${ATTEMPTS_API}/${attemptId}`);
+  return response.data;
+};
+
+export const startQuizAttempt = async (quizId) => {
+  const response = await axios.post(`${QUIZZES_API}/${quizId}/attempts`);
+  return response.data;
+};
+
+export const submitQuizAttempt = async (attemptId, answers) => {
+  const response = await axios.post(`${ATTEMPTS_API}/${attemptId}/submit`, { answers });
+  return response.data;
+};
+

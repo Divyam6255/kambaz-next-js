@@ -87,9 +87,7 @@ export default function CoursePage() {
             <div className="course-nav-item">
               <a href="/kambaz/courses/5678/modules">Modules</a>
             </div>
-            <div className="course-nav-item">
-              <a href="#">Piazza</a>
-            </div>
+            <div className="course-nav-item">\n              <a href={`/kambaz/courses/${course.id}/quizzes`}>Quizzes</a>\n            </div>", "oldString": "            <div className="course-nav-item">\n              <a href="#">Quizzes</a>\n            </div>
             <div className="course-nav-item">
               <a href="#">Zoom</a>
             </div>
@@ -97,7 +95,7 @@ export default function CoursePage() {
               <a href="/kambaz/courses/5678/assignments">Assignments</a>
             </div>
             <div className="course-nav-item">
-              <a href="#">Quizzes</a>
+              <a href="/kambaz/courses//quizzes">Quizzes</a>
             </div>
             <div className="course-nav-item">
               <a href="#">Grades</a>
