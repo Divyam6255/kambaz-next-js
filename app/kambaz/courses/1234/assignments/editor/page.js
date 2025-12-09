@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../../styles.css';
@@ -32,10 +33,10 @@ export default function AssignmentEditorPage() {
             </a>
           </div>
           <div className="nav-item active">
-            <a href="/kambaz/courses">
+            <Link href="/kambaz/courses">
               <FaBook className="nav-icon" />
               Courses
-            </a>
+            </Link>
           </div>
           <div className="nav-item">
             <a href="/kambaz/calendar">
@@ -66,13 +67,13 @@ export default function AssignmentEditorPage() {
         <div className="course-layout">
           <div className="course-nav-sidebar" style={{backgroundColor: 'white'}}>
             <div className={`course-nav-item${pathname.endsWith('/home') ? ' active' : ''}`}>
-              <a href="/kambaz/courses/1234/home">Home</a>
+              <Link href="/kambaz/courses/1234/home">Home</Link>
             </div>
             <div className={`course-nav-item${pathname.includes('/modules') ? ' active' : ''}`}>
-              <a href="/kambaz/courses/1234/modules">Modules</a>
+              <Link href="/kambaz/courses/1234/modules">Modules</Link>
             </div>
             <div className={`course-nav-item${pathname.includes('/people') ? ' active' : ''}`}>
-              <a href="/kambaz/courses/1234/people">People</a>
+              <Link href="/kambaz/courses/1234/people">People</Link>
             </div>
             <div className="course-nav-item">
               <a href="#">Piazza</a>
@@ -81,10 +82,10 @@ export default function AssignmentEditorPage() {
               <a href="#">Zoom</a>
             </div>
             <div className={`course-nav-item${pathname.includes('/assignments') ? ' active' : ''}`}>
-              <a href="/kambaz/courses/1234/assignments">Assignments</a>
+              <Link href="/kambaz/courses/1234/assignments">Assignments</Link>
             </div>
             <div className="course-nav-item">
-              <a href="/kambaz/courses/1234/quizzes">Quizzes</a>
+              <Link href="/kambaz/courses/1234/quizzes">Quizzes</Link>
             </div>
             <div className="course-nav-item">
               <a href="#">Grades</a>

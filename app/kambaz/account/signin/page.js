@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
+import Link from 'next/link';
 import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaGraduationCap } from 'react-icons/fa';
 import '../styles.css';
 import * as client from '../../client';
@@ -58,10 +59,10 @@ export default function SigninPage() {
             </a>
           </div>
           <div className="nav-item">
-            <a href="/kambaz/courses">
+            <Link href="/kambaz/courses">
               <FaBook className="nav-icon" />
               Courses
-            </a>
+            </Link>
           </div>
           <div className="nav-item">
             <a href="/kambaz/calendar">

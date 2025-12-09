@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaGraduationCap } from 'react-icons/fa';
 
@@ -35,10 +36,10 @@ export default function KambazPage() {
             </a>
           </div>
           <div className="nav-item">
-            <a href="/kambaz/courses">
+            <Link href="/kambaz/courses">
               <FaBook className="nav-icon" />
               Courses
-            </a>
+            </Link>
           </div>
           <div className="nav-item">
             <a href="/kambaz/calendar">

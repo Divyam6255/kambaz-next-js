@@ -12,6 +12,7 @@ export default function QuizTakePage({ params }) {
   const { courseId, quizId } = use(params);
   const currentUser = useSelector((state) => state.users.currentUser);
   
+  const [course, setCourse] = useState(null);
   const [quiz, setQuiz] = useState(null);
   const [questions, setQuestions] = useState([]);
   const [currentAttempt, setCurrentAttempt] = useState(null);
@@ -28,10 +29,12 @@ export default function QuizTakePage({ params }) {
   const fetchQuizData = async () => {
     try {
       setLoading(true);
-      const [quizData, questionsData] = await Promise.all([
+      const [courseData, quizData, questionsData] = await Promise.all([
+        client.getCourse(courseId),
         client.getQuiz(quizId),
         client.getQuizQuestions(quizId)
       ]);
+      setCourse(courseData);
       setQuiz(quizData);
       setQuestions(questionsData);
       
@@ -164,6 +167,11 @@ export default function QuizTakePage({ params }) {
       </nav>
 
       <main className="main-content">
+        {course && (
+          <div className="course-header">
+            <h1>{course.number} - {course.name}</h1>
+          </div>
+        )}
         <div className="course-layout">
           <div className="course-nav-sidebar">
             <div className="course-nav-item"><a href={`/kambaz/courses/${courseId}/home`}>Home</a></div>

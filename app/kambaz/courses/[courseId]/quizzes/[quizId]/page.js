@@ -11,6 +11,7 @@ export default function QuizDetailsPage({ params }) {
   const router = useRouter();
   const { courseId, quizId } = use(params);
   const currentUser = useSelector((state) => state.users.currentUser);
+  const [course, setCourse] = useState(null);
   const [quiz, setQuiz] = useState(null);
   const [questions, setQuestions] = useState([]);
   const [attempts, setAttempts] = useState([]);
@@ -23,11 +24,13 @@ export default function QuizDetailsPage({ params }) {
   const fetchQuizData = async () => {
     try {
       setLoading(true);
-      const [quizData, questionsData, attemptsData] = await Promise.all([
+      const [courseData, quizData, questionsData, attemptsData] = await Promise.all([
+        client.getCourse(courseId),
         client.getQuiz(quizId),
         client.getQuizQuestions(quizId),
         client.getQuizAttempts(quizId).catch(() => [])
       ]);
+      setCourse(courseData);
       setQuiz(quizData);
       setQuestions(questionsData);
       setAttempts(attemptsData);
@@ -109,6 +112,11 @@ export default function QuizDetailsPage({ params }) {
       </nav>
 
       <main className="main-content">
+        {course && (
+          <div className="course-header">
+            <h1>{course.number} - {course.name}</h1>
+          </div>
+        )}
         <div className="course-layout">
           <div className="course-nav-sidebar">
             <div className="course-nav-item"><a href={`/kambaz/courses/${courseId}/home`}>Home</a></div>

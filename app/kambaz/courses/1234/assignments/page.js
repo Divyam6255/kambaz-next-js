@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaSearch, FaPlus, FaEllipsisV, FaEdit, FaTrash } from 'react-icons/fa';
 import '../../styles.css';
 import { usePathname } from 'next/navigation';

@@ -11,33 +11,40 @@ export default function QuizzesPage({ params }) {
   const router = useRouter();
   const { courseId } = use(params);
   const currentUser = useSelector((state) => state.users.currentUser);
+  const [course, setCourse] = useState(null);
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [openMenuId, setOpenMenuId] = useState(null);
 
   useEffect(() => {
-    fetchQuizzes();
+    fetchCourseAndQuizzes();
   }, [courseId]);
 
-  const fetchQuizzes = async () => {
+  const fetchCourseAndQuizzes = async () => {
     try {
       setLoading(true);
-      const data = await client.getCourseQuizzes(courseId);
+      const [courseData, quizzesData] = await Promise.all([
+        client.getCourse(courseId),
+        client.getCourseQuizzes(courseId)
+      ]);
+      setCourse(courseData);
       // Sort quizzes by available date (most recent first)
-      const sortedData = data.sort((a, b) => {
+      const sortedData = quizzesData.sort((a, b) => {
         const dateA = a.availableDate ? new Date(a.availableDate) : new Date(0);
         const dateB = b.availableDate ? new Date(b.availableDate) : new Date(0);
         return dateB - dateA;
       });
       setQuizzes(sortedData);
     } catch (err) {
-      console.error('Error fetching quizzes:', err);
-      setError('Failed to load quizzes');
+      console.error('Error fetching data:', err);
+      setError('Failed to load course or quizzes');
     } finally {
       setLoading(false);
     }
   };
+
+
 
   const handleAddQuiz = async () => {
     try {
@@ -133,6 +140,11 @@ export default function QuizzesPage({ params }) {
       </nav>
 
       <main className="main-content">
+        {course && (
+          <div className="course-header">
+            <h1>{course.number} - {course.name}</h1>
+          </div>
+        )}
         <div className="course-layout">
           <div className="course-nav-sidebar">
             <div className="course-nav-item"><a href={`/kambaz/courses/${courseId}/home`}>Home</a></div>

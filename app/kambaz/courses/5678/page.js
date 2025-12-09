@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import Image from 'next/image';
 import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaGraduationCap } from 'react-icons/fa';
 import '../styles.css';
@@ -82,20 +83,25 @@ export default function CoursePage() {
         <div className="course-layout">
           <div className="course-nav-sidebar">
             <div className="course-nav-item">
-              <a href="/kambaz/courses/5678/home">Home</a>
+              <Link href="/kambaz/courses/5678/home">Home</Link>
             </div>
             <div className="course-nav-item">
-              <a href="/kambaz/courses/5678/modules">Modules</a>
+              <Link href="/kambaz/courses/5678/modules">Modules</Link>
             </div>
-            <div className="course-nav-item">\n              <a href={`/kambaz/courses/${course.id}/quizzes`}>Quizzes</a>\n            </div>", "oldString": "            <div className="course-nav-item">\n              <a href="#">Quizzes</a>\n            </div>
+            <div className="course-nav-item">
+              <a href="#">Piazza</a>
+            </div>
             <div className="course-nav-item">
               <a href="#">Zoom</a>
             </div>
             <div className="course-nav-item">
-              <a href="/kambaz/courses/5678/assignments">Assignments</a>
+              <Link href="/kambaz/courses/5678/assignments">Assignments</Link>
             </div>
             <div className="course-nav-item">
-              <a href="/kambaz/courses//quizzes">Quizzes</a>
+              <Link href="/kambaz/courses/5678/quizzes">Quizzes</Link>
+            </div>
+            <div className="course-nav-item">
+              <Link href={`/kambaz/courses/${course.id}/quizzes`}>Quizzes</Link>
             </div>
             <div className="course-nav-item">
               <a href="#">Grades</a>
