@@ -225,18 +225,22 @@ export default function SignupPage() {
               </div>
 
               <div className="form-group">
-                <label htmlFor="role">Role:</label>
+                <label htmlFor="role">Role: <span style={{ color: 'red' }}>*</span></label>
                 <select 
                   id="role" 
                   name="role" 
                   value={userData.role}
                   onChange={(e) => setUserData({ ...userData, role: e.target.value })}
+                  required
                 >
                   <option value="STUDENT">Student</option>
                   <option value="FACULTY">Faculty</option>
                   <option value="TA">TA</option>
                   <option value="ADMIN">Admin</option>
                 </select>
+                <small style={{ color: '#6c757d', fontSize: '0.875rem', marginTop: '4px', display: 'block' }}>
+                  Choose carefully - role cannot be changed after signup
+                </small>
               </div>
               
               <div className="form-buttons">
