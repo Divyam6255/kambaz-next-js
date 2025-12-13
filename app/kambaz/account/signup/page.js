@@ -53,6 +53,7 @@ export default function SignupPage() {
         password: userData.password
       });
       
+      console.log('✅ User signed up and signed in:', signedInUser.username, 'Role:', signedInUser.role);
       dispatch(setCurrentUser(signedInUser));
       router.push('/kambaz/dashboard');
     } catch (err) {

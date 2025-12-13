@@ -25,6 +25,7 @@ export default function SigninPage() {
 
     try {
       const user = await client.signin(credentials);
+      console.log('✅ User signed in:', user.username, 'Role:', user.role);
       dispatch(setCurrentUser(user));
       router.push('/kambaz/dashboard');
     } catch (err) {

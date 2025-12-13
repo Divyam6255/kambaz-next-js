@@ -7,7 +7,7 @@ import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaPlu
 import Image from 'next/image';
 import '../dashboard/styles.css';
 import './styles.css';
-import { navigationLinks } from '../data/navigation';
+import { navigationLinks, adminLinks } from '../data/navigation';
 import { usePathname } from 'next/navigation';
 import * as client from '../client';
 
@@ -19,6 +19,7 @@ export default function UsersPage() {
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [authChecking, setAuthChecking] = useState(true);
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [roleFilter, setRoleFilter] = useState('ALL');
@@ -38,18 +39,39 @@ export default function UsersPage() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
+        // Wait a moment for Redux store to load if it hasn't yet
+        if (authChecking) {
+          setTimeout(() => setAuthChecking(false), 100);
+          return;
+        }
+
+        // Check if user is authenticated by trying to fetch data from backend
+        // The backend will handle authentication via session
         const usersData = await client.getAllUsers();
         setUsers(usersData);
         setFilteredUsers(usersData);
+        setError('');
       } catch (err) {
         console.error('Error fetching users:', err);
-        setError('Failed to load users');
+        if (err.response?.status === 403) {
+          setError('Access denied. Admin privileges required.');
+          setTimeout(() => {
+            router.push('/kambaz/dashboard');
+          }, 2000);
+        } else if (err.response?.status === 401) {
+          setError('Please sign in to access this page');
+          setTimeout(() => {
+            router.push('/kambaz/account/signin');
+          }, 1500);
+        } else {
+          setError('Failed to load users');
+        }
       } finally {
         setLoading(false);
       }
     };
     fetchUsers();
-  }, []);
+  }, [authChecking, router]);
 
   // Filter users based on search and role
   useEffect(() => {
@@ -136,6 +158,26 @@ export default function UsersPage() {
   };
 
   if (loading) return <div className="kambaz-container"><div className="main-content"><p>Loading users...</p></div></div>;
+  
+  if (error) {
+    return (
+      <div className="kambaz-container">
+        <div className="main-content">
+          <div style={{ 
+            padding: '20px', 
+            backgroundColor: '#f8d7da', 
+            color: '#721c24', 
+            borderRadius: '4px',
+            border: '1px solid #f5c6cb',
+            textAlign: 'center'
+          }}>
+            <h2>⚠️ {error}</h2>
+            {error.includes('Access denied') && <p>You will be redirected to the dashboard...</p>}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="kambaz-container">
@@ -158,8 +200,19 @@ export default function UsersPage() {
                   {link.label === 'Courses' && <FaBook className="nav-icon" />}
                   {link.label === 'Calendar' && <FaCalendarAlt className="nav-icon" />}
                   {link.label === 'Inbox' && <FaInbox className="nav-icon" />}
-                  {link.label === 'Users' && <FaUsers className="nav-icon" />}
                   {link.label === 'Labs' && <FaFlask className="nav-icon" />}
+                  {link.label}
+                </a>
+              </div>
+            );
+          })}
+          {/* Admin-only links */}
+          {currentUser && currentUser.role === 'ADMIN' && adminLinks.map(link => {
+            const isActive = pathname === link.href || (link.href !== '/kambaz' && pathname.startsWith(link.href));
+            return (
+              <div className={`nav-item ${isActive ? 'active' : ''}`} key={link.href}>
+                <a href={link.href}>
+                  {link.label === 'Users' && <FaUsers className="nav-icon" />}
                   {link.label}
                 </a>
               </div>

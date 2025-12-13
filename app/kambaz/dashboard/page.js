@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { FaUser, FaTachometerAlt, FaBook, FaCalendarAlt, FaInbox, FaFlask, FaPlus, FaTrash, FaEdit, FaUsers } from 'react-icons/fa';
 import './styles.css';
-import { navigationLinks } from '../data/navigation';
+import { navigationLinks, adminLinks } from '../data/navigation';
 import { usePathname } from 'next/navigation';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCourses, addCourse, updateCourse, deleteCourse, setCurrentUser } from '../store';
@@ -405,6 +405,18 @@ export default function DashboardPage() {
                   {link.label === 'Inbox' && <FaInbox className="nav-icon" />}
                   {link.label === 'Users' && <FaUsers className="nav-icon" />}
                   {link.label === 'Labs' && <FaFlask className="nav-icon" />}
+                  {link.label}
+                </a>
+              </div>
+            );
+          })}
+          {/* Admin-only links */}
+          {currentUser && currentUser.role === 'ADMIN' && adminLinks.map(link => {
+            const isActive = pathname === link.href || (link.href !== '/kambaz' && pathname.startsWith(link.href));
+            return (
+              <div className={`nav-item ${isActive ? 'active' : ''}`} key={link.href}>
+                <a href={link.href}>
+                  {link.label === 'Users' && <FaUsers className="nav-icon" />}
                   {link.label}
                 </a>
               </div>

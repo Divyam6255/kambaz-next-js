@@ -222,16 +222,20 @@ export default function ProfilePage() {
 
               <div className="form-group">
                 <label htmlFor="role">Role:</label>
-                <input 
-                  type="text" 
+                <select 
                   id="role" 
                   name="role" 
                   value={profileData.role}
-                  disabled
-                  style={{ backgroundColor: '#e9ecef', cursor: 'not-allowed' }}
-                />
+                  onChange={(e) => setProfileData({ ...profileData, role: e.target.value })}
+                  style={{ width: '100%', padding: '8px', border: '1px solid #ced4da', borderRadius: '4px' }}
+                >
+                  <option value="STUDENT">Student</option>
+                  <option value="FACULTY">Faculty</option>
+                  <option value="TA">TA</option>
+                  <option value="ADMIN">Admin</option>
+                </select>
                 <small style={{ color: '#6c757d', fontSize: '0.875rem', marginTop: '4px', display: 'block' }}>
-                  Role is set during signup and cannot be changed
+                  You can change your role
                 </small>
               </div>
               

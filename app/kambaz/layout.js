@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from 'react';
 import { Provider, useDispatch } from 'react-redux';
-import store, { setCurrentUser } from './store';
+import store, { setCurrentUser, clearCurrentUser } from './store';
 import * as client from './client';
 
 function KambazInitializer({ children }) {
@@ -13,10 +13,14 @@ function KambazInitializer({ children }) {
       try {
         const user = await client.getCurrentUser();
         if (user) {
+          console.log('✅ User loaded in layout:', user.username, 'Role:', user.role);
           dispatch(setCurrentUser(user));
+        } else {
+          dispatch(clearCurrentUser());
         }
       } catch (error) {
         console.log('Not authenticated or error fetching user');
+        dispatch(clearCurrentUser());
       }
     };
     
